@@ -1,0 +1,10 @@
+Simple RPG
+- Unity 2022.3.49f1
+- URP 2D
+- Scenes without camera, on editor disable "warn if no cameras rendering"
+- Base resolution: 1920x1080, landscape
+- Packages used: TextMeshPro, Dotween
+- Custom Pointer Utility Assembly created: to handle pointer events of child
+PointerEventForwarder: forwards pointerevents to parent, assign this component to child object
+PointerEventForwarderTarget: parent should extend PointerEventForwarderTarget class
+-
