@@ -1,0 +1,55 @@
+﻿-Core: Shared utilities, event handling, base classes, and interfaces.
+Dependencies: None.
+Used by: Data, GameLogic, UI.
+
+-Data: Stores ScriptableObjects, serialization, and file-handling logic.
+Dependencies: Game.Core.
+Used by: GameLogic.
+
+-GameLogic: Core game mechanics, such as battle flow and hero management.
+Dependencies: Game.Core, Game.Data.
+Used by: UI.
+
+-UI: Manages all UI components and interactions.
+Dependencies: Game.Core, Game.Logic.
+
+
+
+
+Assets/
+├── Core/
+│   ├── EventManager: Handles global event broadcasting.
+│   ├── BaseEntity: A base class for shared logic between heroes and enemies (if using inheritance).
+│   ├── IEntity: Interface for shared functionality between entities (if using interfaces).
+│   └── GameState: Manages overall game flow and state tracking.
+├── Data/
+│   ├── GameDataManager: Handles saving and loading data (JSON serialization).
+│   ├── ScriptableObjects/ : Contains all ScriptableObjects (HeroData, EnemyData, etc.).
+│   │   ├── HeroData: ScriptableObject for hero attributes.
+│   │   └── EnemyData: ScriptableObject for enemy attributes.
+├── GameLogic/
+│   ├── HeroInstance: Runtime class for managing dynamic hero data.
+│   ├── EnemyInstance: Runtime class for managing enemy behavior.
+│   ├── HeroManager: Handles battle logic (e.g., attack turns, damage calculation).
+│   ├── EnemyManager: Handles hero-related operations (e.g., leveling up).
+│   └── BattleManager: Handles enemy spawning and behavior.
+├── UI/
+│   ├── Controllers/ : Focus on handling input and coordinating interactions between the View and the Model.
+│   │   ├── HeroSelectionController: Handles hero selection flow.
+│   │   ├── BattleController: Handles turn-based gameplay input (e.g., hero attacks, enemy responses).
+│   │   └── PopupController: Handles info popups (e.g., hero stats on long-press).
+│   ├── Views/ : Handle rendering and displaying the UI, based on data provided by the Controller.
+│   │   ├── HeroSelectionView: Updates the UI for hero selection (e.g., highlighting, popups).
+│   │   ├── BattleView: Updates health bars, attack animations, and victory/defeat screens.
+│   │   └── PopupView: 
+
+-UI Controller:
+Handles user input (e.g., selecting a hero).
+Passes actions to the Game Logic via exposed methods (e.g., HeroManager.SelectHero()).
+
+-Game Logic:
+Updates the Model (e.g., HeroCollection in the Data assembly).
+Provides processed data or events back to the UI.
+
+-Model Updates:
+Changes made in the Data layer (e.g., adding/removing a hero) are reflected via events or callbacks.
