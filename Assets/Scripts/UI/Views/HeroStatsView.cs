@@ -14,19 +14,23 @@ namespace UI.Views
         [SerializeField] private TextMeshProUGUI attackPowerText;
         [SerializeField] private TextMeshProUGUI experienceText;
         [SerializeField] private RectTransform panelTransform;
+
+        private bool isEnabled = false;
         
         // Show the stats panel with data from a HeroCard
-        internal void Show(HeroCardView heroCard, bool isHovered = false)
+        internal void Show(HeroCardView heroCard)
         {
-            if (heroCard == null) return;
+            if (isEnabled || heroCard == null) return;
 
             SetData(heroCard);
             UpdatePosition(heroCard.transform.position);
-            EnableAnimation(true, isHovered);
+            EnableAnimation(true);
         }
 
         internal void Hide()
         {
+            if(!isEnabled) return;
+            
             EnableAnimation(false);
         }
 
@@ -44,15 +48,11 @@ namespace UI.Views
             panelTransform.position = transformPosition;
         }
 
-        private void EnableAnimation(bool enable, bool isHovered = false)
+        private void EnableAnimation(bool enable)
         {
+            isEnabled = enable;
             canvasGroup.DOKill(true);
-            //canvasGroup.interactable = enable && !isHovered;
-            //canvasGroup.blocksRaycasts = enable && !isHovered;
-            if (isHovered)
-                canvasGroup.DOFade(0.7f, Constants.FastAnimationSpeed);
-            else
-                canvasGroup.DOFade(enable ? 1f : 0f, Constants.NormalAnimationSpeed);
+            canvasGroup.DOFade(enable ? 1f : 0f, Constants.NormalAnimationSpeed);
         }
     }
 }

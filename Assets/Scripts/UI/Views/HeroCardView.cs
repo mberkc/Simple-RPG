@@ -3,12 +3,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using PointerEventUtility;
 
 namespace UI.Views
 {
-    public class HeroCardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class HeroCardView : PointerEventForwarderTarget
     {
-        internal event Action<HeroCardView> OnHeroSelected, OnHeroDeselected, OnHeroHovered;
+        internal event Action<HeroCardView> OnHeroSelected, OnHeroDeselected, OnHeroHold;
 
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private Button cardButton;
@@ -27,9 +28,7 @@ namespace UI.Views
             AttackPower = attackPower;
 
             nameText.text = HeroName;
-            selectionBorder.enabled = false;
-
-            cardButton.onClick.AddListener(OnCardClicked);
+            SetSelected(false);
         }
 
         internal void SetSelected(bool selected)
@@ -38,14 +37,20 @@ namespace UI.Views
             selectionBorder.enabled = isSelected;
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
+        public override void OnPointerDown(PointerEventData eventData)
         {
-            OnHeroHovered?.Invoke(this);
+            OnCardClicked();
+            Invoke(nameof(HoldActionComplete), 3f);
         }
 
-        public void OnPointerExit(PointerEventData eventData)
+        public override void OnPointerUp(PointerEventData eventData)
         {
-            OnHeroHovered?.Invoke(null);
+            HoldActionCancel();
+        }
+
+        public override void OnPointerExit(PointerEventData eventData)
+        {
+            HoldActionCancel();
         }
         
         private void OnCardClicked()
@@ -54,6 +59,17 @@ namespace UI.Views
                 OnHeroDeselected?.Invoke(this);
             else
                 OnHeroSelected?.Invoke(this);
+        }
+
+        private void HoldActionCancel()
+        {
+            CancelInvoke(nameof(HoldActionComplete));
+            OnHeroHold?.Invoke(null);
+        }
+
+        private void HoldActionComplete()
+        {
+            OnHeroHold?.Invoke(this);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace UI.Controllers
                 
                 heroCard.OnHeroSelected += OnHeroSelected;
                 heroCard.OnHeroDeselected += OnHeroDeselected;
-                heroCard.OnHeroHovered += OnHeroHovered;
+                heroCard.OnHeroHold += OnHeroHold;
                 heroCard.Initialize($"Hero {i+1}", Constants.EntityDefaultHealth, Constants.EntityDefaultAttackPower);
                 heroCards[i] = heroCard;
             }
@@ -51,7 +51,6 @@ namespace UI.Controllers
                 
                 selectedHeroes.Add(hero);
                 hero.SetSelected(true);
-                heroStatsView.Show(hero);
             }
             else
                 Debug.Log("Cannot select more than " + Constants.MaxSelectedHeroes + " heroes.");
@@ -65,16 +64,15 @@ namespace UI.Controllers
             {
                 selectedHeroes.Remove(hero);
                 hero.SetSelected(false);
-                heroStatsView.Hide();
             }
             UpdateBattleButton();
         }
 
-        // Handle when a hero is hovered to update stats panel
-        private void OnHeroHovered(HeroCardView hero)
+        // Handle when a hero is hold
+        private void OnHeroHold(HeroCardView hero)
         {
             if(hero != null)
-                heroStatsView.Show(hero, true);
+                heroStatsView.Show(hero);
             else
                 heroStatsView.Hide();
         }
