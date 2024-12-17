@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Core;
 using UI.Views;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace UI.Controllers
@@ -22,6 +23,7 @@ namespace UI.Controllers
         {
             InitializeHeroCards();
             UpdateBattleButton();
+            battleButton.onClick.AddListener(BattleButtonClicked);
         }
         
         // Cache all hero cards under the hero grid
@@ -81,6 +83,11 @@ namespace UI.Controllers
         private void UpdateBattleButton()
         {
             battleButton.interactable = selectedHeroes.Count == Constants.MaxSelectedHeroes;
+        }
+
+        private static void BattleButtonClicked()
+        {
+            SceneManager.LoadScene(Constants.BattleSceneIndex);
         }
     }
 }

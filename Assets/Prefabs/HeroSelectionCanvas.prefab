@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 3167118453711405236}
   - component: {fileID: 8380497521398350139}
   m_Layer: 5
-  m_Name: Hero Selection Canvas
+  m_Name: HeroSelectionCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

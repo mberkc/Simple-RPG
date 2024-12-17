@@ -1,4 +1,6 @@
 ﻿using System;
+using Core;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -34,7 +36,9 @@ namespace UI.Views
         internal void SetSelected(bool selected)
         {
             isSelected = selected;
-            selectionBorder.enabled = isSelected;
+            
+            selectionBorder.DOKill(true);
+            selectionBorder.DOFade(selected ? 1f : 0f, Constants.NormalAnimationSpeed);
         }
 
         public override void OnPointerDown(PointerEventData eventData)
