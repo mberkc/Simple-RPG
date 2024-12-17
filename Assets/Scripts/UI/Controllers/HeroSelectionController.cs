@@ -37,7 +37,7 @@ namespace UI.Controllers
                 heroCard.OnHeroSelected += OnHeroSelected;
                 heroCard.OnHeroDeselected += OnHeroDeselected;
                 heroCard.OnHeroHovered += OnHeroHovered;
-                heroCard.Initialize($"Hero {i+1}", 100, 10);
+                heroCard.Initialize($"Hero {i+1}", Constants.EntityDefaultHealth, Constants.EntityDefaultAttackPower);
                 heroCards[i] = heroCard;
             }
         }
@@ -45,7 +45,7 @@ namespace UI.Controllers
         // Handle when a hero is selected
         private void OnHeroSelected(HeroCardView hero)
         {
-            if (selectedHeroes.Count < GameConstants.MaxSelectedHeroes)
+            if (selectedHeroes.Count < Constants.MaxSelectedHeroes)
             {
                 if(selectedHeroes.Contains(hero)) return;
                 
@@ -54,7 +54,7 @@ namespace UI.Controllers
                 heroStatsView.Show(hero);
             }
             else
-                Debug.Log("Cannot select more than " + GameConstants.MaxSelectedHeroes + " heroes.");
+                Debug.Log("Cannot select more than " + Constants.MaxSelectedHeroes + " heroes.");
             UpdateBattleButton();
         }
 
@@ -73,13 +73,16 @@ namespace UI.Controllers
         // Handle when a hero is hovered to update stats panel
         private void OnHeroHovered(HeroCardView hero)
         {
-            heroStatsView.Show(hero);
+            if(hero != null)
+                heroStatsView.Show(hero, true);
+            else
+                heroStatsView.Hide();
         }
 
         // Enable or disable the battle button based on selection count
         private void UpdateBattleButton()
         {
-            battleButton.interactable = selectedHeroes.Count == GameConstants.MaxSelectedHeroes;
+            battleButton.interactable = selectedHeroes.Count == Constants.MaxSelectedHeroes;
         }
     }
 }

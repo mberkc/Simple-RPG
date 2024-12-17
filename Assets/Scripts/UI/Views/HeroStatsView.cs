@@ -1,3 +1,5 @@
+using Core;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -5,24 +7,22 @@ namespace UI.Views
 {
     public class HeroStatsView : MonoBehaviour
     {
-        
+        [SerializeField] private CanvasGroup canvasGroup;
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private TextMeshProUGUI levelText;
         [SerializeField] private TextMeshProUGUI healthText;
         [SerializeField] private TextMeshProUGUI attackPowerText;
         [SerializeField] private TextMeshProUGUI experienceText;
         [SerializeField] private RectTransform panelTransform;
-
-        private readonly Vector2 _topLeftCorner = new (0, 1);
         
         // Show the stats panel with data from a HeroCard
-        internal void Show(HeroCardView heroCard)
+        internal void Show(HeroCardView heroCard, bool isHovered = false)
         {
             if (heroCard == null) return;
 
             SetData(heroCard);
             UpdatePosition(heroCard.transform.position);
-            EnableAnimation(true);
+            EnableAnimation(true, isHovered);
         }
 
         internal void Hide()
@@ -41,16 +41,18 @@ namespace UI.Views
 
         private void UpdatePosition(Vector3 transformPosition)
         {
-            panelTransform.anchorMin = _topLeftCorner;
-            panelTransform.anchorMax = _topLeftCorner;
-            panelTransform.pivot = _topLeftCorner;
             panelTransform.position = transformPosition;
-            // TODO position
         }
 
-        private void EnableAnimation(bool enable)
+        private void EnableAnimation(bool enable, bool isHovered = false)
         {
-            transform.localScale = enable? Vector3.one : Vector3.zero;
+            canvasGroup.DOKill(true);
+            //canvasGroup.interactable = enable && !isHovered;
+            //canvasGroup.blocksRaycasts = enable && !isHovered;
+            if (isHovered)
+                canvasGroup.DOFade(0.7f, Constants.FastAnimationSpeed);
+            else
+                canvasGroup.DOFade(enable ? 1f : 0f, Constants.NormalAnimationSpeed);
         }
     }
 }
