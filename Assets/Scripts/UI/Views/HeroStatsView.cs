@@ -1,4 +1,6 @@
+using System.Globalization;
 using Core;
+using Data.ScriptableObjects;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -22,7 +24,7 @@ namespace UI.Views
         {
             if (isEnabled || heroCard == null) return;
 
-            SetData(heroCard);
+            SetData(heroCard.HeroData);
             UpdatePosition(heroCard.transform.position);
             EnableAnimation(true);
         }
@@ -34,13 +36,13 @@ namespace UI.Views
             EnableAnimation(false);
         }
 
-        private void SetData(HeroCardView heroCard)
+        private void SetData(HeroData heroData)
         {
-            nameText.text = heroCard.HeroName;
-            levelText.text = "1"; // TODO
-            healthText.text = heroCard.Health.ToString();
-            attackPowerText.text = heroCard.AttackPower.ToString();
-            experienceText.text = "0"; // TODO
+            nameText.text = heroData.EntityName;
+            levelText.text = heroData.Level.ToString(CultureInfo.InvariantCulture);
+            healthText.text = heroData.Health.ToString(CultureInfo.InvariantCulture);
+            attackPowerText.text = heroData.AttackPower.ToString(CultureInfo.InvariantCulture);
+            experienceText.text = heroData.Experience.ToString(CultureInfo.InvariantCulture);
         }
 
         private void UpdatePosition(Vector3 transformPosition)

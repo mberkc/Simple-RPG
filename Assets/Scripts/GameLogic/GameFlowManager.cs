@@ -1,7 +1,6 @@
-﻿using Core.Initializable;
-using Data.ScriptableObjects;
-using EventManager.GameLogicEventManager;
-using UnityEngine;
+﻿using Core;
+using Core.EventManager.GameLogicEventManager;
+using Core.Initializable;
 
 
 namespace GameLogic
@@ -20,14 +19,14 @@ namespace GameLogic
 
         private async void StartBattle()
         {
-            HeroData[] selectedHeroes = null;
-            EnemyData enemyToFace = null;
-            // Update GameState with selected heroes & enemy to face
-            GameState.SelectedHeroes = selectedHeroes;
-            GameState.EnemyToFace = enemyToFace;
+            var heroes = GameState.SelectedHeroes;
+            if(heroes is not { Length: Constants.MaxSelectedHeroes }) return;
+                
+            // Update GameState with enemy to face
+            GameState.EnemyToFace = EnemySelector.GetEnemyForLevel(LevelManager.CurrentLevel);
+            
             // Load the Battle Scene
             await SceneLoader.LoadBattleSceneAsync();
-            Debug.Log("Load Task Completed");
             GameLogicEventManager.BroadcastBattleSceneLoaded?.Invoke();
         }
     }

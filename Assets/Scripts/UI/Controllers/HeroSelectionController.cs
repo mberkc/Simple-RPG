@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using Core;
-using EventManager.UIEventManager;
+using Core.EventManager.UIEventManager;
+using Data.ScriptableObjects;
 using UI.Views;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,10 +41,16 @@ namespace UI.Controllers
                 heroCard.OnHeroSelected += OnHeroSelected;
                 heroCard.OnHeroDeselected += OnHeroDeselected;
                 heroCard.OnHeroHold += OnHeroHold;
-                heroCard.Initialize($"Hero {i+1}", Constants.EntityDefaultHealth, Constants.EntityDefaultAttackPower);
+                
+                // TODO: get from so pool
+                var heroData = ScriptableObject.CreateInstance<HeroData>();
+                //heroCard.Initialize($"Hero {i+1}", Constants.EntityDefaultHealth, Constants.EntityDefaultAttackPower);
+                heroCard.Initialize(heroData);
                 heroCards[i] = heroCard;
             }
         }
+
+        #region HeroCardView Callbacks
 
         // Handle when a hero is selected
         private void OnHeroSelected(HeroCardView hero)
@@ -53,6 +61,7 @@ namespace UI.Controllers
                 
                 selectedHeroes.Add(hero);
                 hero.SetSelected(true);
+                UpdateHeroSelection();
             }
             else
                 Debug.Log("Cannot select more than " + Constants.MaxSelectedHeroes + " heroes.");
@@ -66,6 +75,7 @@ namespace UI.Controllers
             {
                 selectedHeroes.Remove(hero);
                 hero.SetSelected(false);
+                UpdateHeroSelection();
             }
             UpdateBattleButton();
         }
@@ -77,6 +87,14 @@ namespace UI.Controllers
                 heroStatsView.Show(hero);
             else
                 heroStatsView.Hide();
+        }
+
+        #endregion
+
+        private void UpdateHeroSelection()
+        {
+            var selectedHeroesData = selectedHeroes.Select(hero => hero.HeroData).ToList();
+            //UIEventManager.RaiseHeroesUpdateRequested(selectedHeroesData);
         }
 
         // Enable or disable the battle button based on selection count

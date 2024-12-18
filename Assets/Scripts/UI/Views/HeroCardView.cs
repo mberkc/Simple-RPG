@@ -1,5 +1,6 @@
 ﻿using System;
 using Core;
+using Data.ScriptableObjects;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -15,21 +16,19 @@ namespace UI.Views
 
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private Button cardButton;
+        [SerializeField] private Image backgroundImage;
         [SerializeField] private Image selectionBorder;
-
-        internal string HeroName { get; private set; }
-        internal int Health { get; private set; }
-        internal int AttackPower { get; private set; }
+        
+        internal HeroData HeroData { get; private set; }
 
         private bool isSelected = false;
 
-        internal void Initialize(string heroName, int health, int attackPower)
+        internal void Initialize(HeroData heroData)
         {
-            HeroName = heroName;
-            Health = health;
-            AttackPower = attackPower;
+            HeroData = heroData;
 
-            nameText.text = HeroName;
+            backgroundImage.color = heroData.Color;
+            nameText.text = heroData.EntityName;
             SetSelected(false);
         }
 

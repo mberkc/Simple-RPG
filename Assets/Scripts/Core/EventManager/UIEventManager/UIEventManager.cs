@@ -1,19 +1,29 @@
 ﻿using System;
-using EventManager.Internal;
+using Core.EventManager.Internal;
 
-namespace EventManager.UIEventManager
+namespace Core.EventManager.UIEventManager
 {
     /// <summary>
     /// Event Manager for UI Assembly
     /// </summary>
     public static class UIEventManager
     {
-        public static Action RaiseBattleStartRequested => UIEventManagerInternal.RaiseBattleStartRequested;
+        #region Invokers
+        
+        public static Action RaiseBattleStartRequested => UIEventsInternal.RaiseBattleStartRequested;
+        
+        //public static Action RaiseHeroesUpdateRequested(List<HeroData> selectedHeroes) => UIEventsInternal.RaiseHeroesUpdateRequested;
 
+        #endregion
+
+        #region Listeners
+        
         public static event Action OnBattleSceneLoaded
         {
-            add => GameLogicEventManagerInternal.OnBattleSceneLoaded += value;
-            remove => GameLogicEventManagerInternal.OnBattleSceneLoaded -= value;
+            add => GameLogicEventsInternal.OnBattleSceneLoaded += value;
+            remove => GameLogicEventsInternal.OnBattleSceneLoaded -= value;
         }
+
+        #endregion
     }
 }

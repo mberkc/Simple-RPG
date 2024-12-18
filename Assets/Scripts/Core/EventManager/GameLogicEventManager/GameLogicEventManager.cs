@@ -1,19 +1,27 @@
 ﻿using System;
-using EventManager.Internal;
+using Core.EventManager.Internal;
 
-namespace EventManager.GameLogicEventManager
+namespace Core.EventManager.GameLogicEventManager
 {
     /// <summary>
     /// Event Manager for GameLogic Assembly
     /// </summary>
     public static class GameLogicEventManager
     {
-        public static Action BroadcastBattleSceneLoaded => GameLogicEventManagerInternal.BroadcastBattleSceneLoaded;
+        #region Invokers
 
+        public static Action BroadcastBattleSceneLoaded => GameLogicEventsInternal.BroadcastBattleSceneLoaded;
+
+        #endregion
+
+        #region Listeners
+        
         public static event Action OnBattleStartRequested
         {
-            add => UIEventManagerInternal.OnBattleStartRequested += value;
-            remove => UIEventManagerInternal.OnBattleStartRequested -= value;
+            add => UIEventsInternal.OnBattleStartRequested += value;
+            remove => UIEventsInternal.OnBattleStartRequested -= value;
         }
+
+        #endregion
     }
 }

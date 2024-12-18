@@ -3,9 +3,9 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("GameLogicEventManager")]
 [assembly: InternalsVisibleTo("UIEventManager")]
-namespace EventManager.Internal
+namespace Core.EventManager.Internal
 {
-    internal static class GameLogicEventManagerInternal
+    internal static class GameLogicEventsInternal
     {
         internal static event Action OnBattleSceneLoaded;
 
