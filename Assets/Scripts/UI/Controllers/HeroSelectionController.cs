@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Core;
+using EventManager.UIEventManager;
 using UI.Views;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace UI.Controllers
@@ -87,7 +87,8 @@ namespace UI.Controllers
 
         private static void BattleButtonClicked()
         {
-            SceneManager.LoadScene(Constants.BattleSceneIndex);
+            Debug.Log("Battle button clicked");
+            UIEventManager.RaiseBattleStartRequested?.Invoke();
         }
     }
 }

@@ -1,0 +1,4 @@
+{
+	"name": "GameLogicEventManager",
+	"references":[ "GUID:a4c74ff596c0c8c4d81e455c36bcaf1d" ]
+}

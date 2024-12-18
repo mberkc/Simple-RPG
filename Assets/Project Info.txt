@@ -7,4 +7,15 @@ Simple RPG
 - Custom Pointer Utility Assembly created: to handle pointer events of child
 PointerEventForwarder: forwards pointerevents to parent, assign this component to child object
 PointerEventForwarderTarget: parent should extend PointerEventForwarderTarget class
--
+-Assemblies:
+Core: Shared utilities, events, state
+
+Data: (Models) Represents game data
+
+GameLogic: Manages game flow and logic. Broadcasts results => UI listens and updates its views.
+
+UI: Raises events => GameLogic processes them.
+(Views) Displays data, user interface
+(Controller) Handles input, updates the view
+
+PointerEventUtility: 
