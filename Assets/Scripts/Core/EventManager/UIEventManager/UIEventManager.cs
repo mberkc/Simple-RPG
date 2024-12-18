@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Core.EventManager.Internal;
 
 namespace Core.EventManager.UIEventManager
@@ -12,7 +13,7 @@ namespace Core.EventManager.UIEventManager
         
         public static Action RaiseBattleStartRequested => UIEventsInternal.RaiseBattleStartRequested;
         
-        //public static Action RaiseHeroesUpdateRequested(List<HeroData> selectedHeroes) => UIEventsInternal.RaiseHeroesUpdateRequested;
+        public static Action RaiseHeroesUpdateRequested(List<int> heroIndexes) => () => UIEventsInternal.RaiseHeroesUpdateRequested(heroIndexes);
 
         #endregion
 

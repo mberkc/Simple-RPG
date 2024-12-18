@@ -12,6 +12,14 @@ namespace Core
         public const int EntityDefaultHealth = 100;
         public const int EntityDefaultAttackPower = 10;
 
+        #region Hero
+
+        public const int HeroLevelUpExperienceThreshold = 5;
+        public const float HeroLevelUpHealthModifier = 1.1f;
+        public const float HeroLevelUpAttackPowerModifier = 1.1f;
+
+        #endregion
+
         #endregion
 
         #region Animation

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("UIEventManager")]
@@ -8,16 +9,16 @@ namespace Core.EventManager.Internal
     internal static class UIEventsInternal
     {
         internal static event Action OnBattleStartRequested;
-        //internal static event Action<List<HeroData>> OnHeroesUpdateRequested;
+        internal static event Action<List<int>> OnHeroesUpdateRequested;
 
         internal static void RaiseBattleStartRequested()
         {
             OnBattleStartRequested?.Invoke();
         }
         
-        internal static void RaiseHeroesUpdateRequested()
+        internal static void RaiseHeroesUpdateRequested(List<int> heroIndexes)
         {
-            OnBattleStartRequested?.Invoke();
+            OnHeroesUpdateRequested?.Invoke(heroIndexes);
         }
     }
 }

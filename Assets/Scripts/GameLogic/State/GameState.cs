@@ -1,7 +1,7 @@
 ﻿using Core;
 using Data.ScriptableObjects;
 
-namespace GameLogic
+namespace GameLogic.State
 {
     public static class GameState
     {

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Core;
 using Core.EventManager.UIEventManager;
-using Data.ScriptableObjects;
+using Data;
 using UI.Views;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,35 +18,43 @@ namespace UI.Controllers
         [SerializeField] private HeroStatsView heroStatsView;
         [SerializeField] private Button battleButton;
 
-        private HeroCardView[] heroCards;
-        private List<HeroCardView> selectedHeroes = new List<HeroCardView>();
+        private List<HeroCardView> selectedHeroes = new ();
 
         private void Awake()
         {
-            InitializeHeroCards();
             UpdateBattleButton();
             battleButton.onClick.AddListener(BattleButtonClicked);
         }
-        
-        // Cache all hero cards under the hero grid
+
+        private void Start()
+        {
+            InitializeHeroCards();
+        }
+
         private void InitializeHeroCards()
         {
             var childCount = heroGrid.childCount;
-            heroCards = new HeroCardView[childCount];
+            if (childCount != Constants.TotalHeroes)
+            {
+                Debug.LogError($"Hero grid count mismatch! Please have {Constants.TotalHeroes} HeroCardView on {heroGrid.name}");
+                return;
+            }
+            
             for (var i = 0; i < childCount; i++)
             {
                 var heroCard = heroGrid.GetChild(i).GetComponent<HeroCardView>();
-                if (heroCard == null) continue;
+                if (heroCard == null)
+                {
+                    Debug.LogError($"Hero card view could not be found on {heroGrid.name} hero grid with child index: {i}");
+                    return;
+                }
                 
                 heroCard.OnHeroSelected += OnHeroSelected;
                 heroCard.OnHeroDeselected += OnHeroDeselected;
                 heroCard.OnHeroHold += OnHeroHold;
                 
-                // TODO: get from so pool
-                var heroData = ScriptableObject.CreateInstance<HeroData>();
-                //heroCard.Initialize($"Hero {i+1}", Constants.EntityDefaultHealth, Constants.EntityDefaultAttackPower);
+                var heroData = EntityDatabase.GetHeroByIndex(i);
                 heroCard.Initialize(heroData);
-                heroCards[i] = heroCard;
             }
         }
 
@@ -93,8 +101,8 @@ namespace UI.Controllers
 
         private void UpdateHeroSelection()
         {
-            var selectedHeroesData = selectedHeroes.Select(hero => hero.HeroData).ToList();
-            //UIEventManager.RaiseHeroesUpdateRequested(selectedHeroesData);
+            var heroIndexes = selectedHeroes.Select(hero => hero.HeroData.Index).ToList();
+            UIEventManager.RaiseHeroesUpdateRequested(heroIndexes);
         }
 
         // Enable or disable the battle button based on selection count

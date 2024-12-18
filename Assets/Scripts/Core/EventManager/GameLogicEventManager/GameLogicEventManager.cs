@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Core.EventManager.Internal;
 
 namespace Core.EventManager.GameLogicEventManager
@@ -20,6 +21,12 @@ namespace Core.EventManager.GameLogicEventManager
         {
             add => UIEventsInternal.OnBattleStartRequested += value;
             remove => UIEventsInternal.OnBattleStartRequested -= value;
+        }
+        
+        public static event Action<List<int>> OnHeroesUpdateRequested
+        {
+            add => UIEventsInternal.OnHeroesUpdateRequested += value;
+            remove => UIEventsInternal.OnHeroesUpdateRequested -= value;
         }
 
         #endregion

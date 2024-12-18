@@ -1,25 +1,33 @@
-﻿using Core.Initializable;
-using Data.ScriptableObjects;
+﻿using System.Collections.Generic;
+using Core.EventManager.GameLogicEventManager;
+using Core.Initializable;
+using Data;
 
-namespace GameLogic
+namespace GameLogic.State
 {
     public class StateManager : Initializable
     {
         protected override void SubscribeEvents()
         {
-            //GameLogicEventManager.OnHeroesUpdateRequested += UpdateSelectedHeroes;
+            GameLogicEventManager.OnHeroesUpdateRequested += UpdateSelectedHeroes;
         }
 
         protected override void UnSubscribeEvents()
         {
-            //GameLogicEventManager.OnHeroesUpdateRequested -= UpdateSelectedHeroes;
+            GameLogicEventManager.OnHeroesUpdateRequested -= UpdateSelectedHeroes;
         }
 
-        private static void UpdateSelectedHeroes(HeroData[] heroes)
+        private static void UpdateSelectedHeroes(List<int> selectedHeroIndexes)
         {
             //if (heroes is not { Length: Constants.MaxSelectedHeroes }) return;
 
-            GameState.SelectedHeroes = heroes;
+            var amount = selectedHeroIndexes.Count;
+            for (var i = 0; i < amount; i++)
+            {
+                var heroData = EntityDatabase.GetHeroByIndex(selectedHeroIndexes[i]);
+                if(heroData != null)
+                    GameState.SelectedHeroes[i] = heroData;
+            }
         }
     }
 }

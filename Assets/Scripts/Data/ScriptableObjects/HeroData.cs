@@ -1,20 +1,22 @@
-﻿using UnityEngine;
+﻿using Core;
+using UnityEngine;
 
 namespace Data.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "NewHero", menuName = "Game/Hero")]
     public class HeroData : EntityData
     {
-        [SerializeField] private float experience = 0;
+        [SerializeField] private int experience = 0;
         [SerializeField] private float level = 1;
 
-        public float Experience => experience;
+        public int Experience => experience;
         
         public float Level => level;
 
-        public void GainExperience()
+        public void GainExperience(int amount)
         {
-            if(++experience < 5)
+            experience += amount;
+            if(experience < Constants.HeroLevelUpExperienceThreshold)
                 return;
             
             LevelUp();
@@ -23,9 +25,11 @@ namespace Data.ScriptableObjects
         private void LevelUp()
         {
             level++;
-            experience = 0;
-            Health *= 1.1f;
-            AttackPower *= 1.1f;
+            experience -= Constants.HeroLevelUpExperienceThreshold;
+            Health *= Constants.HeroLevelUpHealthModifier;
+            AttackPower *= Constants.HeroLevelUpAttackPowerModifier;
+            
+            // Notify
         }
     }
 }
