@@ -6,11 +6,14 @@ namespace Data.ScriptableObjects
 {
     public abstract class EntityData : ScriptableObject
     {
+        [SerializeField] private string id;
+        [SerializeField] private int index;
         [SerializeField] private string entityName = "Entity";
         [SerializeField] private Color color;
         [SerializeField] private float health = Constants.EntityDefaultHealth;
         [SerializeField] private float attackPower = Constants.EntityDefaultAttackPower;
-        
+        public string Id => id;
+        public int Index => index;
         public string EntityName => entityName;
         public Color Color => color;
 

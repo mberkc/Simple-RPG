@@ -333,6 +333,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64cee98696624a878f0e706fe6b22909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heroes:
+  - {fileID: 11400000, guid: 4ed98bea3f82e9644b69ee4d2ce43aac, type: 2}
+  enemies:
+  - {fileID: 11400000, guid: 2b237825d191d1440b3bb03b64f7fa25, type: 2}
 --- !u!4 &1073422820
 Transform:
   m_ObjectHideFlags: 0

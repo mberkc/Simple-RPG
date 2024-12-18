@@ -3,6 +3,9 @@ namespace Core
     public static class Constants
     {
         public const int MaxSelectedHeroes = 3;
+        public const int TotalHeroes = 10;
+        public const int TotalEnemies = 15;
+        public const int TotalLevels = 15;
 
         #region Entity
         
