@@ -1,22 +1,30 @@
 ﻿using Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
 
 namespace GameLogic
 {
     public static class SceneLoader
     {
-        public static void LoadBattleScene()
+        public static async Task LoadBattleSceneAsync()
         {
             // Additional game logic before scene transition (if needed)
             Debug.Log("Loading Battle Scene...");
-            SceneManager.LoadScene(Constants.BattleSceneIndex);
+            var task = SceneManager.LoadSceneAsync(Constants.BattleSceneIndex);
+            while (task is { isDone: false })
+                await Task.Yield();
+            Debug.Log("Battle Scene Loaded!");
         }
 
-        public static void LoadHeroSelectionScene()
+        public static async Task LoadHeroSelectionScene()
         {
+            // Additional game logic before scene transition (if needed)
             Debug.Log("Loading Hero Selection Scene...");
-            SceneManager.LoadScene(Constants.HeroSelectionSceneIndex);
+            var task = SceneManager.LoadSceneAsync(Constants.HeroSelectionSceneIndex);
+            while (task is { isDone: false })
+                await Task.Yield();
+            Debug.Log("Hero Selection Scene Loaded!");
         }
     }
 }
