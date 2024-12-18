@@ -1,17 +1,34 @@
-﻿using Data.ScriptableObjects;
+﻿using Core.Initializable;
+using Data.ScriptableObjects;
+using EventManager.GameLogicEventManager;
+using UnityEngine;
+
 
 namespace GameLogic
 {
-    public static class GameFlowManager
+    public class GameFlowManager : Initializable
     {
-        public static void StartBattle(HeroData[] selectedHeroes, EnemyData enemyToFace)
+        protected override void SubscribeEvents()
         {
+            GameLogicEventManager.OnBattleStartRequested += StartBattle;
+        }
+
+        protected override void UnSubscribeEvents()
+        { 
+            GameLogicEventManager.OnBattleStartRequested += StartBattle;
+        }
+
+        private async void StartBattle()
+        {
+            HeroData[] selectedHeroes = null;
+            EnemyData enemyToFace = null;
             // Update GameState with selected heroes & enemy to face
             GameState.SelectedHeroes = selectedHeroes;
             GameState.EnemyToFace = enemyToFace;
-
             // Load the Battle Scene
-            SceneLoader.LoadBattleScene();
+            await SceneLoader.LoadBattleSceneAsync();
+            Debug.Log("Load Task Completed");
+            GameLogicEventManager.BroadcastBattleSceneLoaded?.Invoke();
         }
     }
 }
