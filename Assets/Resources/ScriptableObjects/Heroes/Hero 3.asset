@@ -15,8 +15,8 @@ MonoBehaviour:
   id: 4cYgzdaGnV
   index: 2
   entityName: Hero 3
-  color: {r: 0.001515327, g: 0.66040546, b: 0.4816823, a: 1}
-  health: 100
-  attackPower: 10
+  color: {r: 0, g: 0.37531945, b: 0.3764706, a: 1}
+  health: 110
+  attackPower: 9
   experience: 0
   level: 1

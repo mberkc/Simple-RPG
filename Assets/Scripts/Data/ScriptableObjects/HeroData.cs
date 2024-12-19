@@ -51,7 +51,7 @@ namespace Data.ScriptableObjects
 
         private void AssignSequentialIndexAndName(string baseName)
         {
-            if (this.index != 0 || Application.isPlaying) return;
+            if (this.index != -1 || Application.isPlaying) return;
             
             var path = AssetDatabase.GetAssetPath(this);
             var folder = System.IO.Path.GetDirectoryName(path);

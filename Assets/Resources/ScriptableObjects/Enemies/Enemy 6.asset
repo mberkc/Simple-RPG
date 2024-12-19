@@ -15,6 +15,6 @@ MonoBehaviour:
   id: kLDluvAv6h
   index: 5
   entityName: Enemy 6
-  color: {r: 0.061224326, g: 0.059811834, b: 0.06335474, a: 1}
-  health: 100
-  attackPower: 10
+  color: {r: 0.7987421, g: 0.19842951, b: 0.7987421, a: 1}
+  health: 300
+  attackPower: 15

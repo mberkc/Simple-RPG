@@ -15,7 +15,6 @@ namespace UI.Views
         internal event Action<HeroCardView> OnHeroSelected, OnHeroDeselected, OnHeroHold;
 
         [SerializeField] private TextMeshProUGUI nameText;
-        [SerializeField] private Button cardButton;
         [SerializeField] private Image backgroundImage;
         [SerializeField] private Image selectionBorder;
         
@@ -37,7 +36,7 @@ namespace UI.Views
             isSelected = selected;
             
             selectionBorder.DOKill(true);
-            selectionBorder.DOFade(selected ? 1f : 0f, Constants.NormalAnimationSpeed);
+            selectionBorder.DOFade(selected ? 1f : 0f, Constants.FastAnimationSpeed);
         }
 
         public override void OnPointerDown(PointerEventData eventData)

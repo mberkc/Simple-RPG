@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: ECNFLGxdbD
   index: 0
-  entityName: 
+  entityName: Enemy 1
   color: {r: 0.3385891, g: 0.13889319, b: 0.32497534, a: 1}
   health: 100
   attackPower: 10

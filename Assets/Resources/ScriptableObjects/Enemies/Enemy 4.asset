@@ -15,6 +15,6 @@ MonoBehaviour:
   id: DYvtPjkjNM
   index: 3
   entityName: Enemy 4
-  color: {r: 0.48636895, g: 0.48924667, b: 0.48509845, a: 1}
-  health: 100
-  attackPower: 10
+  color: {r: 0.38364768, g: 0.25214577, b: 0.28091183, a: 1}
+  health: 80
+  attackPower: 50

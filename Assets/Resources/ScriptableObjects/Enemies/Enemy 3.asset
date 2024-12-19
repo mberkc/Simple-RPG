@@ -15,6 +15,6 @@ MonoBehaviour:
   id: lIl6JEKlmk
   index: 2
   entityName: Enemy 3
-  color: {r: 0.03818877, g: 0.087739475, b: 0.030221773, a: 1}
-  health: 100
-  attackPower: 10
+  color: {r: 0.16375922, g: 0.44025147, b: 0.117677204, a: 1}
+  health: 150
+  attackPower: 15

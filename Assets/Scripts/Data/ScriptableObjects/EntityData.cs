@@ -8,7 +8,7 @@ namespace Data.ScriptableObjects
     public abstract class EntityData : ScriptableObject
     {
         [SerializeField] private string id;
-        [SerializeField] protected int index;
+        [SerializeField] protected int index = -1;
         [SerializeField] private string entityName;
         [SerializeField] private Color color;
         [SerializeField] private float health = Constants.EntityDefaultHealth;
