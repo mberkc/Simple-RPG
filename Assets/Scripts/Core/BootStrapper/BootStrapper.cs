@@ -15,10 +15,5 @@ namespace Core.BootStrapper
         public abstract void Initialize();
 
         protected abstract void Awake();
-        
-        /// <summary>
-        /// Override for Start Behavior
-        /// </summary>
-        protected abstract void Start();
     }
 }

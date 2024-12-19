@@ -40,12 +40,14 @@ namespace BootStrappers
                 if(!InitializeEntityResources()) return;
             
                 InitializeManagerAndInjectDependencies(progressionService);
-                
+
                 Debug.Log("Main BootStrapper initialized!");
+                InitializationCompletionSource.TrySetResult(true);
             }
             catch (Exception e)
             {
                 Debug.LogError($"Main BootStrapper initialization failed! Exception: {e.Message}");
+                InitializationCompletionSource.TrySetException(e);
             }
         }
 

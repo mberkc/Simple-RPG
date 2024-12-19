@@ -7,17 +7,12 @@ namespace BootStrappers
     {
         [SerializeField] private GameObject heroSelectionCanvasPrefab;
 
-        public override void Initialize()
+        protected override void InitializeScene()
         {
             if (heroSelectionCanvasPrefab != null)
             {
                 Instantiate(heroSelectionCanvasPrefab, transform);
             }
-        }
-        
-        protected override void Start()
-        {
-            // Start Behavior
         }
 
         public override void OnDestroy()

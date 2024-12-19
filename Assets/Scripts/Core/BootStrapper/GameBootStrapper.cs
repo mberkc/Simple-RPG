@@ -1,22 +1,28 @@
 using System;
+using System.Threading.Tasks;
 
 namespace Core.BootStrapper
 {
     /// <summary>
-    /// Game Bootstrapper exists forever.
+    /// Initializes & manages the game. Game Bootstrapper exists forever.
     /// </summary>
     public abstract class GameBootStrapper : BootStrapper
     {
-        private static GameBootStrapper _instance;
+        public static GameBootStrapper Instance;
+        
+        public bool IsInitialized => InitializationCompletionSource.Task.IsCompletedSuccessfully;
+        public Task InitializationTask => InitializationCompletionSource.Task;
+        protected readonly TaskCompletionSource<bool> InitializationCompletionSource = new();
+
 
         /// <summary>
         /// Don't override if it's not required!
         /// </summary>
         protected override void Awake()
         {
-            if (_instance == null)
+            if (Instance == null)
             {
-                _instance = this;
+                Instance = this;
                 DontDestroyOnLoad(gameObject);
             }
             else
@@ -26,11 +32,6 @@ namespace Core.BootStrapper
             }
 
             Initialize();
-        }
-        
-        protected override void Start()
-        {
-            // Define Start Behavior on subclass
         }
 
         public override void Initialize()
