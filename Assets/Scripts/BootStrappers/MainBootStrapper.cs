@@ -39,7 +39,7 @@ namespace BootStrappers
                 
                 if(!InitializeEntityResources()) return;
             
-                InitializeManagerAndInjectDependencies(progressionService);
+                InitializeManagersAndInjectDependencies(progressionService);
 
                 Debug.Log("Main BootStrapper initialized!");
                 InitializationCompletionSource.TrySetResult(true);
@@ -110,7 +110,7 @@ namespace BootStrappers
             return false;
         }
 
-        private void InitializeManagerAndInjectDependencies(ProgressionService progressionService)
+        private void InitializeManagersAndInjectDependencies(ProgressionService progressionService)
         {
             new StateManager().Initialize(progressionService);
             new GameFlowManager().Initialize(progressionService);

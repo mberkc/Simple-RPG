@@ -3,6 +3,7 @@ using System.Linq;
 using Core;
 using Core.EventManager.UIEventManager;
 using Data;
+using TMPro;
 using UI.Views;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,18 +11,20 @@ using UnityEngine.UI;
 namespace UI.Controllers
 {
     /// <summary>
-    /// Manages the hero grid and handles user interactions.
+    /// Manages hero selection scene and handles user interactions.
     /// </summary>
-    public class HeroSelectionController : MonoBehaviour
+    public class HeroSelectionSceneController : MonoBehaviour
     {
         [SerializeField] private Transform heroGrid;
         [SerializeField] private HeroStatsView heroStatsView;
         [SerializeField] private Button battleButton;
+        [SerializeField] private TextMeshProUGUI levelText;
 
         private List<HeroCardView> selectedHeroes = new ();
 
         private void Awake()
         {
+            UpdateLevelText();
             UpdateBattleButton();
             battleButton.onClick.AddListener(BattleButtonClicked);
             InitializeHeroCards();
@@ -102,6 +105,12 @@ namespace UI.Controllers
         {
             var heroIndexes = selectedHeroes.Select(hero => hero.HeroData.Index).ToList();
             UIEventManager.RaiseHeroesUpdateRequested(heroIndexes)?.Invoke();
+        }
+
+        private void UpdateLevelText()
+        {
+            // TODO
+            //levelText.text = $"Level: {GameState.Level}";
         }
 
         private void UpdateBattleButton()
