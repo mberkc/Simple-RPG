@@ -24,10 +24,6 @@ namespace UI.Controllers
         {
             UpdateBattleButton();
             battleButton.onClick.AddListener(BattleButtonClicked);
-        }
-
-        private void Start()
-        {
             InitializeHeroCards();
         }
 
@@ -105,17 +101,23 @@ namespace UI.Controllers
         private void UpdateHeroSelection()
         {
             var heroIndexes = selectedHeroes.Select(hero => hero.HeroData.Index).ToList();
-            UIEventManager.RaiseHeroesUpdateRequested(heroIndexes);
+            UIEventManager.RaiseHeroesUpdateRequested(heroIndexes)?.Invoke();
         }
 
-        // Enable or disable the battle button based on selection count
         private void UpdateBattleButton()
         {
             battleButton.interactable = selectedHeroes.Count == Constants.MaxSelectedHeroes;
         }
 
-        private static void BattleButtonClicked()
+        private void BattleButtonClicked()
         {
+            // Extra check
+            if(selectedHeroes.Count != Constants.MaxSelectedHeroes)
+            {
+                UpdateBattleButton();
+                return;
+            }
+            
             Debug.Log("Battle button clicked");
             UIEventManager.RaiseBattleStartRequested?.Invoke();
         }

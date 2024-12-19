@@ -24,6 +24,12 @@ namespace Core.EventManager.UIEventManager
             add => GameLogicEventsInternal.OnBattleSceneLoaded += value;
             remove => GameLogicEventsInternal.OnBattleSceneLoaded -= value;
         }
+        
+        public static event Action OnHeroSelectionSceneLoaded
+        {
+            add => GameLogicEventsInternal.OnHeroSelectionSceneLoaded += value;
+            remove => GameLogicEventsInternal.OnHeroSelectionSceneLoaded -= value;
+        }
 
         #endregion
     }

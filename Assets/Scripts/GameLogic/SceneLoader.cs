@@ -17,7 +17,7 @@ namespace GameLogic
             Debug.Log("Battle Scene Loaded!");
         }
 
-        public static async Task LoadHeroSelectionScene()
+        public static async Task LoadHeroSelectionSceneAsync()
         {
             // Additional game logic before scene transition (if needed)
             Debug.Log("Loading Hero Selection Scene...");

@@ -17,10 +17,9 @@ namespace GameLogic.State
             GameLogicEventManager.OnHeroesUpdateRequested -= UpdateSelectedHeroes;
         }
 
-        private static void UpdateSelectedHeroes(List<int> selectedHeroIndexes)
+        private void UpdateSelectedHeroes(List<int> selectedHeroIndexes)
         {
-            //if (heroes is not { Length: Constants.MaxSelectedHeroes }) return;
-
+            progressionService.SaveSelectedHeroes(selectedHeroIndexes);
             var amount = selectedHeroIndexes.Count;
             for (var i = 0; i < amount; i++)
             {

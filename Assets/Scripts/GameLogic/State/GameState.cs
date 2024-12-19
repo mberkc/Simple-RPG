@@ -7,5 +7,6 @@ namespace GameLogic.State
     {
         public static HeroData[] SelectedHeroes = new HeroData[Constants.MaxSelectedHeroes];
         public static EnemyData EnemyToFace;
+        public static int CurrentLevel;
     }
 }

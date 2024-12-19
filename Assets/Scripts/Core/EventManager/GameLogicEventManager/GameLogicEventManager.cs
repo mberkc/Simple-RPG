@@ -12,6 +12,7 @@ namespace Core.EventManager.GameLogicEventManager
         #region Invokers
 
         public static Action BroadcastBattleSceneLoaded => GameLogicEventsInternal.BroadcastBattleSceneLoaded;
+        public static Action BroadcastHeroSelectionSceneLoaded => GameLogicEventsInternal.BroadcastHeroSelectionSceneLoaded;
 
         #endregion
 

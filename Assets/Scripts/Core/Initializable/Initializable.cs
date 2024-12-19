@@ -1,18 +1,21 @@
-﻿using UnityEngine;
+﻿using Core.Progression;
+using UnityEngine;
 
 namespace Core.Initializable
 {
     public abstract class Initializable : IInitializable
     {
+        protected ProgressionService progressionService;
         private bool isInitialized = false;
         
-        public void Initialize()
+        public void Initialize(ProgressionService progressionService)
         {
             if (isInitialized) return;
             
             isInitialized = true;
+            this.progressionService = progressionService;
             SubscribeEvents();
-            Debug.Log("Initializable initialized.");
+            Debug.Log($"Initializable: {GetType()}  initialized.");
         }
 
         public void Cleanup()
@@ -20,8 +23,9 @@ namespace Core.Initializable
             if (!isInitialized) return;
             
             isInitialized = false;
+            progressionService = null;
             UnSubscribeEvents();
-            Debug.Log("Initializable cleaned up.");
+            Debug.Log($"Initializable: {GetType()} cleaned up.");
         }
 
         protected abstract void SubscribeEvents();

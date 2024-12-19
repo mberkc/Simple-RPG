@@ -1,4 +1,5 @@
-﻿using Data.ScriptableObjects;
+﻿using Data;
+using Data.ScriptableObjects;
 
 namespace GameLogic
 {
@@ -6,9 +7,8 @@ namespace GameLogic
     {
         public static EnemyData GetEnemyForLevel(int level)
         {
-            // Example: Fetch an enemy based on the level
-            //return EnemyDatabase.GetEnemyByLevel(level); // Assume EnemyDatabase handles enemy data
-            return null;
+            // related to index => level-1 because level starts from 1
+            return EntityDatabase.GetEnemyByIndex(level-1);
         }
     }
 }
