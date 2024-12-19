@@ -24,7 +24,8 @@ namespace Core.BootStrapper
         {
             try
             {
-                await WaitGameBootstrapperInitialization();
+                if(!await WaitGameBootstrapperInitialization()) return;
+                
                 InitializeScene();
                 Debug.Log($"{GetType()} initialized!");
             }
@@ -34,13 +35,13 @@ namespace Core.BootStrapper
             }
         }
         
-        private async Task WaitGameBootstrapperInitialization()
+        private async Task<bool> WaitGameBootstrapperInitialization()
         {
             var gameBootStrapper = GameBootStrapper.Instance;
             if(gameBootStrapper == null)
             {
-                Debug.LogError("GameBootStrapper doesn't exist!");
-                return;
+                Debug.LogError("GameBootStrapper doesn't exist! Add it to the scene!");
+                return false;
             }
 
             if (!gameBootStrapper.IsInitialized)
@@ -48,6 +49,8 @@ namespace Core.BootStrapper
                 Debug.Log("Waiting for GameBootStrapper initialization...");
                 await gameBootStrapper.InitializationTask;
             }
+
+            return true;
         }
         
         protected abstract void InitializeScene();
