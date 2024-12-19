@@ -10,10 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b182d518d5ac47c0a93321c2f7d8d493, type: 3}
-  m_Name: NewHero
+  m_Name: Hero 3
   m_EditorClassIdentifier: 
-  entityName: TestHero
-  color: {r: 0.40116674, g: 0.36002475, b: 0.40828615, a: 1}
+  id: 4cYgzdaGnV
+  index: 2
+  entityName: Hero 3
+  color: {r: 0.001515327, g: 0.66040546, b: 0.4816823, a: 1}
   health: 100
   attackPower: 10
   experience: 0

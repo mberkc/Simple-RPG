@@ -334,9 +334,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heroes:
-  - {fileID: 11400000, guid: 4ed98bea3f82e9644b69ee4d2ce43aac, type: 2}
+  - {fileID: 11400000, guid: f23742e2b86e7184f839fd9091b9b5aa, type: 2}
+  - {fileID: 11400000, guid: 6508dcc455486f242888aaf9d651a5c7, type: 2}
+  - {fileID: 11400000, guid: d5af12f44e49e154db3732b0084b5a70, type: 2}
+  - {fileID: 11400000, guid: 483f1e4ad0140b846984ad3bbbfd9e62, type: 2}
+  - {fileID: 11400000, guid: 97922d00005925b4b8521743f950f950, type: 2}
+  - {fileID: 11400000, guid: 63c82c14a1256fe42a902dceba673c2c, type: 2}
+  - {fileID: 11400000, guid: f3e07f2816c558348ba87c4f07075e0c, type: 2}
+  - {fileID: 11400000, guid: 8b648db02a90a844fa9b107c17526883, type: 2}
+  - {fileID: 11400000, guid: 1ef8c7de712b30d459361ca135bb9bdb, type: 2}
+  - {fileID: 11400000, guid: cd91919ad3f98d94faff2e5540882028, type: 2}
   enemies:
-  - {fileID: 11400000, guid: 2b237825d191d1440b3bb03b64f7fa25, type: 2}
+  - {fileID: 11400000, guid: 50b4bdfb292d3f040901395066ec41d6, type: 2}
+  - {fileID: 11400000, guid: ef00eaff7c10b614b84e714c8eb116bf, type: 2}
+  - {fileID: 11400000, guid: 680cbc9914f5c1946a226ceb6ce56120, type: 2}
+  - {fileID: 11400000, guid: c6801ae8e0b19394baee70a60af3c721, type: 2}
+  - {fileID: 11400000, guid: 536e3fd8690cec04aa3797c7f7c5df61, type: 2}
+  - {fileID: 11400000, guid: fd4f8a2c999d5884aabf91a90a26f9cc, type: 2}
+  - {fileID: 11400000, guid: 6828932ef18e42b44974ec91b2781e31, type: 2}
+  - {fileID: 11400000, guid: 2ad7ba60848d2cd4884fd9c800d83c79, type: 2}
+  - {fileID: 11400000, guid: 139400eec3c249e4da66362a6b2dbda3, type: 2}
+  - {fileID: 11400000, guid: 8b7474589784821408305d115754ab73, type: 2}
+  - {fileID: 11400000, guid: 34e6b112e58986944b05fb53c3fcdd78, type: 2}
+  - {fileID: 11400000, guid: 7caf8febd953a1241a83464433d9079c, type: 2}
+  - {fileID: 11400000, guid: e2c7caa31929c8345a798530857b7311, type: 2}
+  - {fileID: 11400000, guid: 83c0697abb46aed4a86ecbb8e2fb588a, type: 2}
+  - {fileID: 11400000, guid: c8e3bbf65cf007b4dac2eec53ecb7e2e, type: 2}
 --- !u!4 &1073422820
 Transform:
   m_ObjectHideFlags: 0
