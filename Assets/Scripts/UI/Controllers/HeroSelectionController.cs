@@ -55,6 +55,9 @@ namespace UI.Controllers
                 
                 var heroData = EntityDatabase.GetHeroByIndex(i);
                 heroCard.Initialize(heroData);
+                var selected = i is 0 or 1 or 2; // TODO: get selected data from save file?
+                if (selected)
+                    OnHeroSelected(heroCard);
             }
         }
 

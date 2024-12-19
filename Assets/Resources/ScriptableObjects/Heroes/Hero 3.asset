@@ -18,5 +18,6 @@ MonoBehaviour:
   color: {r: 0, g: 0.37531945, b: 0.3764706, a: 1}
   health: 110
   attackPower: 9
+  unlocked: 1
   experience: 0
   level: 1

@@ -17,10 +17,12 @@ namespace UI.Views
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private Image backgroundImage;
         [SerializeField] private Image selectionBorder;
+        [SerializeField] private GameObject lockedVisual;
         
         internal HeroData HeroData { get; private set; }
 
         private bool isSelected = false;
+        private bool unlocked = false;
 
         internal void Initialize(HeroData heroData)
         {
@@ -28,15 +30,21 @@ namespace UI.Views
 
             backgroundImage.color = heroData.Color;
             nameText.text = heroData.EntityName;
-            SetSelected(false);
+            //SetSelected(selected);
+            SetUnlocked(heroData.Unlocked);
         }
 
         internal void SetSelected(bool selected)
         {
             isSelected = selected;
-            
             selectionBorder.DOKill(true);
             selectionBorder.DOFade(selected ? 1f : 0f, Constants.FastAnimationSpeed);
+        }
+        
+        private void SetUnlocked(bool unlocked)
+        {
+            this.unlocked = unlocked;
+            lockedVisual.SetActive(!unlocked);
         }
 
         public override void OnPointerDown(PointerEventData eventData)
@@ -57,6 +65,8 @@ namespace UI.Views
         
         private void OnCardClicked()
         {
+            if(!unlocked) return;
+            
             if (isSelected)
                 OnHeroDeselected?.Invoke(this);
             else

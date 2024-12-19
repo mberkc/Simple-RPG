@@ -7,12 +7,27 @@ namespace Data.ScriptableObjects
     [CreateAssetMenu(fileName = "NewHero", menuName = "Game/Hero")]
     public class HeroData : EntityData
     {
+        [SerializeField] private bool unlocked;
         [SerializeField] private int experience = 0;
         [SerializeField] private float level = 1;
 
+        public bool Unlocked => unlocked;
+        
         public int Experience => experience;
         
         public float Level => level;
+        
+        /// <summary>
+        /// Returns false if unlocked already
+        /// </summary>
+        /// <returns></returns>
+        public bool Unlock()
+        {
+            if(!unlocked) return false;
+            
+            unlocked = true;
+            return true;
+        }
 
         public void GainExperience(int amount)
         {
