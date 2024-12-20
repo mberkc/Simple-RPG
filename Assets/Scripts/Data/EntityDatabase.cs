@@ -7,6 +7,9 @@ using UnityEngine;
 [assembly: InternalsVisibleTo("BootStrappers")]
 namespace Data
 {
+    /// <summary>
+    /// Obsolete Class
+    /// </summary>
     public static class EntityDatabase
     {
         // ConcurrentDictionary can be used for thread-safety

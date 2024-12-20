@@ -1,4 +1,5 @@
 ﻿using Core.BootStrapper;
+using UI.Controllers;
 using UnityEngine;
 
 namespace BootStrappers
@@ -9,10 +10,13 @@ namespace BootStrappers
 
         protected override void InitializeScene()
         {
-            if (heroSelectionCanvasPrefab != null)
-            {
-                Instantiate(heroSelectionCanvasPrefab, transform);
-            }
+            if (heroSelectionCanvasPrefab == null) return;
+            
+            var mainBootStrapper = GameBootStrapper as MainBootStrapper;
+            var gameState = mainBootStrapper.GetGameState();
+            var entityService = mainBootStrapper.GetEntityService();
+            var heroSelectionSceneController = Instantiate(heroSelectionCanvasPrefab, transform).GetComponent<HeroSelectionSceneController>();
+            heroSelectionSceneController.Initialize(gameState, entityService);
         }
 
         public override void OnDestroy()

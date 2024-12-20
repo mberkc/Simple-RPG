@@ -13,7 +13,7 @@ namespace UI.Controllers
     /// <summary>
     /// Manages hero selection scene and handles user interactions.
     /// </summary>
-    public class HeroSelectionSceneController : MonoBehaviour
+    public class HeroSelectionSceneController : SceneController
     {
         [SerializeField] private Transform heroGrid;
         [SerializeField] private HeroStatsView heroStatsView;
@@ -22,15 +22,15 @@ namespace UI.Controllers
 
         private List<HeroCardView> selectedHeroes = new ();
 
-        private void Awake()
+        public override void Initialize(GameState gameState, EntityService entityService)
         {
-            UpdateLevelText();
-            UpdateBattleButton();
+            UpdateLevelText(gameState.CurrentLevel);
             battleButton.onClick.AddListener(BattleButtonClicked);
-            InitializeHeroCards();
+            InitializeHeroCards(gameState.SelectedHeroIndexes, entityService);
+            UpdateBattleButton();
         }
 
-        private void InitializeHeroCards()
+        private void InitializeHeroCards(List<int> selectedHeroIndexes, EntityService entityService)
         {
             var childCount = heroGrid.childCount;
             if (childCount != Constants.TotalHeroes)
@@ -51,12 +51,12 @@ namespace UI.Controllers
                 heroCard.OnHeroSelected += OnHeroSelected;
                 heroCard.OnHeroDeselected += OnHeroDeselected;
                 heroCard.OnHeroHold += OnHeroHold;
-                
-                var heroData = EntityDatabase.GetHeroByIndex(i);
-                heroCard.Initialize(heroData);
-                var selected = i is 0 or 1 or 2; // TODO: get selected data from save file?
-                if (selected)
-                    OnHeroSelected(heroCard);
+    
+                var heroData = entityService.GetHeroByIndex(i);
+                var isSelected = selectedHeroIndexes.Contains(i);
+                heroCard.Initialize(heroData, isSelected);
+                if(isSelected)
+                    selectedHeroes.Add(heroCard);
             }
         }
 
@@ -107,10 +107,9 @@ namespace UI.Controllers
             UIEventManager.RaiseHeroesUpdateRequested(heroIndexes)?.Invoke();
         }
 
-        private void UpdateLevelText()
+        private void UpdateLevelText(int level)
         {
-            // TODO
-            //levelText.text = $"Level: {GameState.Level}";
+            levelText.text = $"Level: {level}";
         }
 
         private void UpdateBattleButton()

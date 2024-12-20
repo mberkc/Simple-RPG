@@ -1,4 +1,6 @@
 ﻿using Core.BootStrapper;
+using GameLogic;
+using UI.Controllers;
 using UnityEngine;
 
 namespace BootStrappers
@@ -9,10 +11,17 @@ namespace BootStrappers
         
         protected override void InitializeScene()
         {
-            if (battleCanvasPrefab != null)
-            {
-                Instantiate(battleCanvasPrefab, transform);
-            }
+            if (battleCanvasPrefab == null) return;
+            
+            var mainBootStrapper = GameBootStrapper as MainBootStrapper;
+            var gameState = mainBootStrapper.GetGameState();
+            var entityService = mainBootStrapper.GetEntityService();
+            
+            var battleManager = new BattleManager();
+            battleManager.Initialize(gameState, entityService);
+
+            var battleSceneController = Instantiate(battleCanvasPrefab, transform).GetComponent<BattleSceneController>();
+            battleSceneController.Initialize(gameState, entityService);
         }
 
         public override void OnDestroy()

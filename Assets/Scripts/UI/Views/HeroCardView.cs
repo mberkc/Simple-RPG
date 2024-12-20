@@ -24,13 +24,13 @@ namespace UI.Views
         private bool isSelected = false;
         private bool unlocked = false;
 
-        internal void Initialize(HeroData heroData)
+        internal void Initialize(HeroData heroData, bool selected)
         {
             HeroData = heroData;
 
             backgroundImage.color = heroData.Color;
             nameText.text = heroData.EntityName;
-            //SetSelected(selected);
+            SetSelected(selected);
             SetUnlocked(heroData.Unlocked);
         }
 

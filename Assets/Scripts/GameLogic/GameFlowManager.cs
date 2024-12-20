@@ -1,23 +1,37 @@
 ﻿using System;
 using Core;
 using Core.EventManager.GameLogicEventManager;
-using Core.Initializable;
-using GameLogic.State;
 using UnityEngine;
 
 
 namespace GameLogic
 {
-    public class GameFlowManager : Initializable
+    public class GameFlowManager
     {
-        protected override void SubscribeEvents()
+        private readonly GameStateManager _gameStateManager;
+        private readonly SceneTransitionManager _sceneTransitionManager;
+        
+        public GameFlowManager(GameStateManager gameStateManager, SceneTransitionManager sceneTransitionManager)
+        {
+            _gameStateManager = gameStateManager;
+            _sceneTransitionManager = sceneTransitionManager;
+
+            SubscribeEvents();
+        }
+        
+        public void Cleanup()
+        {
+            UnSubscribeEvents();
+        }
+        
+        private void SubscribeEvents()
         {
             GameLogicEventManager.OnBattleStartRequested += StartBattle;
         }
 
-        protected override void UnSubscribeEvents()
+        private void UnSubscribeEvents()
         { 
-            GameLogicEventManager.OnBattleStartRequested += StartBattle;
+            GameLogicEventManager.OnBattleStartRequested -= StartBattle;
         }
         
         // TODO: Use LevelService & EnemySelector?
@@ -26,16 +40,13 @@ namespace GameLogic
         {
             try
             {
-                var heroes = GameState.SelectedHeroes;
-                if(heroes is not { Length: Constants.MaxSelectedHeroes }) return;
+                var selectedHeroes = _gameStateManager.SelectedHeroIndexes;
+                if (selectedHeroes.Count != Constants.MaxSelectedHeroes) return;
 
-                var currentLevel = progressionService.GetCurrentLevel();
-                GameState.CurrentLevel = currentLevel;
-                GameState.EnemyToFace = EnemySelector.GetEnemyForLevel(currentLevel);
-            
-                // Load the Battle Scene
-                await SceneLoader.LoadBattleSceneAsync();
-                GameLogicEventManager.BroadcastBattleSceneLoaded?.Invoke();
+                var currentLevel = _gameStateManager.CurrentLevel;
+                // TODO Get current enemy index?
+                
+                await _sceneTransitionManager.LoadSceneAsync(Constants.BattleSceneIndex/*, postLoad: GameLogicEventManager.BroadcastBattleSceneLoaded*/);
             }
             catch (Exception e)
             {
@@ -49,8 +60,7 @@ namespace GameLogic
             {
                 if (success)
                 {
-                    // TODO: Update Hero Exp
-                    progressionService.SaveCurrentLevel(++GameState.CurrentLevel);
+                    HandleBattleWon();
                 }
                 
                 // TODO: Check Hero Unlock
@@ -63,6 +73,13 @@ namespace GameLogic
             {
                 Debug.LogError($"FinishBattle failed! Exception: {e.Message}");
             }
+        }
+
+        private async void HandleBattleWon()
+        {
+            // TODO: Update Hero Exp
+            var newLevel = _gameStateManager.CurrentLevel + 1;
+            _gameStateManager.UpdateLevel(newLevel);
         }
     }
 }

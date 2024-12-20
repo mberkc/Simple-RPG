@@ -9,6 +9,8 @@ namespace Core.BootStrapper
     /// </summary>
     public abstract class SceneBootStrapper : BootStrapper
     {
+        protected GameBootStrapper GameBootStrapper;
+        
         /// <summary>
         /// Don't override if it's not required!
         /// </summary>
@@ -37,17 +39,17 @@ namespace Core.BootStrapper
         
         private async Task<bool> WaitGameBootstrapperInitialization()
         {
-            var gameBootStrapper = GameBootStrapper.Instance;
-            if(gameBootStrapper == null)
+            GameBootStrapper = GameBootStrapper.Instance;
+            if(GameBootStrapper == null)
             {
                 Debug.LogError("GameBootStrapper doesn't exist! Add it to the scene!");
                 return false;
             }
 
-            if (!gameBootStrapper.IsInitialized)
+            if (!GameBootStrapper.IsInitialized)
             {
                 Debug.Log("Waiting for GameBootStrapper initialization...");
-                await gameBootStrapper.InitializationTask;
+                await GameBootStrapper.InitializationTask;
             }
 
             return true;

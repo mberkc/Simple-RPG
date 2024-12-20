@@ -1,5 +1,8 @@
 ﻿namespace GameLogic
 {
+    /// <summary>
+    /// Obsolete Class
+    /// </summary>
     public static class LevelManager
     {
         public static int CurrentLevel { get; private set; } = 1;

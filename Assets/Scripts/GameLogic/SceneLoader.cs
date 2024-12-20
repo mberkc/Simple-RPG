@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 
 namespace GameLogic
 {
+    
+    /// <summary>
+    /// Obsolete Class
+    /// </summary>
     public static class SceneLoader
     {
         public static async Task LoadBattleSceneAsync()

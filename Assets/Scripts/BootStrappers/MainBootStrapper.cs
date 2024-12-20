@@ -9,7 +9,6 @@ using Core.Serialization;
 using Data;
 using Data.ScriptableObjects;
 using GameLogic;
-using GameLogic.State;
 using UnityEngine;
 
 namespace BootStrappers
@@ -24,29 +23,34 @@ namespace BootStrappers
         [SerializeField] private HeroData[] heroes;
         [SerializeField] private EnemyData[] enemies; 
         
-        // Cache if needed
-        //private ProgressionService progressionService;
-        //private StateManager stateManager;
-        //private GameFlowManager gameFlowManager;
+        private GameStateManager _gameStateManager;
+        private EntityService _entityService;
+        private SceneTransitionManager _sceneTransitionManager;
+        private GameFlowManager _gameFlowManager;
         
         public override async void Initialize()
         {
             try
             {
-                Debug.Log("Initializing Main BootStrapper!");
+                Debug.Log("Initializing MainBootStrapper!");
                 
                 var progressionService = await InitializeProgressionService();
-                
-                if(!InitializeEntityResources()) return;
-            
-                InitializeManagersAndInjectDependencies(progressionService);
+                _gameStateManager = new GameStateManager(new GameState(), progressionService);
+                _entityService = new EntityService(heroes, enemies);
+                _sceneTransitionManager = new SceneTransitionManager();
 
-                Debug.Log("Main BootStrapper initialized!");
+                //RegisterServices(_gameStateManager, _entityService, _sceneTransitionManager);
+
+                await _gameStateManager.InitializeGameStateAsync();
+
+                _gameFlowManager = new GameFlowManager(_gameStateManager, _sceneTransitionManager);
+                
                 InitializationCompletionSource.TrySetResult(true);
+                Debug.Log("MainBootStrapper initialized!");
             }
             catch (Exception e)
             {
-                Debug.LogError($"Main BootStrapper initialization failed! Exception: {e.Message}");
+                Debug.LogError($"MainBootStrapper initialization failed! Exception: {e.Message}");
                 InitializationCompletionSource.TrySetException(e);
             }
         }
@@ -93,28 +97,26 @@ namespace BootStrappers
         }
 
         #endregion
-        
-        private bool InitializeEntityResources()
+
+        /*
+        private void RegisterServices(GameStateManager gameStateManager, EntityService entityService, SceneTransitionManager sceneTransitionManager)
         {
-            var heroAmount = heroes.Length;
-            var enemyAmount = enemies.Length;
-            Debug.Log($"Available Heroes: {heroAmount}");
-            Debug.Log($"Available Enemies: {enemyAmount}");
-            if (heroAmount == Constants.TotalHeroes && enemyAmount == Constants.TotalEnemies)
-            {
-                EntityDatabase.Initialize(heroes, enemies);
-                return true;
-            }
-            
-            Debug.LogError("Please assign all Heroes and Enemies to Main BootStrapper!");
-            return false;
+            throw new NotImplementedException();
+        }
+        */
+
+        #region SceneBootStrapper Injection Methods
+        
+        internal GameState GetGameState()
+        {
+            return _gameStateManager.GetGameState();
+        }
+        
+        internal EntityService GetEntityService()
+        {
+            return _entityService;
         }
 
-        private void InitializeManagersAndInjectDependencies(ProgressionService progressionService)
-        {
-            new StateManager().Initialize(progressionService);
-            new GameFlowManager().Initialize(progressionService);
-            // Inject progression service to UI?
-        }
+        #endregion
     }
 }
