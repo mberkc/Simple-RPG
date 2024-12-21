@@ -1,14 +1,14 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Core.BootStrapper
+namespace GameStartupSystem.Bootstrapper
 {
     /// <summary>
     /// Initializes & Manages the scene. Scene Bootstrapper exists until scene changes.
     /// </summary>
-    public abstract class SceneBootStrapper : BootStrapper
+    public abstract class SceneBootstrapper : Bootstrapper
     {
-        protected static GameBootStrapper GameBootStrapper => BootStrapperUtility.GameBootStrapper;
+        protected static GameBootstrapper GameBootstrapper => BootstrapperUtility.GameBootstrapper;
         
         /// <summary>
         /// Don't override if it's not required!
@@ -17,7 +17,7 @@ namespace Core.BootStrapper
         {
             try
             {
-                if(!await BootStrapperUtility.WaitForGameBootStrapperInitialization()) return;
+                if(!await BootstrapperUtility.WaitForGameBootstrapperInitialization()) return;
                 
                 Initialize();
                 Debug.Log($"{GetType()} initialized!");

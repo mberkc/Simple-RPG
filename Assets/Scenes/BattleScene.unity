@@ -377,7 +377,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3539950430770313605, guid: 9cfa1cd0b9fd80b4a9a6254d83d98357, type: 3}
       propertyPath: m_Name
-      value: BattleSceneBootStrapper
+      value: BattleSceneBootstrapper
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

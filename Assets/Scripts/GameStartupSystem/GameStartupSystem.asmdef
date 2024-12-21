@@ -1,5 +1,5 @@
 {
-    "name": "BootStrappers",
+    "name": "GameStartupSystem",
     "rootNamespace": "",
     "references": [
         "GUID:a09bbadc5dea59a44b984d06a74b4e23",

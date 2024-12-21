@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-namespace Core.BootStrapper
+namespace GameStartupSystem.Bootstrapper
 {
     /// <summary>
     /// Don't extend this on different assembly.
     /// </summary>
-    public abstract class BootStrapper : MonoBehaviour, IBootStrapper
+    public abstract class Bootstrapper : MonoBehaviour, IBootstrapper
     {
         public bool IsEnabled => enabled;
         

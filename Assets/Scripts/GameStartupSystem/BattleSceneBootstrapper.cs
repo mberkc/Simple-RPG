@@ -1,11 +1,11 @@
-﻿using Core.BootStrapper;
-using GameLogic;
+﻿using GameLogic;
+using GameStartupSystem.Bootstrapper;
 using UI.Controllers;
 using UnityEngine;
 
-namespace BootStrappers
+namespace GameStartupSystem
 {
-    public class BattleSceneBootStrapper: SceneBootStrapper
+    public class BattleSceneBootstrapper: SceneBootstrapper
     {
         [SerializeField] private GameObject battleCanvasPrefab;
         
@@ -13,11 +13,11 @@ namespace BootStrappers
         {
             if (battleCanvasPrefab == null) return;
             
-            var mainBootStrapper = GameBootStrapper as MainBootStrapper;
-            if (mainBootStrapper == null) return;
+            var mainBootstrapper = GameBootstrapper as MainBootstrapper;
+            if (mainBootstrapper == null) return;
             
-            var gameState = mainBootStrapper.GetGameState();
-            var entityService = mainBootStrapper.GetEntityService();
+            var gameState = mainBootstrapper.GetGameState();
+            var entityService = mainBootstrapper.GetEntityService();
             
             var battleManager = new BattleManager();
             battleManager.Initialize(gameState, entityService);

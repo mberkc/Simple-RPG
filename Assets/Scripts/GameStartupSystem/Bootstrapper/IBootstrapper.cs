@@ -1,6 +1,6 @@
-﻿namespace Core.BootStrapper
+﻿namespace GameStartupSystem.Bootstrapper
 {
-    public interface IBootStrapper
+    public interface IBootstrapper
     {
         public bool IsEnabled { get; }
         public void Initialize();

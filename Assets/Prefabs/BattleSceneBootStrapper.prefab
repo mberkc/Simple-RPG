@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 375109083872600230}
   - component: {fileID: 4817965047016034913}
   m_Layer: 0
-  m_Name: BattleSceneBootStrapper
+  m_Name: BattleSceneBootstrapper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

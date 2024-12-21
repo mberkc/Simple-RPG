@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5614096596366029537}
   - component: {fileID: 5243868721927668378}
   m_Layer: 0
-  m_Name: HeroSelectionSceneBootStrapper
+  m_Name: HeroSelectionSceneBootstrapper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

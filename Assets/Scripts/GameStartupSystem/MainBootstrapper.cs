@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Core;
-using Core.BootStrapper;
 using Core.Encryption;
 using Core.Progression;
 using Core.Progression.ProgressionStorage;
@@ -9,11 +8,12 @@ using Core.Serialization;
 using Data;
 using Data.ScriptableObjects;
 using GameLogic;
+using GameStartupSystem.Bootstrapper;
 using UnityEngine;
 
-namespace BootStrappers
+namespace GameStartupSystem
 {
-    public class MainBootStrapper : GameBootStrapper
+    public class MainBootstrapper : GameBootstrapper
     {
         [SerializeField] private StorageType storageType = StorageType.Local;
         [SerializeField] private EncryptionType encryptionType = EncryptionType.AES;
@@ -32,7 +32,7 @@ namespace BootStrappers
         {
             try
             {
-                Debug.Log("Initializing MainBootStrapper!");
+                Debug.Log("Initializing Main Bootstrapper!");
                 
                 var progressionService = await InitializeProgressionService();
                 _gameStateManager = new GameStateManager(new GameState(), progressionService);
@@ -46,11 +46,11 @@ namespace BootStrappers
                 _gameFlowManager = new GameFlowManager(_gameStateManager, _sceneTransitionManager);
                 
                 InitializationCompletionSource.TrySetResult(true);
-                Debug.Log("MainBootStrapper initialized!");
+                Debug.Log("Main Bootstrapper initialized!");
             }
             catch (Exception e)
             {
-                Debug.LogError($"MainBootStrapper initialization failed! Exception: {e.Message}");
+                Debug.LogError($"Main Bootstrapper initialization failed! Exception: {e.Message}");
                 InitializationCompletionSource.TrySetException(e);
             }
         }
@@ -105,7 +105,7 @@ namespace BootStrappers
         }
         */
 
-        #region SceneBootStrapper Injection Methods
+        #region SceneBootstrapper Injection Methods
         
         internal GameState GetGameState()
         {

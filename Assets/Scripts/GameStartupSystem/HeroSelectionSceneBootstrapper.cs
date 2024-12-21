@@ -1,10 +1,10 @@
-﻿using Core.BootStrapper;
+﻿using GameStartupSystem.Bootstrapper;
 using UI.Controllers;
 using UnityEngine;
 
-namespace BootStrappers
+namespace GameStartupSystem
 {
-    public class HeroSelectionSceneBootStrapper: SceneBootStrapper
+    public class HeroSelectionSceneBootstrapper: SceneBootstrapper
     {
         [SerializeField] private GameObject heroSelectionCanvasPrefab;
 
@@ -12,11 +12,11 @@ namespace BootStrappers
         {
             if (heroSelectionCanvasPrefab == null) return;
             
-            var mainBootStrapper = GameBootStrapper as MainBootStrapper;
-            if (mainBootStrapper == null) return;
+            var mainBootstrapper = GameBootstrapper as MainBootstrapper;
+            if (mainBootstrapper == null) return;
             
-            var gameState = mainBootStrapper.GetGameState();
-            var entityService = mainBootStrapper.GetEntityService();
+            var gameState = mainBootstrapper.GetGameState();
+            var entityService = mainBootstrapper.GetEntityService();
             
             var heroSelectionSceneController = Instantiate(heroSelectionCanvasPrefab, transform).GetComponent<HeroSelectionSceneController>();
             heroSelectionSceneController.Initialize(gameState, entityService);

@@ -1,14 +1,14 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Core.BootStrapper
+namespace GameStartupSystem.Bootstrapper
 {
     /// <summary>
     /// Initializes & manages the game. Game Bootstrapper exists forever. Only one Game Bootstrapper can exist!
     /// </summary>
-    public abstract class GameBootStrapper : BootStrapper
+    public abstract class GameBootstrapper : Bootstrapper
     {
-        public static GameBootStrapper Instance;
+        public static GameBootstrapper Instance;
         
         public bool IsInitialized => InitializationCompletionSource.Task.IsCompletedSuccessfully;
         public Task InitializationTask => InitializationCompletionSource.Task;
