@@ -9,11 +9,13 @@ namespace BootStrappers
     {
         [SerializeField] private GameObject battleCanvasPrefab;
         
-        protected override void InitializeScene()
+        public override void Initialize()
         {
             if (battleCanvasPrefab == null) return;
             
             var mainBootStrapper = GameBootStrapper as MainBootStrapper;
+            if (mainBootStrapper == null) return;
+            
             var gameState = mainBootStrapper.GetGameState();
             var entityService = mainBootStrapper.GetEntityService();
             
@@ -24,7 +26,7 @@ namespace BootStrappers
             battleSceneController.Initialize(gameState, entityService);
         }
 
-        public override void OnDestroy()
+        protected override void OnDestroy()
         {
             // Cleanup Behavior
         }

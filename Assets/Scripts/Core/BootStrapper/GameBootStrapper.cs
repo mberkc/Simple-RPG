@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -14,12 +13,11 @@ namespace Core.BootStrapper
         public bool IsInitialized => InitializationCompletionSource.Task.IsCompletedSuccessfully;
         public Task InitializationTask => InitializationCompletionSource.Task;
         protected readonly TaskCompletionSource<bool> InitializationCompletionSource = new();
-
-
+        
         /// <summary>
         /// Don't override if it's not required!
         /// </summary>
-        protected override void Awake()
+        public override void Awake()
         {
             if (Instance == null)
             {
@@ -34,11 +32,6 @@ namespace Core.BootStrapper
             }
 
             Initialize();
-        }
-
-        public override void Initialize()
-        {
-            throw new NotImplementedException();
         }
     }
 }

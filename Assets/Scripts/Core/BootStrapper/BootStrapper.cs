@@ -8,12 +8,9 @@ namespace Core.BootStrapper
     public abstract class BootStrapper : MonoBehaviour, IBootStrapper
     {
         public bool IsEnabled => enabled;
-
-        /// <summary>
-        /// Override for Initialize Behavior
-        /// </summary>
+        
         public abstract void Initialize();
 
-        protected abstract void Awake();
+        public abstract void Awake();
     }
 }

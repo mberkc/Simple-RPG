@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Core.BootStrapper
@@ -9,26 +8,18 @@ namespace Core.BootStrapper
     /// </summary>
     public abstract class SceneBootStrapper : BootStrapper
     {
-        protected GameBootStrapper GameBootStrapper;
+        protected static GameBootStrapper GameBootStrapper => BootStrapperUtility.GameBootStrapper;
         
         /// <summary>
         /// Don't override if it's not required!
         /// </summary>
-        protected override void Awake()
-        {
-            Initialize();
-        }
-        
-        /// <summary>
-        /// Don't override if it's not required!
-        /// </summary>
-        public override async void Initialize()
+        public override async void Awake()
         {
             try
             {
-                if(!await WaitGameBootstrapperInitialization()) return;
+                if(!await BootStrapperUtility.WaitForGameBootStrapperInitialization()) return;
                 
-                InitializeScene();
+                Initialize();
                 Debug.Log($"{GetType()} initialized!");
             }
             catch (Exception e)
@@ -37,29 +28,6 @@ namespace Core.BootStrapper
             }
         }
         
-        private async Task<bool> WaitGameBootstrapperInitialization()
-        {
-            GameBootStrapper = GameBootStrapper.Instance;
-            if(GameBootStrapper == null)
-            {
-                Debug.LogError("GameBootStrapper doesn't exist! Add it to the scene!");
-                return false;
-            }
-
-            if (!GameBootStrapper.IsInitialized)
-            {
-                Debug.Log("Waiting for GameBootStrapper initialization...");
-                await GameBootStrapper.InitializationTask;
-            }
-
-            return true;
-        }
-        
-        protected abstract void InitializeScene();
-        
-        public virtual void OnDestroy()
-        {
-            throw new NotImplementedException();
-        }
+        protected abstract void OnDestroy();
     }
 }

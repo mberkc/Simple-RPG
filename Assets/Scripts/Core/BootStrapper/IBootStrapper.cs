@@ -4,5 +4,6 @@
     {
         public bool IsEnabled { get; }
         public void Initialize();
+        public void Awake();
     }
 }

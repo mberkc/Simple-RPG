@@ -8,18 +8,21 @@ namespace BootStrappers
     {
         [SerializeField] private GameObject heroSelectionCanvasPrefab;
 
-        protected override void InitializeScene()
+        public override void Initialize()
         {
             if (heroSelectionCanvasPrefab == null) return;
             
             var mainBootStrapper = GameBootStrapper as MainBootStrapper;
+            if (mainBootStrapper == null) return;
+            
             var gameState = mainBootStrapper.GetGameState();
             var entityService = mainBootStrapper.GetEntityService();
+            
             var heroSelectionSceneController = Instantiate(heroSelectionCanvasPrefab, transform).GetComponent<HeroSelectionSceneController>();
             heroSelectionSceneController.Initialize(gameState, entityService);
         }
 
-        public override void OnDestroy()
+        protected override void OnDestroy()
         {
             // Cleanup Behavior
         }
