@@ -30,12 +30,13 @@ namespace Core.BootStrapper
 
         private static bool TryGetGameBootStrapper()
         {
+            // Tries setting on each call, because it can be destroyed.
+            _gameBootStrapper = GameBootStrapper.Instance;
             if (_gameBootStrapper == null)
             {
-                _gameBootStrapper = GameBootStrapper.Instance;
-                if(_gameBootStrapper == null)
-                    _gameBootStrapper = Object.FindObjectOfType<GameBootStrapper>();
-
+                // instance can be checked asynchronously with delaying getting instance in a loop.
+                // Cost of FindObjectOfType will be negligible, if we're calling it once.
+                _gameBootStrapper = Object.FindObjectOfType<GameBootStrapper>();
                 if (_gameBootStrapper == null)
                 {
                     Debug.LogWarning("GameBootStrapper not found in the scene.");
