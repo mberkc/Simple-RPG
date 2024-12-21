@@ -1,4 +1,5 @@
 ﻿using System;
+using GameStartupSystem.Bootstrapper.Utility;
 using UnityEngine;
 
 namespace GameStartupSystem.Bootstrapper
@@ -8,7 +9,7 @@ namespace GameStartupSystem.Bootstrapper
     /// </summary>
     public abstract class SceneBootstrapper : Bootstrapper
     {
-        protected static GameBootstrapper GameBootstrapper => BootstrapperUtility.GameBootstrapper;
+        //protected static GameBootstrapper GameBootstrapper => BootstrapperUtility.GameBootstrapper;
         
         /// <summary>
         /// Don't override if it's not required!

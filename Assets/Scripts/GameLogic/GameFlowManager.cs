@@ -75,7 +75,7 @@ namespace GameLogic
             }
         }
 
-        private async void HandleBattleWon()
+        private void HandleBattleWon()
         {
             // TODO: Update Hero Exp
             var newLevel = _gameStateManager.CurrentLevel + 1;

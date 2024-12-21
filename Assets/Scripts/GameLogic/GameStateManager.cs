@@ -70,7 +70,7 @@ namespace GameLogic
         }
         
         // Extracts GameState for DI
-        public GameState GetGameState()
+        public GameState GetGameStateUI()
         {
             return _gameState;
         }

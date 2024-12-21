@@ -1,13 +1,13 @@
 ﻿using System.Threading.Tasks;
 using UnityEngine;
 
-namespace GameStartupSystem.Bootstrapper
+namespace GameStartupSystem.Bootstrapper.Utility
 {
     public static class BootstrapperUtility
     {
-        private static GameBootstrapper _gameBootstrapper;
+        //internal static GameBootstrapper GameBootstrapper { get; private set; }
 
-        internal static GameBootstrapper GameBootstrapper => _gameBootstrapper;
+        private static GameBootstrapper _gameBootstrapper;
 
         public static async Task<bool> WaitForGameBootstrapperInitialization()
         {

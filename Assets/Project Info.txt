@@ -5,6 +5,7 @@ Simple RPG
 - Base resolution: 1920x1080, landscape
 - Packages used: TextMeshPro, Dotween
 - Custom Pointer Utility Assembly created: to handle pointer events of child
+- IoC & DI via GameStartupSystem (Bootstrappers)
 PointerEventForwarder: forwards pointerevents to parent, assign this component to child object
 PointerEventForwarderTarget: parent should extend PointerEventForwarderTarget class
 -Assemblies:

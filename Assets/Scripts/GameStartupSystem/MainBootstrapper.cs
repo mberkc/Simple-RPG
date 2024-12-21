@@ -9,6 +9,7 @@ using Data;
 using Data.ScriptableObjects;
 using GameLogic;
 using GameStartupSystem.Bootstrapper;
+using GameStartupSystem.Bootstrapper.Utility;
 using UnityEngine;
 
 namespace GameStartupSystem
@@ -23,10 +24,6 @@ namespace GameStartupSystem
         [SerializeField] private HeroData[] heroes;
         [SerializeField] private EnemyData[] enemies; 
         
-        private GameStateManager _gameStateManager;
-        private EntityService _entityService;
-        private SceneTransitionManager _sceneTransitionManager;
-        private GameFlowManager _gameFlowManager;
         
         public override async void Initialize()
         {
@@ -35,15 +32,13 @@ namespace GameStartupSystem
                 Debug.Log("Initializing Main Bootstrapper!");
                 
                 var progressionService = await InitializeProgressionService();
-                _gameStateManager = new GameStateManager(new GameState(), progressionService);
-                _entityService = new EntityService(heroes, enemies);
-                _sceneTransitionManager = new SceneTransitionManager();
+                var gameStateManager = new GameStateManager(new GameState(), progressionService);
+                var entityService = new EntityService(heroes, enemies);
+                new GameFlowManager(gameStateManager, new SceneTransitionManager());
 
-                //RegisterServices(_gameStateManager, _entityService, _sceneTransitionManager);
+                RegisterServices(gameStateManager, entityService);
 
-                await _gameStateManager.InitializeGameStateAsync();
-
-                _gameFlowManager = new GameFlowManager(_gameStateManager, _sceneTransitionManager);
+                await gameStateManager.InitializeGameStateAsync();
                 
                 InitializationCompletionSource.TrySetResult(true);
                 Debug.Log("Main Bootstrapper initialized!");
@@ -53,6 +48,12 @@ namespace GameStartupSystem
                 Debug.LogError($"Main Bootstrapper initialization failed! Exception: {e.Message}");
                 InitializationCompletionSource.TrySetException(e);
             }
+        }
+        
+        private void RegisterServices(GameStateManager gameStateManager, EntityService entityService)
+        {
+            ServiceLocator.Register(gameStateManager);
+            ServiceLocator.Register(entityService);
         }
 
         #region Progression Service
@@ -94,27 +95,6 @@ namespace GameStartupSystem
                 StorageType.Cloud => new CloudProgressionStorage(),
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
-        }
-
-        #endregion
-
-        /*
-        private void RegisterServices(GameStateManager gameStateManager, EntityService entityService, SceneTransitionManager sceneTransitionManager)
-        {
-            throw new NotImplementedException();
-        }
-        */
-
-        #region SceneBootstrapper Injection Methods
-        
-        internal GameState GetGameState()
-        {
-            return _gameStateManager.GetGameState();
-        }
-        
-        internal EntityService GetEntityService()
-        {
-            return _entityService;
         }
 
         #endregion

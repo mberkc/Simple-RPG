@@ -1,4 +1,7 @@
-﻿using GameStartupSystem.Bootstrapper;
+﻿using Data;
+using GameLogic;
+using GameStartupSystem.Bootstrapper;
+using GameStartupSystem.Bootstrapper.Utility;
 using UI.Controllers;
 using UnityEngine;
 
@@ -11,12 +14,12 @@ namespace GameStartupSystem
         public override void Initialize()
         {
             if (heroSelectionCanvasPrefab == null) return;
+
+            // Dependencies
+            var gameStateManager = ServiceLocator.Resolve<GameStateManager>();
+            var entityService = ServiceLocator.Resolve<EntityService>();
             
-            var mainBootstrapper = GameBootstrapper as MainBootstrapper;
-            if (mainBootstrapper == null) return;
-            
-            var gameState = mainBootstrapper.GetGameState();
-            var entityService = mainBootstrapper.GetEntityService();
+            var gameState = gameStateManager.GetGameStateUI();
             
             var heroSelectionSceneController = Instantiate(heroSelectionCanvasPrefab, transform).GetComponent<HeroSelectionSceneController>();
             heroSelectionSceneController.Initialize(gameState, entityService);

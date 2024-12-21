@@ -1,5 +1,7 @@
-﻿using GameLogic;
+﻿using Data;
+using GameLogic;
 using GameStartupSystem.Bootstrapper;
+using GameStartupSystem.Bootstrapper.Utility;
 using UI.Controllers;
 using UnityEngine;
 
@@ -13,12 +15,11 @@ namespace GameStartupSystem
         {
             if (battleCanvasPrefab == null) return;
             
-            var mainBootstrapper = GameBootstrapper as MainBootstrapper;
-            if (mainBootstrapper == null) return;
+            // Dependencies
+            var gameStateManager = ServiceLocator.Resolve<GameStateManager>();
+            var entityService = ServiceLocator.Resolve<EntityService>();
             
-            var gameState = mainBootstrapper.GetGameState();
-            var entityService = mainBootstrapper.GetEntityService();
-            
+            var gameState = gameStateManager.GetGameStateUI();
             var battleManager = new BattleManager();
             battleManager.Initialize(gameState, entityService);
 
