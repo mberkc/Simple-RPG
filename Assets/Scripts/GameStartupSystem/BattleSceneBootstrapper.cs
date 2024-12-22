@@ -1,5 +1,6 @@
 ﻿using Data;
 using GameLogic;
+using GameLogic.Battle;
 using GameStartupSystem.Bootstrapper;
 using GameStartupSystem.Bootstrapper.Utility;
 using UI.Controllers;

@@ -20,3 +20,22 @@ UI: Raises events => GameLogic processes them.
 (Controller) Handles input, updates the view
 
 PointerEventUtility: 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----
+Obsolete Classes:
+Data Assembly: EntityDatabase
+GameLogic: EnemySelector, LevelManager

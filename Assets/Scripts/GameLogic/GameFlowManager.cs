@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Core;
 using Core.EventManager.GameLogicEventManager;
 using UnityEngine;
-
 
 namespace GameLogic
 {
@@ -26,17 +26,19 @@ namespace GameLogic
         
         private void SubscribeEvents()
         {
-            GameLogicEventManager.OnBattleStartRequested += StartBattle;
+            GameLogicEventManager.OnBattleStartRequested += HandleBattleStart;
+            GameLogicEventManager.OnBattleComplete += HandleBattleComplete;
         }
 
         private void UnSubscribeEvents()
-        { 
-            GameLogicEventManager.OnBattleStartRequested -= StartBattle;
+        {
+            GameLogicEventManager.OnBattleStartRequested -= HandleBattleStart;
+            GameLogicEventManager.OnBattleComplete -= HandleBattleComplete;
         }
         
         // TODO: Use LevelService & EnemySelector?
 
-        private async void StartBattle()
+        private async void HandleBattleStart()
         {
             try
             {
@@ -54,20 +56,16 @@ namespace GameLogic
             }
         }
         
-        public async void FinishBattle(bool success)
+        private async void HandleBattleComplete(bool success, List<int> aliveHeroIndexes)
         {
             try
             {
                 if (success)
-                {
-                    HandleBattleWon();
-                }
+                    HandleBattleWin(aliveHeroIndexes);
+
+                CheckHeroUnlock();
                 
-                // TODO: Check Hero Unlock
-                
-                // Load the Hero Selection Scene
-                await SceneLoader.LoadHeroSelectionSceneAsync();
-                GameLogicEventManager.BroadcastHeroSelectionSceneLoaded?.Invoke();
+                await _sceneTransitionManager.LoadSceneAsync(Constants.HeroSelectionSceneIndex/*, postLoad: GameLogicEventManager.BroadcastHeroSelectionSceneLoaded*/);
             }
             catch (Exception e)
             {
@@ -75,11 +73,21 @@ namespace GameLogic
             }
         }
 
-        private void HandleBattleWon()
+        private void HandleBattleWin(List<int> aliveHeroIndexes)
         {
-            // TODO: Update Hero Exp
+            var count = aliveHeroIndexes.Count;
+            for (var i = 0; i < count; i++)
+            {
+                var heroIndex = aliveHeroIndexes[i];
+                // TODO: Update Hero Exp
+            }
             var newLevel = _gameStateManager.CurrentLevel + 1;
             _gameStateManager.UpdateLevel(newLevel);
+        }
+
+        private void CheckHeroUnlock()
+        {
+            // TODO: Check Hero Unlock, if unlocked heroes < 10 , then unlock a new hero on every 5th game.
         }
     }
 }

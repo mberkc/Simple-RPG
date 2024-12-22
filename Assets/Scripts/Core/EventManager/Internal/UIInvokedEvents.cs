@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("GameLogicEventManager")]
 namespace Core.EventManager.Internal
 {
-    internal static class UIEventsInternal
+    internal static class UIInvokedEvents
     {
         internal static event Action OnBattleStartRequested;
         internal static event Action<List<int>> OnHeroesUpdateRequested;

@@ -53,16 +53,16 @@ namespace GameLogic
         public void UpdateLevel(int level)
         {
             _gameState.CurrentLevel = level;
-            SaveProgressionAsync();
+            SaveGameStateAsync();
         }
 
         private void UpdateSelectedHeroes(List<int> heroIndexes)
         {
             _gameState.SelectedHeroIndexes = heroIndexes;
-            SaveProgressionAsync();
+            SaveGameStateAsync();
         }
 
-        private async Task SaveProgressionAsync()
+        private async Task SaveGameStateAsync()
         {
             progressionData.CurrentLevel = _gameState.CurrentLevel;
             progressionData.SelectedHeroIndexes = _gameState.SelectedHeroIndexes;

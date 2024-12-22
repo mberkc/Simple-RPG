@@ -16,5 +16,6 @@ namespace Data
 
         public HeroData GetHeroByIndex(int index) => _heroes.ElementAtOrDefault(index);
         public EnemyData GetEnemyByIndex(int index) => _enemies.ElementAtOrDefault(index);
+        public EnemyData GetEnemyByLevel(int index) => _enemies.ElementAtOrDefault(index);
     }
 }

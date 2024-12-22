@@ -3,19 +3,27 @@ using Data;
 using Data.ScriptableObjects;
 using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.Battle
 {
     public class BattleManager
     {
+        private PlayerManager _playerManager;
+        private OpponentManager _opponentManager;
+        
         private HeroData[] heroes;
         private EnemyData enemy;
         private int level;
+        
+        // Command: For battle actions (e.g., attacks).
+        // Factory: To create and initialize hero/enemy instances dynamically
+        // State: Manage battle states (e.g., Idle, Combat(PlayerTurn, OpponentTurn), Victory, Defeat, etc...).
 
         public void Initialize(GameState gameState, EntityService entityService)
         {
-            level = gameState.CurrentLevel;
-            enemy = entityService.GetEnemyByIndex(level);
+            
             // Instantiate and initialize enemy GameObject here
+            level = gameState.CurrentLevel;
+            enemy = entityService.GetEnemyByLevel(level);
             heroes = new HeroData[3];
 
             for (var i = 0; i < Constants.MaxSelectedHeroes; i++)
@@ -26,6 +34,10 @@ namespace GameLogic
                 heroes[i] = hero;
                 // Instantiate and initialize hero GameObjects here
             }
+            
+            // Inject heroes & enemies?
+            _playerManager = new PlayerManager(gameState, entityService);
+            _opponentManager = new OpponentManager(gameState, entityService);
         }
     }
 }
