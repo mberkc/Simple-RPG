@@ -1,5 +1,4 @@
-﻿using Data;
-using Data.ScriptableObjects;
+﻿using Data.ScriptableObjects;
 using UnityEngine;
 
 namespace GameLogic.Battle
@@ -11,9 +10,9 @@ namespace GameLogic.Battle
     {
         private readonly EnemyData _enemy;
 
-        public OpponentManager(GameState gameState, EntityService entityService)
+        public OpponentManager(EnemyData enemy)
         {
-            _enemy = entityService.GetEnemyByLevel(gameState.CurrentLevel);
+            _enemy = enemy;
         }
 
         public EnemyData GetEnemy() => _enemy;

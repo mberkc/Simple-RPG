@@ -21,8 +21,7 @@ namespace GameStartupSystem
             var entityService = ServiceLocator.Resolve<EntityService>();
             
             var gameState = gameStateManager.GetGameStateUI();
-            var battleManager = new BattleManager();
-            battleManager.Initialize(gameState, entityService);
+            new BattleManager(gameState, entityService);
 
             var battleSceneController = Instantiate(battleCanvasPrefab, transform).GetComponent<BattleSceneController>();
             battleSceneController.Initialize(gameState, entityService);

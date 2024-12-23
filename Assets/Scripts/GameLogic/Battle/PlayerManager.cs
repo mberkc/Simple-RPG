@@ -1,6 +1,4 @@
-﻿using Core;
-using Data;
-using Data.ScriptableObjects;
+﻿using Data.ScriptableObjects;
 using UnityEngine;
 
 namespace GameLogic.Battle
@@ -12,14 +10,9 @@ namespace GameLogic.Battle
     {
         private readonly HeroData[] _heroes;
 
-        public PlayerManager(GameState gameState, EntityService entityService)
+        public PlayerManager(HeroData[] heroes)
         {
-            _heroes = new HeroData[Constants.MaxSelectedHeroes];
-            for (var i = 0; i < gameState.SelectedHeroIndexes.Count; i++)
-            {
-                var heroIndex = gameState.SelectedHeroIndexes[i];
-                _heroes[i] = entityService.GetHeroByIndex(heroIndex);
-            }
+            _heroes = heroes;
         }
 
         public HeroData[] GetHeroes() => _heroes;
