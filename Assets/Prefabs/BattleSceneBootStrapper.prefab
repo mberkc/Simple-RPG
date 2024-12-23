@@ -44,4 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0432bddd656a4b91ade7a3fabeebb41f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  botStrategyType: 0
+  specifiedSeedEnabled: 1
+  randomSeed: 142312312
   battleCanvasPrefab: {fileID: 0}
+  heroPrefab: {fileID: 0}
+  enemyPrefab: {fileID: 0}

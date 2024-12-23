@@ -12,9 +12,9 @@ namespace Core.EventManager.Internal
         internal static event Action OnBattleSceneLoaded;
         internal static event Action OnHeroSelectionSceneLoaded;
         
-        internal static void BroadcastBattleComplete(bool isWin, List<int> aliveHeroIndexes)
+        internal static void BroadcastBattleComplete(bool victory, List<int> aliveHeroIndexes)
         {
-            OnBattleComplete?.Invoke(isWin, aliveHeroIndexes);
+            OnBattleComplete?.Invoke(victory, aliveHeroIndexes);
         }
 
         internal static void BroadcastBattleSceneLoaded()

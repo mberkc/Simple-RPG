@@ -10,7 +10,7 @@ namespace Core.EventManager.GameLogicEventManager
     public static class GameLogicEventManager
     {
         #region Invokers
-        public static Action BroadcastBattleComplete(bool isWin, List<int> aliveHeroes = null) => () => GameLogicInvokedEvents.BroadcastBattleComplete(isWin, aliveHeroes);
+        public static Action BroadcastBattleComplete(bool victory, List<int> aliveHeroes = null) => () => GameLogicInvokedEvents.BroadcastBattleComplete(victory, aliveHeroes);
         public static Action BroadcastBattleSceneLoaded => GameLogicInvokedEvents.BroadcastBattleSceneLoaded;
         public static Action BroadcastHeroSelectionSceneLoaded => GameLogicInvokedEvents.BroadcastHeroSelectionSceneLoaded;
 

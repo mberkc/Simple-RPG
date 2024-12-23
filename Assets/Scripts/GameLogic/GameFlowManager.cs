@@ -35,8 +35,6 @@ namespace GameLogic
             GameLogicEventManager.OnBattleStartRequested -= HandleBattleStart;
             GameLogicEventManager.OnBattleComplete -= HandleBattleComplete;
         }
-        
-        // TODO: Use LevelService & EnemySelector?
 
         private async void HandleBattleStart()
         {
@@ -56,11 +54,11 @@ namespace GameLogic
             }
         }
         
-        private async void HandleBattleComplete(bool success, List<int> aliveHeroIndexes)
+        private async void HandleBattleComplete(bool victory, List<int> aliveHeroIndexes)
         {
             try
             {
-                if (success)
+                if (victory)
                     HandleBattleWin(aliveHeroIndexes);
 
                 CheckHeroUnlock();
@@ -75,6 +73,8 @@ namespace GameLogic
 
         private void HandleBattleWin(List<int> aliveHeroIndexes)
         {
+            if(aliveHeroIndexes == null || aliveHeroIndexes.Count == 0) return;
+            
             var count = aliveHeroIndexes.Count;
             for (var i = 0; i < count; i++)
             {

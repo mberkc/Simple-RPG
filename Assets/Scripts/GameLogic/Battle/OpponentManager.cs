@@ -1,4 +1,7 @@
-﻿using Data.ScriptableObjects;
+﻿using System.Threading.Tasks;
+using Data;
+using GameLogic.Battle.BotStrategy;
+using GameLogic.Battle.Entity;
 using UnityEngine;
 
 namespace GameLogic.Battle
@@ -8,19 +11,30 @@ namespace GameLogic.Battle
     /// </summary>
     public class OpponentManager
     {
-        private readonly EnemyData _enemy;
+        private readonly IBotStrategy _botStrategy;
+        private readonly BattleEntity _enemyEntity;
 
-        public OpponentManager(EnemyData enemy)
-        {
-            _enemy = enemy;
+        public OpponentManager(BattleEntityFactory entityFactory, GameState gameState, EntityService entityService, IBotStrategy botStrategy)
+        { 
+            _botStrategy = botStrategy;
+            var enemy = entityService.GetEnemyByIndex(gameState.CurrentLevel); 
+            _enemyEntity = entityFactory.CreateEnemy(enemy, GetEnemySpawnPosition());
         }
-
-        public EnemyData GetEnemy() => _enemy;
-
-        public void ApplyDamage(float damage)
+        
+        public async Task HandleOpponentAttack(BattleEntity[] availableTargets, CombatSystem combatSystem)
         {
-            //_enemy.Health -= damage;
-            Debug.Log($"{_enemy.EntityName} took {damage} damage!");
+            var target = await _botStrategy.ChooseTarget(availableTargets);
+            if (target != null)
+                combatSystem.ExecuteAttack(_enemyEntity, target);
+            else
+                Debug.LogWarning("No valid target available for opponent.");
+        }
+        
+        public bool CheckIfEnemyIsDefeated => !_enemyEntity.IsAlive;
+        
+        private Vector3 GetEnemySpawnPosition()
+        {
+            return new Vector3(0, 0, 0);
         }
     }
 }
