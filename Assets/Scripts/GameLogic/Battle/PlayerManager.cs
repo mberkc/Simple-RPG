@@ -8,7 +8,7 @@ using UnityEngine;
 namespace GameLogic.Battle
 {
     /// <summary>
-    /// Manages player-controlled heroes.
+    /// Manages player-controlled heroes via UI input(s).
     /// </summary>
     public class PlayerManager
     {

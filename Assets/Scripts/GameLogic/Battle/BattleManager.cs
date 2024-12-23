@@ -7,14 +7,14 @@ using UnityEngine;
 
 namespace GameLogic.Battle
 {
-    public class BattleFlowManager
+    public class BattleManager
     {
         private readonly CombatSystem _combatSystem;
         private readonly PlayerManager _playerManager;
         private readonly OpponentManager _opponentManager;
         private BattleState _currentState = BattleState.Idle;
         
-        public BattleFlowManager(BattleEntityFactory entityFactory, CombatSystem combatSystem, GameState gameState, EntityService entityService, IBotStrategy botStrategy)
+        public BattleManager(BattleEntityFactory entityFactory, CombatSystem combatSystem, GameState gameState, EntityService entityService, IBotStrategy botStrategy)
         {
             _combatSystem = combatSystem;
             _playerManager = new PlayerManager(entityFactory, gameState, entityService);

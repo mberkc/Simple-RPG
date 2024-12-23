@@ -29,7 +29,7 @@ namespace GameStartupSystem
             var entityService = ServiceLocator.Resolve<EntityService>();
             
             var gameState = gameStateManager.GetGameStateUI();
-            new BattleFlowManager(new BattleEntityFactory(heroPrefab, enemyPrefab), new CombatSystem(), gameState, entityService, InitializeBotStrategy(botStrategyType));
+            new BattleManager(new BattleEntityFactory(heroPrefab, enemyPrefab), new CombatSystem(), gameState, entityService, InitializeBotStrategy(botStrategyType));
 
             var battleSceneController = Instantiate(battleCanvasPrefab, transform).GetComponent<BattleSceneController>();
             battleSceneController.Initialize(gameState, entityService);

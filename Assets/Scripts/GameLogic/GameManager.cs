@@ -6,12 +6,12 @@ using UnityEngine;
 
 namespace GameLogic
 {
-    public class GameFlowManager
+    public class GameManager
     {
         private readonly GameStateManager _gameStateManager;
         private readonly SceneTransitionService _sceneTransitionService;
         
-        public GameFlowManager(GameStateManager gameStateManager, SceneTransitionService sceneTransitionService)
+        public GameManager(GameStateManager gameStateManager, SceneTransitionService sceneTransitionService)
         {
             _gameStateManager = gameStateManager;
             _sceneTransitionService = sceneTransitionService;
@@ -26,14 +26,21 @@ namespace GameLogic
         
         private void SubscribeEvents()
         {
+            GameLogicEventManager.OnHeroesUpdateRequested += UpdateSelectedHeroes;
             GameLogicEventManager.OnBattleStartRequested += HandleBattleStart;
             GameLogicEventManager.OnBattleComplete += HandleBattleComplete;
         }
 
         private void UnSubscribeEvents()
         {
+            GameLogicEventManager.OnHeroesUpdateRequested -= UpdateSelectedHeroes;
             GameLogicEventManager.OnBattleStartRequested -= HandleBattleStart;
             GameLogicEventManager.OnBattleComplete -= HandleBattleComplete;
+        }
+        
+        private void UpdateSelectedHeroes(List<int> heroIndexes)
+        {
+            _gameStateManager.UpdateSelectedHeroes(heroIndexes);
         }
 
         private async void HandleBattleStart()

@@ -7,7 +7,7 @@ using UnityEngine;
 namespace GameLogic.Battle
 {
     /// <summary>
-    /// Manages enemy-controlled units (currently a single enemy).
+    /// Manages enemy-controlled units (currently a single enemy) via AI-driven decisions.
     /// </summary>
     public class OpponentManager
     {
