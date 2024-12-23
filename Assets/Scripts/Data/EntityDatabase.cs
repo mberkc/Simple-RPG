@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Data.ScriptableObjects;
 using UnityEngine;
 
-[assembly: InternalsVisibleTo("BootStrappers")]
+//[assembly: InternalsVisibleTo("BootStrappers")]
 namespace Data
 {
     /// <summary>

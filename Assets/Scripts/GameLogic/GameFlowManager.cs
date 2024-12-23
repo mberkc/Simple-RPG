@@ -9,12 +9,12 @@ namespace GameLogic
     public class GameFlowManager
     {
         private readonly GameStateManager _gameStateManager;
-        private readonly SceneTransitionManager _sceneTransitionManager;
+        private readonly SceneTransitionService _sceneTransitionService;
         
-        public GameFlowManager(GameStateManager gameStateManager, SceneTransitionManager sceneTransitionManager)
+        public GameFlowManager(GameStateManager gameStateManager, SceneTransitionService sceneTransitionService)
         {
             _gameStateManager = gameStateManager;
-            _sceneTransitionManager = sceneTransitionManager;
+            _sceneTransitionService = sceneTransitionService;
 
             SubscribeEvents();
         }
@@ -48,7 +48,7 @@ namespace GameLogic
                 var currentLevel = _gameStateManager.CurrentLevel;
                 // TODO Get current enemy index?
                 
-                await _sceneTransitionManager.LoadSceneAsync(Constants.BattleSceneIndex/*, postLoad: GameLogicEventManager.BroadcastBattleSceneLoaded*/);
+                await _sceneTransitionService.LoadSceneAsync(Constants.BattleSceneIndex/*, postLoad: GameLogicEventManager.BroadcastBattleSceneLoaded*/);
             }
             catch (Exception e)
             {
@@ -65,7 +65,7 @@ namespace GameLogic
 
                 CheckHeroUnlock();
                 
-                await _sceneTransitionManager.LoadSceneAsync(Constants.HeroSelectionSceneIndex/*, postLoad: GameLogicEventManager.BroadcastHeroSelectionSceneLoaded*/);
+                await _sceneTransitionService.LoadSceneAsync(Constants.HeroSelectionSceneIndex/*, postLoad: GameLogicEventManager.BroadcastHeroSelectionSceneLoaded*/);
             }
             catch (Exception e)
             {

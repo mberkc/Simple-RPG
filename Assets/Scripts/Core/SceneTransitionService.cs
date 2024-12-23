@@ -7,7 +7,7 @@ namespace Core
     /// <summary>
     /// Manages scene transitions.
     /// </summary>
-    public class SceneTransitionManager
+    public class SceneTransitionService
     {
         public async Task LoadSceneAsync(int sceneIndex, Action preLoad = null, Action postLoad = null)
         {

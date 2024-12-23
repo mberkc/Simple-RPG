@@ -34,7 +34,7 @@ namespace GameStartupSystem
                 var progressionService = await InitializeProgressionService();
                 var gameStateManager = new GameStateManager(new GameState(), progressionService);
                 var entityService = new EntityService(heroes, enemies);
-                new GameFlowManager(gameStateManager, new SceneTransitionManager());
+                new GameFlowManager(gameStateManager, new SceneTransitionService());
 
                 RegisterServices(gameStateManager, entityService);
 
