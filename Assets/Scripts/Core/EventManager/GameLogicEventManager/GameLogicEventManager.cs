@@ -10,25 +10,49 @@ namespace Core.EventManager.GameLogicEventManager
     public static class GameLogicEventManager
     {
         #region Invokers
-
-        public static Action BroadcastBattleSceneLoaded => GameLogicEventsInternal.BroadcastBattleSceneLoaded;
-        public static Action BroadcastHeroSelectionSceneLoaded => GameLogicEventsInternal.BroadcastHeroSelectionSceneLoaded;
+        public static Action BroadcastBattleComplete(bool victory, List<int> aliveHeroes = null) => () => GameLogicInvokedEvents.BroadcastBattleComplete(victory, aliveHeroes);
+        public static Action BroadcastPlayerTurnEnded => GameLogicInvokedEvents.BroadcastPlayerTurnEnded;
+        public static Action BroadcastOpponentTurnEnded => GameLogicInvokedEvents.BroadcastOpponentTurnEnded;
+        public static Action BroadcastBattleSceneLoaded => GameLogicInvokedEvents.BroadcastBattleSceneLoaded;
+        public static Action BroadcastHeroSelectionSceneLoaded => GameLogicInvokedEvents.BroadcastHeroSelectionSceneLoaded;
 
         #endregion
 
         #region Listeners
         
+        public static event Action<bool, List<int>> OnBattleComplete
+        {
+            add => GameLogicInvokedEvents.OnBattleComplete += value;
+            remove => GameLogicInvokedEvents.OnBattleComplete -= value;
+        }
+        
+        public static event Action OnBattleSceneLoaded
+        {
+            add => GameLogicInvokedEvents.OnBattleSceneLoaded += value;
+            remove => GameLogicInvokedEvents.OnBattleSceneLoaded -= value;
+        }
+        
+        #region Invoked by UI Assembly
+        
         public static event Action OnBattleStartRequested
         {
-            add => UIEventsInternal.OnBattleStartRequested += value;
-            remove => UIEventsInternal.OnBattleStartRequested -= value;
+            add => UIInvokedEvents.OnBattleStartRequested += value;
+            remove => UIInvokedEvents.OnBattleStartRequested -= value;
         }
         
         public static event Action<List<int>> OnHeroesUpdateRequested
         {
-            add => UIEventsInternal.OnHeroesUpdateRequested += value;
-            remove => UIEventsInternal.OnHeroesUpdateRequested -= value;
+            add => UIInvokedEvents.OnHeroesUpdateRequested += value;
+            remove => UIInvokedEvents.OnHeroesUpdateRequested -= value;
         }
+        
+        public static event Action<int> OnPlayerAttackRequested
+        {
+            add => UIInvokedEvents.OnPlayerAttackRequested += value;
+            remove => UIInvokedEvents.OnPlayerAttackRequested -= value;
+        }
+
+        #endregion
 
         #endregion
     }

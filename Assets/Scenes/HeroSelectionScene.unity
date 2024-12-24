@@ -309,7 +309,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6007570184399915540, guid: 59b963d925260e94d86feaf7054f3c74, type: 3}
       propertyPath: m_Name
-      value: MainBootStrapper
+      value: MainBootstrapper
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -394,7 +394,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1687102386170895607, guid: 3870a05028c90b14ca543981ee17b6d6, type: 3}
       propertyPath: m_Name
-      value: HeroSelectionSceneBootStrapper
+      value: HeroSelectionSceneBootstrapper
       objectReference: {fileID: 0}
     - target: {fileID: 5614096596366029537, guid: 3870a05028c90b14ca543981ee17b6d6, type: 3}
       propertyPath: m_LocalPosition.x

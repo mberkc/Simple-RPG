@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 375109083872600230}
   - component: {fileID: 4817965047016034913}
   m_Layer: 0
-  m_Name: BattleSceneBootStrapper
+  m_Name: BattleSceneBootstrapper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,4 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0432bddd656a4b91ade7a3fabeebb41f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleCanvasPrefab: {fileID: 0}
+  botStrategyType: 0
+  specifiedSeedEnabled: 1
+  randomSeed: 142312312
+  battleCanvasPrefab: {fileID: 4267894884733243430, guid: d5d9b30f08784e948b885f415c97ba1e, type: 3}
+  heroPrefab: {fileID: 0}
+  enemyPrefab: {fileID: 0}

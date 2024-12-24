@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Data.ScriptableObjects;
 using UnityEngine;
 
-[assembly: InternalsVisibleTo("BootStrappers")]
+//[assembly: InternalsVisibleTo("BootStrappers")]
 namespace Data
 {
+    /// <summary>
+    /// Obsolete Class
+    /// </summary>
     public static class EntityDatabase
     {
         // ConcurrentDictionary can be used for thread-safety

@@ -11,25 +11,41 @@ namespace Core.EventManager.UIEventManager
     {
         #region Invokers
         
-        public static Action RaiseBattleStartRequested => UIEventsInternal.RaiseBattleStartRequested;
+        public static Action RaiseBattleStartRequested => UIInvokedEvents.RaiseBattleStartRequested;
+        public static Action RaiseHeroesUpdateRequested(List<int> heroIndexes) => () => UIInvokedEvents.RaiseHeroesUpdateRequested(heroIndexes);
+        public static Action RaisePlayerAttackRequested(int attackerBoardIndex) => () => UIInvokedEvents.RaisePlayerAttackRequested(attackerBoardIndex);
         
-        public static Action RaiseHeroesUpdateRequested(List<int> heroIndexes) => () => UIEventsInternal.RaiseHeroesUpdateRequested(heroIndexes);
-
         #endregion
 
         #region Listeners
+
+        #region Invoked by GameLogic Assembly
         
+        public static event Action OnPlayerTurnEnded
+        {
+            add => GameLogicInvokedEvents.OnPlayerTurnEnded += value;
+            remove => GameLogicInvokedEvents.OnPlayerTurnEnded -= value;
+        }
+        
+        public static event Action OnOpponentTurnEnded
+        {
+            add => GameLogicInvokedEvents.OnOpponentTurnEnded += value;
+            remove => GameLogicInvokedEvents.OnOpponentTurnEnded -= value;
+        }
+
         public static event Action OnBattleSceneLoaded
         {
-            add => GameLogicEventsInternal.OnBattleSceneLoaded += value;
-            remove => GameLogicEventsInternal.OnBattleSceneLoaded -= value;
+            add => GameLogicInvokedEvents.OnBattleSceneLoaded += value;
+            remove => GameLogicInvokedEvents.OnBattleSceneLoaded -= value;
         }
         
         public static event Action OnHeroSelectionSceneLoaded
         {
-            add => GameLogicEventsInternal.OnHeroSelectionSceneLoaded += value;
-            remove => GameLogicEventsInternal.OnHeroSelectionSceneLoaded -= value;
+            add => GameLogicInvokedEvents.OnHeroSelectionSceneLoaded += value;
+            remove => GameLogicInvokedEvents.OnHeroSelectionSceneLoaded -= value;
         }
+
+        #endregion
 
         #endregion
     }

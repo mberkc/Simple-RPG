@@ -2,8 +2,7 @@
     "name": "UIEventManager",
     "rootNamespace": "",
     "references": [
-        "GUID:a4c74ff596c0c8c4d81e455c36bcaf1d",
-        "GUID:1dfbe8b9a6187db48a901daa12b82247"
+        "GUID:a4c74ff596c0c8c4d81e455c36bcaf1d"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
