@@ -16,10 +16,10 @@ namespace GameStartupSystem
             if (heroSelectionCanvasPrefab == null) return;
 
             // Dependencies
-            var gameStateManager = ServiceLocator.Resolve<GameStateManager>();
+            var gameStateManager = ServiceLocator.Resolve<UserDataManager>();
             var entityService = ServiceLocator.Resolve<EntityService>();
             
-            var gameState = gameStateManager.GetGameStateUI();
+            var gameState = gameStateManager.GetUserDataUI();
             
             var heroSelectionSceneController = Instantiate(heroSelectionCanvasPrefab, transform).GetComponent<HeroSelectionSceneController>();
             heroSelectionSceneController.Initialize(gameState, entityService);

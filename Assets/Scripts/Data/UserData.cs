@@ -3,18 +3,18 @@
 namespace Data
 {
     /// <summary>
-    /// Can only be manipulated by GameState Service. Don't access from other scripts.
+    /// Can only be manipulated by UserData Manager. Don't access from other scripts.
     /// </summary>
-    public class GameState // TODO: Rename to UserData
+    public class UserData
     {
         public List<int> SelectedHeroIndexes { get; set; } = new ();
         public int CurrentLevel{ get; set; }
     }
     
     /// <summary>
-    /// GameState Data for UI
+    /// UserData for UI
     /// </summary>
-    public class GameStateUI
+    public class UserDataUI
     {
         public List<int> SelectedHeroIndexes { get; set; } = new ();
         public int CurrentLevel { get; set; }

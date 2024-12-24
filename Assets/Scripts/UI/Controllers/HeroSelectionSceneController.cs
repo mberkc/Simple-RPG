@@ -22,11 +22,11 @@ namespace UI.Controllers
 
         private List<HeroCardView> selectedHeroes = new ();
 
-        public override void Initialize(GameState gameState, EntityService entityService)
+        public override void Initialize(UserData userData, EntityService entityService)
         {
-            UpdateLevelText(gameState.CurrentLevel);
+            UpdateLevelText(userData.CurrentLevel);
             battleButton.onClick.AddListener(BattleButtonClicked);
-            InitializeHeroCards(gameState.SelectedHeroIndexes, entityService);
+            InitializeHeroCards(userData.SelectedHeroIndexes, entityService);
             UpdateBattleButton();
         }
 

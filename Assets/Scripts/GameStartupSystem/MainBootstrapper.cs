@@ -32,13 +32,13 @@ namespace GameStartupSystem
                 Debug.Log("Initializing Main Bootstrapper!");
                 
                 var progressionService = await InitializeProgressionService();
-                var gameStateManager = new GameStateManager(new GameState(), progressionService);
+                var userDataManager = new UserDataManager(new UserData(), progressionService);
                 var entityService = new EntityService(heroes, enemies);
-                new GameManager(gameStateManager, new SceneTransitionService());
+                new GameManager(userDataManager, new SceneTransitionService());
 
-                RegisterServices(gameStateManager, entityService);
+                RegisterServices(userDataManager, entityService);
 
-                await gameStateManager.InitializeGameStateAsync();
+                await userDataManager.InitializeUserDataAsync();
                 
                 InitializationCompletionSource.TrySetResult(true);
                 Debug.Log("Main Bootstrapper initialized!");
@@ -50,9 +50,9 @@ namespace GameStartupSystem
             }
         }
         
-        private void RegisterServices(GameStateManager gameStateManager, EntityService entityService)
+        private void RegisterServices(UserDataManager userDataManager, EntityService entityService)
         {
-            ServiceLocator.Register(gameStateManager);
+            ServiceLocator.Register(userDataManager);
             ServiceLocator.Register(entityService);
         }
 

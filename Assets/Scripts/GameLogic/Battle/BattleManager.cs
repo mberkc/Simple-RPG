@@ -25,10 +25,10 @@ namespace GameLogic.Battle
         private readonly OpponentManager _opponentManager;
         private BattleState currentState = BattleState.Idle;
         
-        public BattleManager(AttackHandler attackHandler, GameState gameState, EntityService entityService, EntitySpawner entitySpawner, IBotStrategy botStrategy)
+        public BattleManager(AttackHandler attackHandler, UserData userData, EntityService entityService, EntitySpawner entitySpawner, IBotStrategy botStrategy)
         {
-            _playerManager = new PlayerManager(gameState, entityService, entitySpawner);
-            _opponentManager = new OpponentManager(gameState, entityService, entitySpawner, botStrategy);
+            _playerManager = new PlayerManager(userData, entityService, entitySpawner);
+            _opponentManager = new OpponentManager(userData, entityService, entitySpawner, botStrategy);
             _combatController = new CombatController(attackHandler, _playerManager, _opponentManager);
             SubscribeEvents();
             ProcessState(BattleState.Initialize);

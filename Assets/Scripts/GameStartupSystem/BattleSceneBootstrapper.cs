@@ -26,10 +26,10 @@ namespace GameStartupSystem
             if (battleCanvasPrefab == null) return;
             
             // Dependencies
-            var gameStateManager = ServiceLocator.Resolve<GameStateManager>();
+            var gameStateManager = ServiceLocator.Resolve<UserDataManager>();
             var entityService = ServiceLocator.Resolve<EntityService>();
             
-            var gameState = gameStateManager.GetGameStateUI();
+            var gameState = gameStateManager.GetUserDataUI();
             var entityFactory = new BattleEntityFactory(heroPrefab, enemyPrefab);
             new BattleManager(new AttackHandler(), gameState, entityService, new EntitySpawner(entityFactory), InitializeBotStrategy(botStrategyType));
 

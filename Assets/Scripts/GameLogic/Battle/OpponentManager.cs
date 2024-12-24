@@ -13,10 +13,10 @@ namespace GameLogic.Battle
         private readonly IBotStrategy _botStrategy;
         private readonly BattleEntity _enemyEntity;
 
-        public OpponentManager(GameState gameState, EntityService entityService, EntitySpawner entitySpawner, IBotStrategy botStrategy)
+        public OpponentManager(UserData userData, EntityService entityService, EntitySpawner entitySpawner, IBotStrategy botStrategy)
         { 
             _botStrategy = botStrategy;
-            var enemy = entityService.GetEnemyByIndex(gameState.CurrentLevel); 
+            var enemy = entityService.GetEnemyByIndex(userData.CurrentLevel); 
             _enemyEntity = entitySpawner.SpawnEnemy(enemy);
         }
         

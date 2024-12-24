@@ -8,12 +8,12 @@ namespace GameLogic
 {
     public class GameManager
     {
-        private readonly GameStateManager _gameStateManager;
+        private readonly UserDataManager _userDataManager;
         private readonly SceneTransitionService _sceneTransitionService;
         
-        public GameManager(GameStateManager gameStateManager, SceneTransitionService sceneTransitionService)
+        public GameManager(UserDataManager userDataManager, SceneTransitionService sceneTransitionService)
         {
-            _gameStateManager = gameStateManager;
+            _userDataManager = userDataManager;
             _sceneTransitionService = sceneTransitionService;
 
             SubscribeEvents();
@@ -40,14 +40,14 @@ namespace GameLogic
         
         private void UpdateSelectedHeroes(List<int> heroIndexes)
         {
-            _gameStateManager.UpdateSelectedHeroes(heroIndexes);
+            _userDataManager.UpdateSelectedHeroes(heroIndexes);
         }
 
         private async void HandleBattleStart()
         {
             try
             {
-                var selectedHeroes = _gameStateManager.SelectedHeroIndexes;
+                var selectedHeroes = _userDataManager.SelectedHeroIndexes;
                 if (selectedHeroes.Count != Constants.MaxSelectedHeroes) return;
                 
                 await _sceneTransitionService.LoadSceneAsync(Constants.BattleSceneIndex/*, postLoad: GameLogicEventManager.BroadcastBattleSceneLoaded*/);
@@ -86,8 +86,8 @@ namespace GameLogic
                 var heroIndex = aliveHeroIndexes[i];
                 // TODO: Update Hero Exp
             }
-            var newLevel = _gameStateManager.CurrentLevel + 1;
-            _gameStateManager.UpdateLevel(newLevel);
+            var newLevel = _userDataManager.CurrentLevel + 1;
+            _userDataManager.UpdateLevel(newLevel);
         }
 
         private void CheckHeroUnlock()
