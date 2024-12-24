@@ -1,13 +1,13 @@
 ﻿using GameLogic.Battle.Entity;
 using UnityEngine;
 
-namespace GameLogic.Battle
+namespace GameLogic.Battle.Combat
 {
-    public class CombatSystem
+    public class AttackHandler
     {
         public void ExecuteAttack(BattleEntity attacker, BattleEntity target)
         {
-            if (!attacker.IsAlive || !target.IsAlive)
+            if (attacker is not { IsAlive: true } || target is not { IsAlive: true })
             {
                 Debug.LogWarning("Invalid attack: One or both entities are dead.");
                 return;

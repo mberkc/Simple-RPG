@@ -8,7 +8,7 @@ namespace GameLogic
     /// <summary>
     /// Manipulates GameState and saves/loads via Progression Service
     /// </summary>
-    public class GameStateManager
+    public class GameStateManager // TODO: Rename to UserDataManager
     {
         private readonly ProgressionService _progressionService;
         private readonly GameState _gameState;

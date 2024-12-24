@@ -5,8 +5,6 @@ namespace GameStartupSystem.Bootstrapper.Utility
 {
     public static class BootstrapperUtility
     {
-        //internal static GameBootstrapper GameBootstrapper { get; private set; }
-
         private static GameBootstrapper _gameBootstrapper;
 
         public static async Task<bool> WaitForGameBootstrapperInitialization()

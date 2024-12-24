@@ -2,6 +2,7 @@
 using Core.EventManager.GameLogicEventManager;
 using Data;
 using GameLogic.Battle.BotStrategy;
+using GameLogic.Battle.Combat;
 using GameLogic.Battle.Entity;
 using UnityEngine;
 
@@ -9,23 +10,55 @@ namespace GameLogic.Battle
 {
     public class BattleManager
     {
-        private readonly CombatSystem _combatSystem;
+        private enum BattleState
+        {
+            Idle,
+            Initialize,
+            PlayerTurn,
+            OpponentTurn,
+            Victory,
+            Defeat
+        }
+        
+        private readonly CombatController _combatController;
         private readonly PlayerManager _playerManager;
         private readonly OpponentManager _opponentManager;
-        private BattleState _currentState = BattleState.Idle;
+        private BattleState currentState = BattleState.Idle;
         
-        public BattleManager(BattleEntityFactory entityFactory, CombatSystem combatSystem, GameState gameState, EntityService entityService, IBotStrategy botStrategy)
+        public BattleManager(AttackHandler attackHandler, GameState gameState, EntityService entityService, EntitySpawner entitySpawner, IBotStrategy botStrategy)
         {
-            _combatSystem = combatSystem;
-            _playerManager = new PlayerManager(entityFactory, gameState, entityService);
-            _opponentManager = new OpponentManager(entityFactory, gameState, entityService, botStrategy);
+            _playerManager = new PlayerManager(gameState, entityService, entitySpawner);
+            _opponentManager = new OpponentManager(gameState, entityService, entitySpawner, botStrategy);
+            _combatController = new CombatController(attackHandler, _playerManager, _opponentManager);
+            SubscribeEvents();
             ProcessState(BattleState.Initialize);
+        }
+        
+        public void Cleanup()
+        {
+            UnSubscribeEvents();
+        }
+        
+        private void SubscribeEvents()
+        {
+            GameLogicEventManager.OnBattleSceneLoaded += BattleSceneLoaded;
+            GameLogicEventManager.OnPlayerAttackRequested += HandlePlayerAttack;
+            _combatController.OnPlayerAttackFinished += PlayerTurnEnded;
+            _combatController.OnOpponentAttackFinished += OpponentTurnEnded;
+        }
+
+        private void UnSubscribeEvents()
+        {
+            GameLogicEventManager.OnBattleSceneLoaded -= BattleSceneLoaded;
+            GameLogicEventManager.OnPlayerAttackRequested -= HandlePlayerAttack;
+            _combatController.OnPlayerAttackFinished -= PlayerTurnEnded;
+            _combatController.OnOpponentAttackFinished -= OpponentTurnEnded;
         }
         
         private void ProcessState(BattleState state)
         {
-            _currentState = state;
-            switch (_currentState)
+            currentState = state;
+            switch (currentState)
             {
                 case BattleState.Initialize:
                     HandleInitialize();
@@ -53,61 +86,61 @@ namespace GameLogic.Battle
         {
             // Initialize things needed
             Debug.Log("Waiting for battle start!");
-            // Subscribe start battle event => BattleStarted()
         }
 
         private void HandlePlayerTurn()
         {
             Debug.Log("Player turn!");
-            // Subscribe player turn finish event => PlayerTurnEnded()
-            // Implement logic for player actions
             // Enable Player inputs
         }
         
-        private async void HandleOpponentTurn()
+        private void HandleOpponentTurn()
         {
             Debug.Log("Opponent turn!");
-            // Subscribe opponent turn finish event => OpponentTurnEnded()
-            await _opponentManager.HandleOpponentAttack(_playerManager.GetHeroEntities(), _combatSystem);
+            _combatController.HandleOpponentAttack();
         }
         
         private void CompleteBattle(bool victory)
         {
             Debug.Log("Battle completed!");
-            var aliveHeroIndexes = victory ? _playerManager.GetAliveHeroIndexes() : null;
+            var aliveHeroIndexes = victory ? _playerManager.GetAliveHeroIndexes : null;
             GameLogicEventManager.BroadcastBattleComplete(victory, aliveHeroIndexes)?.Invoke();
         }
 
-        #region Event Callbacks
-
-        private void BattleStarted()
+        private void StartBattle()
         {
             Debug.Log("Battle started!");
             ProcessState(BattleState.PlayerTurn);
         }
 
+        #region Event Callbacks
+
+        private void BattleSceneLoaded()
+        {
+            if(currentState != BattleState.Initialize) return;
+
+            StartBattle();
+        }
+        
+        private void HandlePlayerAttack(int attackerIndex)
+        {
+            _combatController.HandlePlayerAttack(attackerIndex);
+        }
+
         private void PlayerTurnEnded()
         {
             Debug.Log("Player turn ended!");
+            GameLogicEventManager.BroadcastPlayerTurnEnded?.Invoke();
             ProcessState(_opponentManager.CheckIfEnemyIsDefeated ? BattleState.Victory : BattleState.OpponentTurn);
         }
         
         private void OpponentTurnEnded()
         {
             Debug.Log("Player turn ended!");
+            GameLogicEventManager.BroadcastOpponentTurnEnded?.Invoke();
             ProcessState(_playerManager.CheckIfAllHeroesAreDefeated ? BattleState.Defeat : BattleState.PlayerTurn);
         }
 
         #endregion
     }
-}
-
-public enum BattleState
-{
-    Idle,
-    Initialize,
-    PlayerTurn,
-    OpponentTurn,
-    Victory,
-    Defeat
 }

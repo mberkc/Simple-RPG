@@ -10,6 +10,7 @@ namespace Core.EventManager.Internal
     {
         internal static event Action OnBattleStartRequested;
         internal static event Action<List<int>> OnHeroesUpdateRequested;
+        internal static event Action<int> OnPlayerAttackRequested;
 
         internal static void RaiseBattleStartRequested()
         {
@@ -19,6 +20,11 @@ namespace Core.EventManager.Internal
         internal static void RaiseHeroesUpdateRequested(List<int> heroIndexes)
         {
             OnHeroesUpdateRequested?.Invoke(heroIndexes);
+        }
+        
+        internal static void RaisePlayerAttackRequested(int attackerBoardIndex)
+        {
+            OnPlayerAttackRequested?.Invoke(attackerBoardIndex);
         }
     }
 }

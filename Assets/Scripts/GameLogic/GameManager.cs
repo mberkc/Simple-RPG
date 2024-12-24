@@ -49,11 +49,10 @@ namespace GameLogic
             {
                 var selectedHeroes = _gameStateManager.SelectedHeroIndexes;
                 if (selectedHeroes.Count != Constants.MaxSelectedHeroes) return;
-
-                var currentLevel = _gameStateManager.CurrentLevel;
-                // TODO Get current enemy index?
                 
                 await _sceneTransitionService.LoadSceneAsync(Constants.BattleSceneIndex/*, postLoad: GameLogicEventManager.BroadcastBattleSceneLoaded*/);
+                Debug.Log("Battle Scene Transition Complete!");
+                GameLogicEventManager.BroadcastBattleSceneLoaded?.Invoke();
             }
             catch (Exception e)
             {
@@ -65,12 +64,11 @@ namespace GameLogic
         {
             try
             {
-                if (victory)
-                    HandleBattleWin(aliveHeroIndexes);
+                if (victory) HandleBattleWin(aliveHeroIndexes);
 
                 CheckHeroUnlock();
-                
                 await _sceneTransitionService.LoadSceneAsync(Constants.HeroSelectionSceneIndex/*, postLoad: GameLogicEventManager.BroadcastHeroSelectionSceneLoaded*/);
+                Debug.Log("HeroSelection Scene Transition Complete!");
             }
             catch (Exception e)
             {

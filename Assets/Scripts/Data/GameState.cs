@@ -5,7 +5,7 @@ namespace Data
     /// <summary>
     /// Can only be manipulated by GameState Service. Don't access from other scripts.
     /// </summary>
-    public class GameState
+    public class GameState // TODO: Rename to UserData
     {
         public List<int> SelectedHeroIndexes { get; set; } = new ();
         public int CurrentLevel{ get; set; }

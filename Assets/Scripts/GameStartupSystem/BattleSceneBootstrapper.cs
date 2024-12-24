@@ -3,6 +3,7 @@ using Data;
 using GameLogic;
 using GameLogic.Battle;
 using GameLogic.Battle.BotStrategy;
+using GameLogic.Battle.Combat;
 using GameLogic.Battle.Entity;
 using GameStartupSystem.Bootstrapper;
 using GameStartupSystem.Bootstrapper.Utility;
@@ -29,7 +30,8 @@ namespace GameStartupSystem
             var entityService = ServiceLocator.Resolve<EntityService>();
             
             var gameState = gameStateManager.GetGameStateUI();
-            new BattleManager(new BattleEntityFactory(heroPrefab, enemyPrefab), new CombatSystem(), gameState, entityService, InitializeBotStrategy(botStrategyType));
+            var entityFactory = new BattleEntityFactory(heroPrefab, enemyPrefab);
+            new BattleManager(new AttackHandler(), gameState, entityService, new EntitySpawner(entityFactory), InitializeBotStrategy(botStrategyType));
 
             var battleSceneController = Instantiate(battleCanvasPrefab, transform).GetComponent<BattleSceneController>();
             battleSceneController.Initialize(gameState, entityService);

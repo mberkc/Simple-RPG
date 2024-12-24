@@ -3,48 +3,31 @@ using System.Linq;
 using Core;
 using Data;
 using GameLogic.Battle.Entity;
-using UnityEngine;
 
 namespace GameLogic.Battle
 {
     /// <summary>
-    /// Manages player-controlled heroes via UI input(s).
+    /// Manages player-controlled heroes
     /// </summary>
     public class PlayerManager
     {
         private readonly BattleEntity[] _heroEntities;
 
-        public PlayerManager(BattleEntityFactory entityFactory, GameState gameState, EntityService entityService)
+        public PlayerManager(GameState gameState, EntityService entityService, EntitySpawner entitySpawner)
         {
             _heroEntities = new BattleEntity[Constants.MaxSelectedHeroes];
-
             for (var i = 0; i < Constants.MaxSelectedHeroes; i++)
             {
                 var heroIndex = gameState.SelectedHeroIndexes[i];
                 var hero = entityService.GetHeroByIndex(heroIndex);
-                _heroEntities[i] = entityFactory.CreateHero(hero, GetHeroSpawnPosition(i));
+                _heroEntities[i] = entitySpawner.SpawnHero(hero, i);
             }
         }
         
-        public void HandlePlayerAttack(int attackerIndex, BattleEntity target, CombatSystem combatSystem)
-        {
-            var hero = _heroEntities[attackerIndex];
-            combatSystem.ExecuteAttack(hero, target);
-        }
-        
-        public BattleEntity[] GetHeroEntities() => _heroEntities;
+        public BattleEntity[] GetHeroEntities => _heroEntities;
         
         public bool CheckIfAllHeroesAreDefeated => _heroEntities.All(hero => !hero.IsAlive);
 
-        public List<int> GetAliveHeroIndexes()
-        {
-            return _heroEntities.Where(hero => hero.IsAlive).Select(hero => hero.Index).ToList();
-        }
-        
-        private Vector3 GetHeroSpawnPosition(int index)
-        {
-            // index based spawn position
-            return new Vector3(-2 + index * 2, 0, 0);
-        }
+        public List<int> GetAliveHeroIndexes => _heroEntities.Where(hero => hero.IsAlive).Select(hero => hero.Index).ToList();
     }
 }

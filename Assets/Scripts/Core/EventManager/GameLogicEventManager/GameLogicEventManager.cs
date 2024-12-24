@@ -11,6 +11,8 @@ namespace Core.EventManager.GameLogicEventManager
     {
         #region Invokers
         public static Action BroadcastBattleComplete(bool victory, List<int> aliveHeroes = null) => () => GameLogicInvokedEvents.BroadcastBattleComplete(victory, aliveHeroes);
+        public static Action BroadcastPlayerTurnEnded => GameLogicInvokedEvents.BroadcastPlayerTurnEnded;
+        public static Action BroadcastOpponentTurnEnded => GameLogicInvokedEvents.BroadcastOpponentTurnEnded;
         public static Action BroadcastBattleSceneLoaded => GameLogicInvokedEvents.BroadcastBattleSceneLoaded;
         public static Action BroadcastHeroSelectionSceneLoaded => GameLogicInvokedEvents.BroadcastHeroSelectionSceneLoaded;
 
@@ -22,6 +24,12 @@ namespace Core.EventManager.GameLogicEventManager
         {
             add => GameLogicInvokedEvents.OnBattleComplete += value;
             remove => GameLogicInvokedEvents.OnBattleComplete -= value;
+        }
+        
+        public static event Action OnBattleSceneLoaded
+        {
+            add => GameLogicInvokedEvents.OnBattleSceneLoaded += value;
+            remove => GameLogicInvokedEvents.OnBattleSceneLoaded -= value;
         }
         
         #region Invoked by UI Assembly
@@ -36,6 +44,12 @@ namespace Core.EventManager.GameLogicEventManager
         {
             add => UIInvokedEvents.OnHeroesUpdateRequested += value;
             remove => UIInvokedEvents.OnHeroesUpdateRequested -= value;
+        }
+        
+        public static event Action<int> OnPlayerAttackRequested
+        {
+            add => UIInvokedEvents.OnPlayerAttackRequested += value;
+            remove => UIInvokedEvents.OnPlayerAttackRequested -= value;
         }
 
         #endregion

@@ -13,12 +13,25 @@ namespace Core.EventManager.UIEventManager
         
         public static Action RaiseBattleStartRequested => UIInvokedEvents.RaiseBattleStartRequested;
         public static Action RaiseHeroesUpdateRequested(List<int> heroIndexes) => () => UIInvokedEvents.RaiseHeroesUpdateRequested(heroIndexes);
-
+        public static Action RaisePlayerAttackRequested(int attackerBoardIndex) => () => UIInvokedEvents.RaisePlayerAttackRequested(attackerBoardIndex);
+        
         #endregion
 
         #region Listeners
 
         #region Invoked by GameLogic Assembly
+        
+        public static event Action OnPlayerTurnEnded
+        {
+            add => GameLogicInvokedEvents.OnPlayerTurnEnded += value;
+            remove => GameLogicInvokedEvents.OnPlayerTurnEnded -= value;
+        }
+        
+        public static event Action OnOpponentTurnEnded
+        {
+            add => GameLogicInvokedEvents.OnOpponentTurnEnded += value;
+            remove => GameLogicInvokedEvents.OnOpponentTurnEnded -= value;
+        }
 
         public static event Action OnBattleSceneLoaded
         {

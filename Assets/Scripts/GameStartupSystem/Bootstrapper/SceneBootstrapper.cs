@@ -9,8 +9,6 @@ namespace GameStartupSystem.Bootstrapper
     /// </summary>
     public abstract class SceneBootstrapper : Bootstrapper
     {
-        //protected static GameBootstrapper GameBootstrapper => BootstrapperUtility.GameBootstrapper;
-        
         /// <summary>
         /// Don't override if it's not required!
         /// </summary>
