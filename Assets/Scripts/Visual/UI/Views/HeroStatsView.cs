@@ -59,16 +59,16 @@ namespace Visual.UI.Views
             experienceText.text = heroData.Experience.ToString(CultureInfo.InvariantCulture);
         }
 
-        private void UpdatePosition(Vector3 transformPosition)
-        {
-            panelTransform.position = transformPosition;
-        }
-
         private void EnableAnimation(bool enable)
         {
             isEnabled = enable;
             canvasGroup.DOKill(true);
             canvasGroup.DOFade(enable ? 1f : 0f, Constants.NormalAnimationSpeed);
+        }
+
+        private void UpdatePosition(Vector2 screenPosition)
+        {
+            panelTransform.position = screenPosition;
         }
     }
 }

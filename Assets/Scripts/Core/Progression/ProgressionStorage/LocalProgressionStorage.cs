@@ -9,7 +9,7 @@ namespace Core.Progression.ProgressionStorage
 {
     public class LocalProgressionStorage : IProgressionStorage
     {
-        private readonly string _savePath = Path.Combine(Application.persistentDataPath, "progression.dat");
+        private readonly string _savePath = Path.Combine(Application.persistentDataPath, "progression.txt");
         private readonly IEncryptionService _encryptionService;
         private readonly ISerializationService _serializationService;
         
