@@ -52,6 +52,11 @@ namespace GameLogic
             await _progressionService.SaveProgressionAsync(progressionData);
         }
         
+        public UserData GetUserData()
+        {
+            return _userData;
+        }
+        
         // Extracts UserData for DI
         public UserData GetUserDataUI()
         {

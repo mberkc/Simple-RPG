@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Core
 {
     public static class Constants
@@ -11,6 +13,8 @@ namespace Core
         
         public const int EntityDefaultHealth = 100;
         public const int EntityDefaultAttackPower = 10;
+
+        public const int EnemyBoardIndex = 3;
 
         #region Hero
 
@@ -34,6 +38,12 @@ namespace Core
 
         public const int HeroSelectionSceneIndex = 0;
         public const int BattleSceneIndex = 1;
+
+        #endregion
+
+        #region Visual
+
+        public static readonly int ShaderColorPropertyId = Shader.PropertyToID("_Color"); // BaseColor?
 
         #endregion
     }

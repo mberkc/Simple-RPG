@@ -1,5 +1,5 @@
-﻿using Data.ScriptableObjects;
-using UnityEngine;
+﻿using Core;
+using Data.ScriptableObjects;
 
 namespace GameLogic.Battle.Entity
 {
@@ -14,25 +14,12 @@ namespace GameLogic.Battle.Entity
 
         public BattleEntity SpawnHero(HeroData heroData, int boardIndex)
         {
-            var position = GetHeroSpawnPosition(boardIndex);
-            return _entityFactory.CreateHero(heroData, position);
+            return _entityFactory.CreateHero(heroData, boardIndex);
         }
 
         public BattleEntity SpawnEnemy(EnemyData enemyData)
         {
-            var position = GetEnemySpawnPosition();
-            return _entityFactory.CreateEnemy(enemyData, position);
-        }
-
-        private Vector3 GetHeroSpawnPosition(int index)
-        {
-            // index based spawn position
-            return new Vector3(-2 + index * 2, 0, 0);
-        }
-
-        private Vector3 GetEnemySpawnPosition()
-        {
-            return Vector3.zero;
+            return _entityFactory.CreateEnemy(enemyData, Constants.EnemyBoardIndex);
         }
     }
 }

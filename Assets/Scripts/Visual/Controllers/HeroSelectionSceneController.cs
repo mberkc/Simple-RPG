@@ -4,16 +4,17 @@ using Core;
 using Core.EventManager.UIEventManager;
 using Data;
 using TMPro;
-using UI.Views;
 using UnityEngine;
 using UnityEngine.UI;
+using Visual.UI.Views;
+using Visual.UI.Views.HeroSelection;
 
-namespace UI.Controllers
+namespace Visual.Controllers
 {
     /// <summary>
     /// Manages hero selection scene and handles user interactions.
     /// </summary>
-    public class HeroSelectionSceneController : SceneController
+    public class HeroSelectionSceneController : MonoBehaviour
     {
         [SerializeField] private Transform heroGrid;
         [SerializeField] private HeroStatsView heroStatsView;
@@ -22,9 +23,9 @@ namespace UI.Controllers
 
         private List<HeroCardView> selectedHeroes = new ();
 
-        public override void Initialize(UserData userData, EntityService entityService)
+        public void Initialize(UserData userData, EntityService entityService)
         {
-            UpdateLevelText(userData.CurrentLevel);
+            levelText.text = $"Level: {userData.CurrentLevel}";
             battleButton.onClick.AddListener(BattleButtonClicked);
             InitializeHeroCards(userData.SelectedHeroIndexes, entityService);
             UpdateBattleButton();
@@ -105,11 +106,6 @@ namespace UI.Controllers
         {
             var heroIndexes = selectedHeroes.Select(hero => hero.HeroData.Index).ToList();
             UIEventManager.RaiseHeroesUpdateRequested(heroIndexes)?.Invoke();
-        }
-
-        private void UpdateLevelText(int level)
-        {
-            levelText.text = $"Level: {level}";
         }
 
         private void UpdateBattleButton()

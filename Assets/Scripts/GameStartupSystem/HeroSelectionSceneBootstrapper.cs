@@ -2,8 +2,8 @@
 using GameLogic;
 using GameStartupSystem.Bootstrapper;
 using GameStartupSystem.Bootstrapper.Utility;
-using UI.Controllers;
 using UnityEngine;
+using Visual.Controllers;
 
 namespace GameStartupSystem
 {
@@ -16,13 +16,11 @@ namespace GameStartupSystem
             if (heroSelectionCanvasPrefab == null) return;
 
             // Dependencies
-            var gameStateManager = ServiceLocator.Resolve<UserDataManager>();
+            var userDataManager = ServiceLocator.Resolve<UserDataManager>();
             var entityService = ServiceLocator.Resolve<EntityService>();
             
-            var gameState = gameStateManager.GetUserDataUI();
-            
             var heroSelectionSceneController = Instantiate(heroSelectionCanvasPrefab, transform).GetComponent<HeroSelectionSceneController>();
-            heroSelectionSceneController.Initialize(gameState, entityService);
+            heroSelectionSceneController.Initialize(userDataManager.GetUserDataUI(), entityService);
         }
 
         protected override void OnDestroy()

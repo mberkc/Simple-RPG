@@ -13,6 +13,9 @@ namespace Core.EventManager.GameLogicEventManager
         public static Action BroadcastBattleComplete(bool victory, List<int> aliveHeroes = null) => () => GameLogicInvokedEvents.BroadcastBattleComplete(victory, aliveHeroes);
         public static Action BroadcastPlayerTurnEnded => GameLogicInvokedEvents.BroadcastPlayerTurnEnded;
         public static Action BroadcastOpponentTurnEnded => GameLogicInvokedEvents.BroadcastOpponentTurnEnded;
+        public static Action BroadcastEntityAttacked(int boardIndex) => () => GameLogicInvokedEvents.BroadcastEntityAttacked(boardIndex);
+        public static Action BroadcastEntityDamaged(int boardIndex, float damage, float targetHealth) => () => GameLogicInvokedEvents.BroadcastEntityDamaged(boardIndex, damage, targetHealth);
+        public static Action BroadcastEntityDied(int boardIndex) => () => GameLogicInvokedEvents.BroadcastEntityDied(boardIndex);
         public static Action BroadcastBattleSceneLoaded => GameLogicInvokedEvents.BroadcastBattleSceneLoaded;
         public static Action BroadcastHeroSelectionSceneLoaded => GameLogicInvokedEvents.BroadcastHeroSelectionSceneLoaded;
 
@@ -38,6 +41,12 @@ namespace Core.EventManager.GameLogicEventManager
         {
             add => UIInvokedEvents.OnBattleStartRequested += value;
             remove => UIInvokedEvents.OnBattleStartRequested -= value;
+        }
+        
+        public static event Action OnReturnToHeroSelectionRequested
+        {
+            add => UIInvokedEvents.OnReturnToHeroSelectionRequested += value;
+            remove => UIInvokedEvents.OnReturnToHeroSelectionRequested -= value;
         }
         
         public static event Action<List<int>> OnHeroesUpdateRequested

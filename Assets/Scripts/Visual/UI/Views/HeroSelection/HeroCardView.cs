@@ -6,9 +6,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using PointerEventUtility;
+using Visual.UI.PointerEventUtility;
 
-namespace UI.Views
+namespace Visual.UI.Views.HeroSelection
 {
     public class HeroCardView : PointerEventForwarderTarget
     {
@@ -47,6 +47,8 @@ namespace UI.Views
             lockedVisual.SetActive(!unlocked);
         }
 
+        #region Click & Hold Actions
+
         public override void OnPointerDown(PointerEventData eventData)
         {
             OnCardClicked();
@@ -83,5 +85,7 @@ namespace UI.Views
         {
             OnHeroHold?.Invoke(this);
         }
+
+        #endregion
     }
 }

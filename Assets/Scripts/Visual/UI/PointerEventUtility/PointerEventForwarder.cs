@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace PointerEventUtility
+namespace Visual.UI.PointerEventUtility
 {
     public class PointerEventForwarder : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
     {

@@ -7,8 +7,9 @@ using GameLogic.Battle.Combat;
 using GameLogic.Battle.Entity;
 using GameStartupSystem.Bootstrapper;
 using GameStartupSystem.Bootstrapper.Utility;
-using UI.Controllers;
 using UnityEngine;
+using Visual.Controllers;
+using Visual.Rendering;
 
 namespace GameStartupSystem
 {
@@ -21,20 +22,23 @@ namespace GameStartupSystem
         [SerializeField] private GameObject heroPrefab;
         [SerializeField] private GameObject enemyPrefab;
         
+        private BattleManager battleManager;
+        
         public override void Initialize()
         {
             if (battleCanvasPrefab == null) return;
             
             // Dependencies
-            var gameStateManager = ServiceLocator.Resolve<UserDataManager>();
+            var userDataManager = ServiceLocator.Resolve<UserDataManager>();
             var entityService = ServiceLocator.Resolve<EntityService>();
-            
-            var gameState = gameStateManager.GetUserDataUI();
-            var entityFactory = new BattleEntityFactory(heroPrefab, enemyPrefab);
-            new BattleManager(new AttackHandler(), gameState, entityService, new EntitySpawner(entityFactory), InitializeBotStrategy(botStrategyType));
 
+            var attackHandler = new AttackHandler();
+            var entitySpawner = new EntitySpawner(new BattleEntityFactory());
+            battleManager = new BattleManager(attackHandler, userDataManager.GetUserData(), entityService, entitySpawner, InitializeBotStrategy(botStrategyType));
+
+            
             var battleSceneController = Instantiate(battleCanvasPrefab, transform).GetComponent<BattleSceneController>();
-            battleSceneController.Initialize(gameState, entityService);
+            battleSceneController.Initialize(userDataManager.GetUserDataUI(), entityService, new EntityRendererFactory(heroPrefab, enemyPrefab));
         }
         private IBotStrategy InitializeBotStrategy(BotStrategyType type)
         {
@@ -50,6 +54,7 @@ namespace GameStartupSystem
         protected override void OnDestroy()
         {
             // Cleanup Behavior
+            battleManager.Cleanup();
         }
     }
 }

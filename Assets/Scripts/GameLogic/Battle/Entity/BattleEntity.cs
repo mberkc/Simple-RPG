@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using Core.EventManager.GameLogicEventManager;
+using UnityEngine;
 
 namespace GameLogic.Battle.Entity
 {
     public class BattleEntity
     {
-        //public readonly int BoardIndex;
+        public readonly int BoardIndex;
         public readonly int Index;
         public readonly string EntityName;
         public readonly float CurrentAttackPower; // can be changed later but currently AP is static during battle.
@@ -12,13 +13,13 @@ namespace GameLogic.Battle.Entity
         
         public bool IsAlive => CurrentHealth > 0;
 
-        public BattleEntity(string name, int index, float health, float attackPower)
+        public BattleEntity(string name, int index, float health, float attackPower, int boardIndex)
         {
             EntityName = name;
             Index = index;
             CurrentHealth = health;
             CurrentAttackPower = attackPower;
-            //BoardIndex = boardIndex;
+            BoardIndex = boardIndex;
         }
         
         /// <summary>
@@ -30,8 +31,8 @@ namespace GameLogic.Battle.Entity
         {
             CurrentHealth -= damage;
             Debug.Log($"{EntityName} took {damage} damage. Remaining health: {CurrentHealth}");
-            // Take damage action => Update Health bar
-
+            GameLogicEventManager.BroadcastEntityDamaged(BoardIndex, damage, CurrentHealth)?.Invoke();
+            
             if (IsAlive) return false;
             
             Die();
@@ -41,6 +42,7 @@ namespace GameLogic.Battle.Entity
         private void Die()
         {
             Debug.Log($"{EntityName} has died.");
+            GameLogicEventManager.BroadcastEntityDied(BoardIndex)?.Invoke();
             // Die action => Dead animation
         }
     }

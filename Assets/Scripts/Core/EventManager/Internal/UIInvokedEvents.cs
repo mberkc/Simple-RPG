@@ -9,12 +9,18 @@ namespace Core.EventManager.Internal
     internal static class UIInvokedEvents
     {
         internal static event Action OnBattleStartRequested;
+        internal static event Action OnReturnToHeroSelectionRequested;
         internal static event Action<List<int>> OnHeroesUpdateRequested;
         internal static event Action<int> OnPlayerAttackRequested;
-
+        
         internal static void RaiseBattleStartRequested()
         {
             OnBattleStartRequested?.Invoke();
+        }
+        
+        internal static void RaiseReturnToHeroSelectionRequested()
+        {
+            OnReturnToHeroSelectionRequested?.Invoke();
         }
         
         internal static void RaiseHeroesUpdateRequested(List<int> heroIndexes)

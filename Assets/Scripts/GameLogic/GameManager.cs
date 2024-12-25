@@ -19,28 +19,26 @@ namespace GameLogic
             SubscribeEvents();
         }
         
-        public void Cleanup()
+        
+        public void Cleanup() // Call on Parent MonoBehaviour OnDestroy if needed (currently GameManager exists during game).
         {
             UnSubscribeEvents();
         }
         
         private void SubscribeEvents()
         {
-            GameLogicEventManager.OnHeroesUpdateRequested += UpdateSelectedHeroes;
             GameLogicEventManager.OnBattleStartRequested += HandleBattleStart;
+            GameLogicEventManager.OnReturnToHeroSelectionRequested += ReturnToHeroSelection;
+            GameLogicEventManager.OnHeroesUpdateRequested += UpdateSelectedHeroes;
             GameLogicEventManager.OnBattleComplete += HandleBattleComplete;
         }
 
         private void UnSubscribeEvents()
         {
-            GameLogicEventManager.OnHeroesUpdateRequested -= UpdateSelectedHeroes;
             GameLogicEventManager.OnBattleStartRequested -= HandleBattleStart;
+            GameLogicEventManager.OnReturnToHeroSelectionRequested -= ReturnToHeroSelection;
+            GameLogicEventManager.OnHeroesUpdateRequested -= UpdateSelectedHeroes;
             GameLogicEventManager.OnBattleComplete -= HandleBattleComplete;
-        }
-        
-        private void UpdateSelectedHeroes(List<int> heroIndexes)
-        {
-            _userDataManager.UpdateSelectedHeroes(heroIndexes);
         }
 
         private async void HandleBattleStart()
@@ -56,24 +54,33 @@ namespace GameLogic
             }
             catch (Exception e)
             {
-                Debug.LogError($"StartBattle failed! Exception: {e.Message}");
+                Debug.LogError($"Battle Start failed! Exception: {e.Message}");
             }
         }
         
-        private async void HandleBattleComplete(bool victory, List<int> aliveHeroIndexes)
+        private async void ReturnToHeroSelection()
         {
             try
             {
-                if (victory) HandleBattleWin(aliveHeroIndexes);
-
-                CheckHeroUnlock();
                 await _sceneTransitionService.LoadSceneAsync(Constants.HeroSelectionSceneIndex/*, postLoad: GameLogicEventManager.BroadcastHeroSelectionSceneLoaded*/);
                 Debug.Log("HeroSelection Scene Transition Complete!");
             }
             catch (Exception e)
             {
-                Debug.LogError($"FinishBattle failed! Exception: {e.Message}");
+                Debug.LogError($"Return to HeroSelection Scene failed! Exception: {e.Message}");
             }
+        }
+        
+        private void UpdateSelectedHeroes(List<int> heroIndexes)
+        {
+            _userDataManager.UpdateSelectedHeroes(heroIndexes);
+        }
+        
+        private void HandleBattleComplete(bool victory, List<int> aliveHeroIndexes)
+        {
+            if (victory) HandleBattleWin(aliveHeroIndexes);
+
+            CheckHeroUnlock();
         }
 
         private void HandleBattleWin(List<int> aliveHeroIndexes)

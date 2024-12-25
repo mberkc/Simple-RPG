@@ -48,5 +48,5 @@ MonoBehaviour:
   specifiedSeedEnabled: 1
   randomSeed: 142312312
   battleCanvasPrefab: {fileID: 4267894884733243430, guid: d5d9b30f08784e948b885f415c97ba1e, type: 3}
-  heroPrefab: {fileID: 0}
-  enemyPrefab: {fileID: 0}
+  heroPrefab: {fileID: 5681719209290159652, guid: 23e7e489773fc8a43bf0229fde72cc32, type: 3}
+  enemyPrefab: {fileID: 5681719209290159652, guid: 94394688181434041a066243c1ac617c, type: 3}

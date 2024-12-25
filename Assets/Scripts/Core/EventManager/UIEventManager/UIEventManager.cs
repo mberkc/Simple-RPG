@@ -12,6 +12,7 @@ namespace Core.EventManager.UIEventManager
         #region Invokers
         
         public static Action RaiseBattleStartRequested => UIInvokedEvents.RaiseBattleStartRequested;
+        public static Action RaiseReturnToHeroSelectionRequested => UIInvokedEvents.RaiseReturnToHeroSelectionRequested;
         public static Action RaiseHeroesUpdateRequested(List<int> heroIndexes) => () => UIInvokedEvents.RaiseHeroesUpdateRequested(heroIndexes);
         public static Action RaisePlayerAttackRequested(int attackerBoardIndex) => () => UIInvokedEvents.RaisePlayerAttackRequested(attackerBoardIndex);
         
@@ -20,6 +21,12 @@ namespace Core.EventManager.UIEventManager
         #region Listeners
 
         #region Invoked by GameLogic Assembly
+        
+        public static event Action<bool, List<int>> OnBattleComplete
+        {
+            add => GameLogicInvokedEvents.OnBattleComplete += value;
+            remove => GameLogicInvokedEvents.OnBattleComplete -= value;
+        }
         
         public static event Action OnPlayerTurnEnded
         {
@@ -31,6 +38,24 @@ namespace Core.EventManager.UIEventManager
         {
             add => GameLogicInvokedEvents.OnOpponentTurnEnded += value;
             remove => GameLogicInvokedEvents.OnOpponentTurnEnded -= value;
+        }
+        
+        public static event Action<int> OnEntityAttacked
+        {
+            add => GameLogicInvokedEvents.OnEntityAttacked += value;
+            remove => GameLogicInvokedEvents.OnEntityAttacked -= value;
+        }
+        
+        public static event Action<int, float, float>  OnEntityDamaged
+        {
+            add => GameLogicInvokedEvents.OnEntityDamaged += value;
+            remove => GameLogicInvokedEvents.OnEntityDamaged -= value;
+        }
+        
+        public static event Action<int> OnEntityDied
+        {
+            add => GameLogicInvokedEvents.OnEntityDied += value;
+            remove => GameLogicInvokedEvents.OnEntityDied -= value;
         }
 
         public static event Action OnBattleSceneLoaded

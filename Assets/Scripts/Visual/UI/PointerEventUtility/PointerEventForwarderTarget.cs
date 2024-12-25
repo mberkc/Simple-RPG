@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace PointerEventUtility
+namespace Visual.UI.PointerEventUtility
 {
     public abstract class PointerEventForwarderTarget: MonoBehaviour
     {

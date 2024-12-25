@@ -11,6 +11,9 @@ namespace Core.EventManager.Internal
         internal static event Action<bool, List<int>> OnBattleComplete;
         internal static event Action OnPlayerTurnEnded;
         internal static event Action OnOpponentTurnEnded;
+        internal static event Action<int> OnEntityAttacked;
+        internal static event Action<int, float, float> OnEntityDamaged;
+        internal static event Action<int> OnEntityDied;
         internal static event Action OnBattleSceneLoaded;
         internal static event Action OnHeroSelectionSceneLoaded;
         
@@ -28,7 +31,22 @@ namespace Core.EventManager.Internal
         {
             OnOpponentTurnEnded?.Invoke();
         }
-
+        
+        internal static void BroadcastEntityAttacked(int boardIndex)
+        {
+            OnEntityAttacked?.Invoke(boardIndex);
+        }
+        
+        internal static void BroadcastEntityDamaged(int boardIndex, float damage, float targetHealth)
+        {
+            OnEntityDamaged?.Invoke(boardIndex, damage, targetHealth);
+        }
+        
+        internal static void BroadcastEntityDied(int boardIndex)
+        {
+            OnEntityDied?.Invoke(boardIndex);
+        }
+//
         internal static void BroadcastBattleSceneLoaded()
         {
             OnBattleSceneLoaded?.Invoke();

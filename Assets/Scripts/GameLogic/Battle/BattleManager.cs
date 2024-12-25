@@ -34,6 +34,7 @@ namespace GameLogic.Battle
             ProcessState(BattleState.Initialize);
         }
         
+        // TODO: Call on Parent OnDestroy
         public void Cleanup()
         {
             UnSubscribeEvents();
