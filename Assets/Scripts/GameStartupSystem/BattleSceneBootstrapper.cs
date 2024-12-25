@@ -38,7 +38,7 @@ namespace GameStartupSystem
 
             
             var battleSceneController = Instantiate(battleCanvasPrefab, transform).GetComponent<BattleSceneController>();
-            battleSceneController.Initialize(userDataManager.GetUserDataUI(), entityService, new EntityRendererFactory(heroPrefab, enemyPrefab));
+            battleSceneController.Initialize(userDataManager.GetUserDataVisual(), entityService, new EntityRendererFactory(heroPrefab, enemyPrefab));
         }
         private IBotStrategy InitializeBotStrategy(BotStrategyType type)
         {

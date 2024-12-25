@@ -1,5 +1,4 @@
 ﻿using System;
-using Core.EventManager.GameLogicEventManager;
 using UnityEngine;
 
 namespace GameLogic.Battle.Combat
@@ -28,10 +27,10 @@ namespace GameLogic.Battle.Combat
         {
             var attacker = _playerManager.GetHeroEntities[attackerIndex];
             var target = _opponentManager.GetEnemyEntity;
-
-            Debug.Log($"Player's {attacker.EntityName} is attacking {target.EntityName}.");
-            GameLogicEventManager.BroadcastEntityAttacked(attacker.BoardIndex)?.Invoke();
-            _attackHandler.ExecuteAttack(attacker, target);
+            Debug.Log($"Player's {attacker.EntityName} is trying to attacking {target.EntityName}.");
+            
+            if(!_attackHandler.ExecuteAttack(attacker, target)) return;
+            
             OnPlayerAttackFinished?.Invoke();
         }
 
@@ -42,10 +41,10 @@ namespace GameLogic.Battle.Combat
                 var attacker = _opponentManager.GetEnemyEntity;
                 var availableTargets = _playerManager.GetHeroEntities;
                 var target = await _opponentManager.GetTarget(availableTargets);
-            
-                Debug.Log($"Opponent's {attacker.EntityName} is attacking {target.EntityName}.");
-                GameLogicEventManager.BroadcastEntityAttacked(attacker.BoardIndex)?.Invoke();
-                _attackHandler.ExecuteAttack(attacker, target);
+                Debug.Log($"Opponent's {attacker.EntityName} is trying to attacking {target.EntityName}.");
+                
+                if(!_attackHandler.ExecuteAttack(attacker, target)) return;
+                
                 OnOpponentAttackFinished?.Invoke();
             }
             catch (Exception e)

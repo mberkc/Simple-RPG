@@ -19,7 +19,7 @@ namespace GameLogic.Battle.Entity
 
         public BattleEntity SpawnEnemy(EnemyData enemyData)
         {
-            return _entityFactory.CreateEnemy(enemyData, Constants.EnemyBoardIndex);
+            return _entityFactory.CreateEnemy(enemyData, Constants.EnemyBoardIndex); // Equal to hero number.
         }
     }
 }

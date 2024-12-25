@@ -20,7 +20,7 @@ namespace GameStartupSystem
             var entityService = ServiceLocator.Resolve<EntityService>();
             
             var heroSelectionSceneController = Instantiate(heroSelectionCanvasPrefab, transform).GetComponent<HeroSelectionSceneController>();
-            heroSelectionSceneController.Initialize(userDataManager.GetUserDataUI(), entityService);
+            heroSelectionSceneController.Initialize(userDataManager.GetUserDataVisual(), entityService);
         }
 
         protected override void OnDestroy()

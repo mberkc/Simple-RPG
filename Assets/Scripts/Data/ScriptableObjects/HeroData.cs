@@ -23,10 +23,9 @@ namespace Data.ScriptableObjects
         /// <returns></returns>
         public bool Unlock()
         {
-            if(!unlocked) return false;
+            if(unlocked) return false;
             
-            unlocked = true;
-            return true;
+            return unlocked = true;
         }
 
         public void GainExperience(int amount)
@@ -40,12 +39,10 @@ namespace Data.ScriptableObjects
         
         private void LevelUp()
         {
-            level++;
+            ++level;
             experience -= Constants.HeroLevelUpExperienceThreshold;
             Health *= Constants.HeroLevelUpHealthModifier;
             AttackPower *= Constants.HeroLevelUpAttackPowerModifier;
-            
-            // Notify
         }
 
 #if UNITY_EDITOR

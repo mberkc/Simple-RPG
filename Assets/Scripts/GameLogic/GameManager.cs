@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Core;
 using Core.EventManager.GameLogicEventManager;
+using GameLogic.Battle;
 using UnityEngine;
 
 namespace GameLogic
@@ -10,12 +11,13 @@ namespace GameLogic
     {
         private readonly UserDataManager _userDataManager;
         private readonly SceneTransitionService _sceneTransitionService;
+        private readonly HeroProgressionService _heroProgressionService;
         
-        public GameManager(UserDataManager userDataManager, SceneTransitionService sceneTransitionService)
+        public GameManager(UserDataManager userDataManager, SceneTransitionService sceneTransitionService, HeroProgressionService heroProgressionService)
         {
             _userDataManager = userDataManager;
             _sceneTransitionService = sceneTransitionService;
-
+            _heroProgressionService = heroProgressionService;
             SubscribeEvents();
         }
         
@@ -78,28 +80,13 @@ namespace GameLogic
         
         private void HandleBattleComplete(bool victory, List<int> aliveHeroIndexes)
         {
-            if (victory) HandleBattleWin(aliveHeroIndexes);
+            var level = _userDataManager.CurrentLevel;
+            var playAmount = _userDataManager.BattlePlayAmount + 1;
+            if (victory) 
+                ++level;
 
-            CheckHeroUnlock();
-        }
-
-        private void HandleBattleWin(List<int> aliveHeroIndexes)
-        {
-            if(aliveHeroIndexes == null || aliveHeroIndexes.Count == 0) return;
-            
-            var count = aliveHeroIndexes.Count;
-            for (var i = 0; i < count; i++)
-            {
-                var heroIndex = aliveHeroIndexes[i];
-                // TODO: Update Hero Exp
-            }
-            var newLevel = _userDataManager.CurrentLevel + 1;
-            _userDataManager.UpdateLevel(newLevel);
-        }
-
-        private void CheckHeroUnlock()
-        {
-            // TODO: Check Hero Unlock, if unlocked heroes < 10 , then unlock a new hero on every 5th game.
+            _heroProgressionService.CheckHeroProgression(victory, aliveHeroIndexes, playAmount);
+            _userDataManager.UpdateLevelAndPlayAmount(level, playAmount);
         }
     }
 }

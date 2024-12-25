@@ -12,30 +12,33 @@ namespace GameLogic
     {
         private readonly ProgressionService _progressionService;
         private readonly UserData _userData;
-        //private readonly UserDataUI _userDataUI;
+        //private readonly UserDataVisual _userDataVisual;
         
         private ProgressionData progressionData;
 
         public UserDataManager(UserData userData, ProgressionService progressionService)
         {
             _userData = userData;
-            //_userDataUI = userDataUI;
+            //_userDataVisual = _userDataVisual;
             _progressionService = progressionService;
         }
         
+        public int BattlePlayAmount => _userData.BattlePlayAmount;
         public int CurrentLevel => _userData.CurrentLevel;
         public List<int> SelectedHeroIndexes => _userData.SelectedHeroIndexes;
 
         public async Task InitializeUserDataAsync()
         {
             progressionData = await _progressionService.LoadProgressionAsync();
+            _userData.BattlePlayAmount = progressionData.BattlePlayAmount;
             _userData.CurrentLevel = progressionData.CurrentLevel;
             _userData.SelectedHeroIndexes = progressionData.SelectedHeroIndexes;
         }
 
-        public void UpdateLevel(int level)
+        public void UpdateLevelAndPlayAmount(int level, int playAmount)
         {
             _userData.CurrentLevel = level;
+            _userData.BattlePlayAmount = playAmount;
             SaveUserDataAsync();
         }
 
@@ -47,6 +50,7 @@ namespace GameLogic
 
         private async Task SaveUserDataAsync()
         {
+            progressionData.BattlePlayAmount = _userData.BattlePlayAmount;
             progressionData.CurrentLevel = _userData.CurrentLevel;
             progressionData.SelectedHeroIndexes = _userData.SelectedHeroIndexes;
             await _progressionService.SaveProgressionAsync(progressionData);
@@ -57,9 +61,10 @@ namespace GameLogic
             return _userData;
         }
         
-        // Extracts UserData for DI
-        public UserData GetUserDataUI()
+        // Extracts UserData for DI (Visual Assembly)
+        public UserData GetUserDataVisual()
         {
+            // _userDataVisual
             return _userData;
         }
     }

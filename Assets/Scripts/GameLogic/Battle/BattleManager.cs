@@ -139,7 +139,7 @@ namespace GameLogic.Battle
         
         private void OpponentTurnEnded()
         {
-            Debug.Log("Player turn ended!");
+            Debug.Log("Opponent turn ended!");
             ProcessState(_playerManager.CheckIfAllHeroesAreDefeated ? BattleState.Defeat : BattleState.PlayerTurn);
         }
 

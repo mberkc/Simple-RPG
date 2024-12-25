@@ -9,14 +9,16 @@ namespace Data
     {
         public List<int> SelectedHeroIndexes { get; set; } = new ();
         public int CurrentLevel{ get; set; }
+        public int BattlePlayAmount{ get; set; }
     }
     
     /// <summary>
-    /// UserData for UI
+    /// UserData for Visual Assembly
     /// </summary>
-    public class UserDataUI
+    public class UserDataVisual
     {
         public List<int> SelectedHeroIndexes { get; set; } = new ();
         public int CurrentLevel { get; set; }
+        public int BattlePlayAmount{ get; set; }
     }
 }

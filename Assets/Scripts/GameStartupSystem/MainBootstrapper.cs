@@ -8,6 +8,7 @@ using Core.Serialization;
 using Data;
 using Data.ScriptableObjects;
 using GameLogic;
+using GameLogic.Battle;
 using GameStartupSystem.Bootstrapper;
 using GameStartupSystem.Bootstrapper.Utility;
 using UnityEngine;
@@ -31,10 +32,9 @@ namespace GameStartupSystem
             {
                 Debug.Log("Initializing Main Bootstrapper!");
                 
-                var progressionService = await InitializeProgressionService();
-                var userDataManager = new UserDataManager(new UserData(), progressionService);
+                var userDataManager = new UserDataManager(new UserData(), InitializeProgressionService());
                 var entityService = new EntityService(heroes, enemies);
-                new GameManager(userDataManager, new SceneTransitionService());
+                new GameManager(userDataManager, new SceneTransitionService(), new HeroProgressionService(userDataManager, entityService));
 
                 RegisterServices(userDataManager, entityService);
 
@@ -58,13 +58,12 @@ namespace GameStartupSystem
 
         #region Progression Service
 
-        private async Task<ProgressionService> InitializeProgressionService()
+        private ProgressionService InitializeProgressionService()
         {
             var encryptionService = InitializeEncryptionService(encryptionType);
             var serializationService = InitializeSerializationService(serializationType);
             var progressionStorage = InitializeProgressionStorage(storageType, encryptionService, serializationService);
             var progressionService = new ProgressionService(progressionStorage);
-            await progressionService.LoadProgressionAsync();
             return progressionService;
         }
         

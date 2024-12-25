@@ -379,6 +379,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleSceneBootstrapper
       objectReference: {fileID: 0}
+    - target: {fileID: 4817965047016034913, guid: 9cfa1cd0b9fd80b4a9a6254d83d98357, type: 3}
+      propertyPath: randomSeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4817965047016034913, guid: 9cfa1cd0b9fd80b4a9a6254d83d98357, type: 3}
+      propertyPath: specifiedSeedEnabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
