@@ -50,3 +50,4 @@ MonoBehaviour:
   battleCanvasPrefab: {fileID: 4267894884733243430, guid: d5d9b30f08784e948b885f415c97ba1e, type: 3}
   heroPrefab: {fileID: 5681719209290159652, guid: 23e7e489773fc8a43bf0229fde72cc32, type: 3}
   enemyPrefab: {fileID: 5681719209290159652, guid: 94394688181434041a066243c1ac617c, type: 3}
+  damageValueSpawnerPrefab: {fileID: 2444643112699603175, guid: e0d2fc2236aaed7479e23f433795ccff, type: 3}

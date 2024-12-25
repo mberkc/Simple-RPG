@@ -10,6 +10,7 @@ using GameStartupSystem.Bootstrapper.Utility;
 using UnityEngine;
 using Visual.Controllers;
 using Visual.Rendering;
+using Visual.Rendering.DamageValue;
 
 namespace GameStartupSystem
 {
@@ -21,6 +22,7 @@ namespace GameStartupSystem
         [SerializeField] private GameObject battleCanvasPrefab;
         [SerializeField] private GameObject heroPrefab;
         [SerializeField] private GameObject enemyPrefab;
+        [SerializeField] private GameObject damageValueSpawnerPrefab;
         
         private BattleManager battleManager;
         
@@ -35,10 +37,11 @@ namespace GameStartupSystem
             var attackHandler = new AttackHandler();
             var entitySpawner = new EntitySpawner(new BattleEntityFactory());
             battleManager = new BattleManager(attackHandler, userDataManager.GetUserData(), entityService, entitySpawner, InitializeBotStrategy(botStrategyType));
-
+            
+            var damageValueSpawner = Instantiate(damageValueSpawnerPrefab, transform).GetComponent<DamageValueSpawner>();
             
             var battleSceneController = Instantiate(battleCanvasPrefab, transform).GetComponent<BattleSceneController>();
-            battleSceneController.Initialize(userDataManager.GetUserDataVisual(), entityService, new EntityRendererFactory(heroPrefab, enemyPrefab));
+            battleSceneController.Initialize(userDataManager.GetUserDataVisual(), entityService, new EntityRendererFactory(heroPrefab, enemyPrefab, damageValueSpawner));
         }
         private IBotStrategy InitializeBotStrategy(BotStrategyType type)
         {

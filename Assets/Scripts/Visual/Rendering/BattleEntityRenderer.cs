@@ -2,6 +2,7 @@
 using Data.ScriptableObjects;
 using DG.Tweening;
 using UnityEngine;
+using Visual.Rendering.DamageValue;
 using Visual.UI.Views.Battle;
 
 namespace Visual.Rendering
@@ -10,12 +11,14 @@ namespace Visual.Rendering
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private HealthView healthView;
-
+        
+        protected DamageValueSpawner DamageValueSpawner;
         protected bool IsAlive = false;
         private MaterialPropertyBlock materialPropertyBlock;
         
-        public virtual void Initialize(EntityData entityData, int boardIndex = 0)
+        public virtual void Initialize(EntityData entityData, DamageValueSpawner damageValueSpawner, int boardIndex = 0)
         {
+            DamageValueSpawner = damageValueSpawner;
             materialPropertyBlock = new MaterialPropertyBlock();
             SetColor(entityData.Color);
             SetAlive(true);
@@ -29,13 +32,22 @@ namespace Visual.Rendering
 
         internal void TakeDamage(float damage, float targetHealth)
         {
+            ShowDamageValue(damage);
             PlayDamageAnimation();
             healthView.UpdateHealth(targetHealth);
         }
+        
         internal void Die()
         {
             SetAlive(false);
             PlayDieAnimation();
+        }
+        
+        private void ShowDamageValue(float damage)
+        {
+            var centerPosition = spriteRenderer.bounds.center;
+            var screenPosition = VisualUtility.WorldToScreenPosition(centerPosition);
+            DamageValueSpawner.Spawn(damage, screenPosition);
         }
         
         private void PlayAttackAnimation()

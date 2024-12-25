@@ -70,7 +70,6 @@ namespace Visual.Controllers
                 enemyEntityRenderer.TakeDamage(damage, targetHealth);
             else
                 heroEntityRenderers[boardIndex].TakeDamage(damage, targetHealth);
-            ShowDamageAnimation(boardIndex, damage);
         }
 
         private void EntityDie(int boardIndex)
@@ -102,12 +101,6 @@ namespace Visual.Controllers
         }
         
         #endregion
-
-        private void ShowDamageAnimation(int boardIndex, float damage)
-        {
-            // boardIndex == Constants.EnemyBoardIndex ? enemyEntityRenderer : heroEntityRenderers[boardIndex];
-            // Spawn at specific position
-        }
         
         private void InitializeEnemyEntityView(int level, EntityService entityService, EntityRendererFactory entityRendererFactory)
         {

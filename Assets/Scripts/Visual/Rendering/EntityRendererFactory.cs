@@ -1,5 +1,6 @@
 ﻿using Data.ScriptableObjects;
 using UnityEngine;
+using Visual.Rendering.DamageValue;
 
 namespace Visual.Rendering
 {
@@ -10,18 +11,20 @@ namespace Visual.Rendering
     {
         private readonly GameObject _heroPrefab;
         private readonly GameObject _enemyPrefab;
+        private readonly DamageValueSpawner _damageValueSpawner;
 
-        public EntityRendererFactory(GameObject heroPrefab, GameObject enemyPrefab)
+        public EntityRendererFactory(GameObject heroPrefab, GameObject enemyPrefab, DamageValueSpawner damageValueSpawner)
         {
             _heroPrefab = heroPrefab;
             _enemyPrefab = enemyPrefab;
+            _damageValueSpawner = damageValueSpawner;
         }
         
         public BattleHeroRenderer CreateHero(HeroData heroData, Transform parent, int boardIndex)
         {
             var rendererObject = Object.Instantiate(_heroPrefab, parent);
             var renderer = rendererObject.GetComponent<BattleHeroRenderer>();
-            renderer.Initialize(heroData, boardIndex);
+            renderer.Initialize(heroData, _damageValueSpawner, boardIndex);
             return renderer;
         }
 
@@ -29,7 +32,7 @@ namespace Visual.Rendering
         {
             var rendererObject = Object.Instantiate(_enemyPrefab, parent);
             var renderer = rendererObject.GetComponent<BattleEntityRenderer>();
-            renderer.Initialize(enemyData);
+            renderer.Initialize(enemyData, _damageValueSpawner);
             return renderer;
         }
     }

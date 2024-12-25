@@ -1,5 +1,6 @@
 ﻿using System;
 using Data.ScriptableObjects;
+using Visual.Rendering.DamageValue;
 
 namespace Visual.Rendering
 {
@@ -11,11 +12,11 @@ namespace Visual.Rendering
         internal HeroData HeroData;
         private int boardIndex;
         
-        public override void Initialize(EntityData entityData, int boardIndex)
+        public override void Initialize(EntityData entityData, DamageValueSpawner damageValueSpawner,  int boardIndex)
         {
             HeroData = entityData as HeroData;
             this.boardIndex = boardIndex;
-            base.Initialize(entityData);
+            base.Initialize(entityData, damageValueSpawner);
         }
         
         #region Click & Hold Actions
