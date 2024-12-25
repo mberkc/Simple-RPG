@@ -26,6 +26,7 @@ namespace Visual.Controllers
         public void Initialize(UserData userData, EntityService entityService)
         {
             levelText.text = $"Level: {userData.CurrentLevel}";
+            battleButton.onClick.RemoveAllListeners();
             battleButton.onClick.AddListener(BattleButtonClicked);
             InitializeHeroCards(userData.SelectedHeroIndexes, entityService);
             UpdateBattleButton();
@@ -123,6 +124,7 @@ namespace Visual.Controllers
             }
             
             Debug.Log("Battle button clicked");
+            battleButton.onClick.RemoveAllListeners();
             UIEventManager.RaiseBattleStartRequested?.Invoke();
         }
     }

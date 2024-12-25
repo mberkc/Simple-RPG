@@ -11,8 +11,8 @@ namespace Core.EventManager.GameLogicEventManager
     {
         #region Invokers
         public static Action BroadcastBattleComplete(bool victory, List<int> aliveHeroes = null) => () => GameLogicInvokedEvents.BroadcastBattleComplete(victory, aliveHeroes);
+        public static Action BroadcastPlayerTurnStarted => GameLogicInvokedEvents.BroadcastPlayerTurnStarted;
         public static Action BroadcastPlayerTurnEnded => GameLogicInvokedEvents.BroadcastPlayerTurnEnded;
-        public static Action BroadcastOpponentTurnEnded => GameLogicInvokedEvents.BroadcastOpponentTurnEnded;
         public static Action BroadcastEntityAttacked(int boardIndex) => () => GameLogicInvokedEvents.BroadcastEntityAttacked(boardIndex);
         public static Action BroadcastEntityDamaged(int boardIndex, float damage, float targetHealth) => () => GameLogicInvokedEvents.BroadcastEntityDamaged(boardIndex, damage, targetHealth);
         public static Action BroadcastEntityDied(int boardIndex) => () => GameLogicInvokedEvents.BroadcastEntityDied(boardIndex);

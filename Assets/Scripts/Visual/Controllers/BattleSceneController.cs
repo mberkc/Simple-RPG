@@ -22,7 +22,6 @@ namespace Visual.Controllers
         private BattleHeroRenderer[] heroEntityRenderers = new BattleHeroRenderer[3];
         public void Initialize(UserData userData, EntityService entityService, EntityRendererFactory entityRendererFactory)
         {
-            // TODO
             Debug.Log("Initializing Battle Scene Controller");
             levelText.text = $"Level: {userData.CurrentLevel}";
             InitializeEnemyEntityView(userData.CurrentLevel, entityService, entityRendererFactory);
@@ -42,8 +41,8 @@ namespace Visual.Controllers
             UIEventManager.OnEntityAttacked += EntityAttack;
             UIEventManager.OnEntityDamaged += EntityTakeDamage;
             UIEventManager.OnEntityDied += EntityDie;
+            UIEventManager.OnPlayerTurnStarted += PlayerTurnStarted;
             UIEventManager.OnPlayerTurnEnded += PlayerTurnEnded;
-            UIEventManager.OnOpponentTurnEnded += OpponentTurnEnded;
             UIEventManager.OnBattleComplete += ShowResult;
         }
         
@@ -52,8 +51,8 @@ namespace Visual.Controllers
             UIEventManager.OnEntityAttacked -= EntityAttack;
             UIEventManager.OnEntityDamaged -= EntityTakeDamage;
             UIEventManager.OnEntityDied -= EntityDie;
+            UIEventManager.OnPlayerTurnStarted -= PlayerTurnStarted;
             UIEventManager.OnPlayerTurnEnded -= PlayerTurnEnded;
-            UIEventManager.OnOpponentTurnEnded -= OpponentTurnEnded;
             UIEventManager.OnBattleComplete -= ShowResult;
         }
 
@@ -79,17 +78,22 @@ namespace Visual.Controllers
             if(boardIndex == Constants.EnemyBoardIndex)
                 enemyEntityRenderer.Die();
             else
-                heroEntityRenderers[boardIndex].Die();
+            {    
+                var heroRenderer = heroEntityRenderers[boardIndex];
+                heroRenderer.OnHeroSelected -= OnHeroSelected;
+                heroRenderer.OnHeroHold -= OnHeroHold;
+                heroRenderer.Die();
+            }
+        }
+        
+        private void PlayerTurnStarted()
+        {
+            // TODO: Enable input
         }
 
         private void PlayerTurnEnded()
         {
-            // TODO
-        }
-        
-        private void OpponentTurnEnded()
-        {
-            // TODO
+            // TODO: Disable input
         }
 
         private void ShowResult(bool victory, List<int> aliveHeroIndexes)
@@ -134,8 +138,6 @@ namespace Visual.Controllers
         
         private void OnHeroHold(BattleHeroRenderer entityRenderer)
         {
-            // Position hero stats views related to entityRenderer, but still it will be child of battleUICanvas
-            // Show hero statsviews
             if(entityRenderer != null)
                 heroStatsView.Show(entityRenderer);
             else

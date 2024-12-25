@@ -28,16 +28,16 @@ namespace Core.EventManager.UIEventManager
             remove => GameLogicInvokedEvents.OnBattleComplete -= value;
         }
         
+        public static event Action OnPlayerTurnStarted
+        {
+            add => GameLogicInvokedEvents.OnPlayerTurnStarted += value;
+            remove => GameLogicInvokedEvents.OnPlayerTurnStarted -= value;
+        }
+        
         public static event Action OnPlayerTurnEnded
         {
             add => GameLogicInvokedEvents.OnPlayerTurnEnded += value;
             remove => GameLogicInvokedEvents.OnPlayerTurnEnded -= value;
-        }
-        
-        public static event Action OnOpponentTurnEnded
-        {
-            add => GameLogicInvokedEvents.OnOpponentTurnEnded += value;
-            remove => GameLogicInvokedEvents.OnOpponentTurnEnded -= value;
         }
         
         public static event Action<int> OnEntityAttacked

@@ -23,6 +23,8 @@ namespace Visual.UI.Views.Battle
 
         private void ReturnToHeroSelection()
         {
+            Debug.Log("Confirm button clicked");
+            returnButton.onClick.RemoveAllListeners();
             UIEventManager.RaiseReturnToHeroSelectionRequested?.Invoke();
         }
     }

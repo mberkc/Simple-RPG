@@ -24,6 +24,7 @@ namespace GameLogic.Battle
         private readonly PlayerManager _playerManager;
         private readonly OpponentManager _opponentManager;
         private BattleState currentState = BattleState.Idle;
+        private bool CheckIfPlayerTurn => currentState == BattleState.PlayerTurn;
         
         public BattleManager(AttackHandler attackHandler, UserData userData, EntityService entityService, EntitySpawner entitySpawner, IBotStrategy botStrategy)
         {
@@ -34,7 +35,6 @@ namespace GameLogic.Battle
             ProcessState(BattleState.Initialize);
         }
         
-        // TODO: Call on Parent OnDestroy
         public void Cleanup()
         {
             UnSubscribeEvents();
@@ -92,7 +92,7 @@ namespace GameLogic.Battle
         private void HandlePlayerTurn()
         {
             Debug.Log("Player turn!");
-            // Enable Player inputs
+            GameLogicEventManager.BroadcastPlayerTurnStarted?.Invoke();
         }
         
         private void HandleOpponentTurn()
@@ -125,6 +125,8 @@ namespace GameLogic.Battle
         
         private void HandlePlayerAttack(int attackerIndex)
         {
+            if(!CheckIfPlayerTurn) return;
+            
             _combatController.HandlePlayerAttack(attackerIndex);
         }
 
@@ -138,7 +140,6 @@ namespace GameLogic.Battle
         private void OpponentTurnEnded()
         {
             Debug.Log("Player turn ended!");
-            GameLogicEventManager.BroadcastOpponentTurnEnded?.Invoke();
             ProcessState(_playerManager.CheckIfAllHeroesAreDefeated ? BattleState.Defeat : BattleState.PlayerTurn);
         }
 

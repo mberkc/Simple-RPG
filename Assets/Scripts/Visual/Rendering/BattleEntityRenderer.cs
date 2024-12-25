@@ -34,6 +34,7 @@ namespace Visual.Rendering
         }
         internal void Die()
         {
+            SetAlive(false);
             PlayDieAnimation();
         }
         
@@ -44,12 +45,11 @@ namespace Visual.Rendering
 
         private void PlayDamageAnimation()
         {
-            transform.DOPunchScale(Vector3.one * 0.1f, Constants.NormalAnimationSpeed);
+            transform.DOPunchScale(Vector3.one * 0.5f, Constants.NormalAnimationSpeed);
         }
         
         private void PlayDieAnimation()
         {
-            SetAlive(false);
             transform.DOScale(Vector3.zero, Constants.NormalAnimationSpeed);
         }
 
@@ -63,9 +63,6 @@ namespace Visual.Rendering
         private void SetAlive(bool alive)
         {
             IsAlive = alive;
-            // Disable
-            //entityImage.DOKill(true);
-            //entityImage.DOFade(alive ? 1f : 0.3f, Constants.FastAnimationSpeed);
         }
 
     }
