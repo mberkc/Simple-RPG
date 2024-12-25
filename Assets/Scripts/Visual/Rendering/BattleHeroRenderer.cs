@@ -1,10 +1,11 @@
 ﻿using System;
 using Data.ScriptableObjects;
 using Visual.Rendering.DamageValue;
+using Visual.Rendering.PointerHandler;
 
 namespace Visual.Rendering
 {
-    public class BattleHeroRenderer : BattleEntityRenderer
+    public class BattleHeroRenderer : BattleEntityRenderer, IPointerHandler
     {
         internal event Action<int> OnHeroSelected;
         internal event Action<BattleHeroRenderer> OnHeroHold;
@@ -12,7 +13,7 @@ namespace Visual.Rendering
         internal HeroData HeroData;
         private int boardIndex;
         
-        public override void Initialize(EntityData entityData, DamageValueSpawner damageValueSpawner,  int boardIndex)
+        public override void Initialize(EntityData entityData, DamageValueSpawner damageValueSpawner, int boardIndex)
         {
             HeroData = entityData as HeroData;
             this.boardIndex = boardIndex;
@@ -21,23 +22,21 @@ namespace Visual.Rendering
         
         #region Click & Hold Actions
 
-        /*
-        public void OnPointerDown(PointerEventData eventData)
+        public void OnPointerDown()
         {
             OnHeroClicked();
             Invoke(nameof(HoldActionComplete), 3f);
         }
 
-        public void OnPointerUp(PointerEventData eventData)
+        public void OnPointerUp()
         {
             HoldActionCancel();
         }
 
-        public void OnPointerExit(PointerEventData eventData)
+        public void OnPointerExit()
         {
             HoldActionCancel();
         }
-        */
         
         private void OnHeroClicked()
         {

@@ -12,7 +12,6 @@ namespace Visual.Rendering.DamageValue
 
         internal void Show(float damage, Vector3 scenePosition, DamageValueSpawner spawner)
         {
-            // Spawn at the center of spriteRenderer and move upwards while fading out. Speed will be slower by time
             rectTransform.position = scenePosition;
             textMeshPro.text = damage.ToString("F0");
             

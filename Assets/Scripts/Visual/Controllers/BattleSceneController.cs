@@ -136,22 +136,5 @@ namespace Visual.Controllers
             else
                 heroStatsView.Hide();
         }
-
-#if UNITY_EDITOR
-        
-        // TODO: Remove after Test
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1)) OnHeroSelected(0);
-            if (Input.GetKeyDown(KeyCode.Alpha2)) OnHeroSelected(1);
-            if (Input.GetKeyDown(KeyCode.Alpha3)) OnHeroSelected(2);
-            if (Input.GetKeyDown(KeyCode.Q)) OnHeroHold(heroEntityRenderers[0]);
-            if (Input.GetKeyDown(KeyCode.W)) OnHeroHold(heroEntityRenderers[1]);
-            if (Input.GetKeyDown(KeyCode.E)) OnHeroHold(heroEntityRenderers[2]);
-            if (Input.GetKeyDown(KeyCode.A)) OnHeroHold(null);
-        }
-        
-#endif
     }
 }

@@ -23,6 +23,7 @@ namespace GameStartupSystem
         [SerializeField] private GameObject heroPrefab;
         [SerializeField] private GameObject enemyPrefab;
         [SerializeField] private GameObject damageValueSpawnerPrefab;
+        [SerializeField] private GameObject pointerHandlerUtilityPrefab;
         
         private BattleManager battleManager;
         
@@ -37,7 +38,8 @@ namespace GameStartupSystem
             var attackHandler = new AttackHandler();
             var entitySpawner = new EntitySpawner(new BattleEntityFactory());
             battleManager = new BattleManager(attackHandler, userDataManager.GetUserData(), entityService, entitySpawner, InitializeBotStrategy(botStrategyType));
-            
+
+            Instantiate(pointerHandlerUtilityPrefab, transform);
             var damageValueSpawner = Instantiate(damageValueSpawnerPrefab, transform).GetComponent<DamageValueSpawner>();
             
             var battleSceneController = Instantiate(battleCanvasPrefab, transform).GetComponent<BattleSceneController>();
