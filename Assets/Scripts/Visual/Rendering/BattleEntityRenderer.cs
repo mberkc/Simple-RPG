@@ -12,17 +12,22 @@ namespace Visual.Rendering
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private HealthView healthView;
         
-        protected DamageValueSpawner DamageValueSpawner;
+        private DamageValueSpawner DamageValueSpawner;
         protected bool IsAlive = false;
         private MaterialPropertyBlock materialPropertyBlock;
+        protected int BoardIndex;
+
+        private Vector3 animationDirection;
         
-        public virtual void Initialize(EntityData entityData, DamageValueSpawner damageValueSpawner, int boardIndex = 0)
+        public virtual void Initialize(EntityData entityData, DamageValueSpawner damageValueSpawner, int boardIndex)
         {
+            BoardIndex = boardIndex;
             DamageValueSpawner = damageValueSpawner;
             materialPropertyBlock = new MaterialPropertyBlock();
             SetColor(entityData.Color);
             SetAlive(true);
             healthView.Initialize(entityData.Health);
+            animationDirection = (BoardIndex >= Constants.EnemyBoardIndex ? Vector2.left : Vector2.right) / 2f;
         }
 
         internal void Attack()
@@ -52,17 +57,17 @@ namespace Visual.Rendering
         
         private void PlayAttackAnimation()
         {
-            transform.DOShakePosition(Constants.NormalAnimationSpeed);
+            transform.DOPunchPosition(animationDirection, Constants.NormalAnimationSpeed, elasticity: 0.1f);
         }
 
         private void PlayDamageAnimation()
         {
-            transform.DOPunchScale(Vector3.one * 0.5f, Constants.NormalAnimationSpeed);
+            transform.DOPunchScale(Vector2.one/5f, Constants.NormalAnimationSpeed, elasticity: 0.1f);
         }
         
         private void PlayDieAnimation()
         {
-            transform.DOScale(Vector3.zero, Constants.NormalAnimationSpeed);
+            transform.DOScale(Vector2.zero, Constants.NormalAnimationSpeed);
         }
 
         private void SetColor(Color color)

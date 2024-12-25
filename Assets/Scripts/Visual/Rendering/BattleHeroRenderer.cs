@@ -11,13 +11,11 @@ namespace Visual.Rendering
         internal event Action<BattleHeroRenderer> OnHeroHold;
 
         internal HeroData HeroData;
-        private int boardIndex;
         
         public override void Initialize(EntityData entityData, DamageValueSpawner damageValueSpawner, int boardIndex)
         {
             HeroData = entityData as HeroData;
-            this.boardIndex = boardIndex;
-            base.Initialize(entityData, damageValueSpawner);
+            base.Initialize(entityData, damageValueSpawner, boardIndex);
         }
         
         #region Click & Hold Actions
@@ -42,7 +40,7 @@ namespace Visual.Rendering
         {
             if(!IsAlive) return;
             
-            OnHeroSelected?.Invoke(boardIndex);
+            OnHeroSelected?.Invoke(BoardIndex);
         }
 
         private void HoldActionCancel()
