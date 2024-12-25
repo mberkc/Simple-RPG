@@ -22,7 +22,7 @@ namespace GameLogic.Battle.BotStrategy
 
         public async Task<BattleEntity> ChooseTarget(BattleEntity[] heroes)
         {
-            var randomWaitMS = _waitTimeRandom.Next(250, 1000);
+            var randomWaitMS = _waitTimeRandom.Next(500, 2000);
             await Task.Delay(randomWaitMS);
             var aliveHeroes = heroes.Where(hero => hero.IsAlive).ToArray();
             if (aliveHeroes.Length == 0) return null;

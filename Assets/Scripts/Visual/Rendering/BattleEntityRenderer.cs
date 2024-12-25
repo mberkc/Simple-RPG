@@ -17,7 +17,8 @@ namespace Visual.Rendering
         private MaterialPropertyBlock materialPropertyBlock;
         protected int BoardIndex;
 
-        private Vector3 animationDirection;
+        private Vector2 animationDirection;
+        private Vector2 targetScale = Vector2.one/5f;
         
         public virtual void Initialize(EntityData entityData, DamageValueSpawner damageValueSpawner, int boardIndex)
         {
@@ -62,7 +63,7 @@ namespace Visual.Rendering
 
         private void PlayDamageAnimation()
         {
-            transform.DOPunchScale(Vector2.one/5f, Constants.NormalAnimationSpeed, elasticity: 0.1f);
+            transform.DOPunchScale(targetScale, Constants.NormalAnimationSpeed, elasticity: 0.1f);
         }
         
         private void PlayDieAnimation()

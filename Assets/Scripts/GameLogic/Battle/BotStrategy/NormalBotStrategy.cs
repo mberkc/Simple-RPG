@@ -11,7 +11,7 @@ namespace GameLogic.Battle.BotStrategy
         
         public async Task<BattleEntity> ChooseTarget(BattleEntity[] heroes)
         {
-            var randomWaitMS = _waitTimeRandom.Next(1000, 2500);
+            var randomWaitMS = _waitTimeRandom.Next(1000, 4000);
             await Task.Delay(randomWaitMS);
             return heroes
                 .Where(hero => hero.IsAlive)
