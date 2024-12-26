@@ -13,13 +13,13 @@ namespace GameLogic.Battle
     {
         private readonly BattleEntity[] _heroEntities;
 
-        public PlayerManager(UserData userData, EntityService entityService, EntitySpawner entitySpawner)
+        public PlayerManager(UserData userData, EntitySpawner entitySpawner)
         {
             _heroEntities = new BattleEntity[Constants.MaxSelectedHeroes];
             for (var i = 0; i < Constants.MaxSelectedHeroes; i++)
             {
                 var heroIndex = userData.SelectedHeroIndexes[i];
-                var hero = entityService.GetHeroByIndex(heroIndex);
+                var hero = userData.GetHeroData(heroIndex);
                 _heroEntities[i] = entitySpawner.SpawnHero(hero, i);
             }
         }

@@ -19,10 +19,16 @@ namespace Visual.Rendering.DamageValue
             textMeshPro.DOFade(0, 1.5f).SetEase(Ease.OutQuad).OnComplete(() =>
             {
                 textMeshPro.color = startColor;
-                spawner.Recycle(this);
+                if(spawner != null)
+                    spawner.Recycle(this);
             });
 
             rectTransform.DOMoveY(rectTransform.position.y + verticalMove, 1.5f).SetEase(Ease.OutQuad);
+        }
+
+        private void OnDestroy()
+        {
+            rectTransform.DOKill();
         }
     }
 }

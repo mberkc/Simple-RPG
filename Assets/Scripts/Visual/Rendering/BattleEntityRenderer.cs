@@ -1,4 +1,5 @@
-﻿using Core;
+﻿using System;
+using Core;
 using Data.ScriptableObjects;
 using DG.Tweening;
 using UnityEngine;
@@ -10,24 +11,24 @@ namespace Visual.Rendering
     public class BattleEntityRenderer : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
-        [SerializeField] private HealthView healthView;
+        [SerializeField] protected HealthView healthView;
         
-        private DamageValueSpawner DamageValueSpawner;
+        protected DamageValueSpawner DamageValueSpawner;
         protected bool IsAlive = false;
-        private MaterialPropertyBlock materialPropertyBlock;
+        protected MaterialPropertyBlock materialPropertyBlock;
         protected int BoardIndex;
 
-        private Vector2 animationDirection;
+        protected Vector2 animationDirection;
         private Vector2 targetScale = Vector2.one/5f;
         
-        public virtual void Initialize(EntityData entityData, DamageValueSpawner damageValueSpawner, int boardIndex)
+        public void Initialize(EntitySO entitySo, DamageValueSpawner damageValueSpawner, int boardIndex)
         {
             BoardIndex = boardIndex;
             DamageValueSpawner = damageValueSpawner;
             materialPropertyBlock = new MaterialPropertyBlock();
-            SetColor(entityData.Color);
+            SetColor(entitySo.Color);
             SetAlive(true);
-            healthView.Initialize(entityData.Health);
+            healthView.Initialize(entitySo.BaseHealth);
             animationDirection = (BoardIndex >= Constants.EnemyBoardIndex ? Vector2.left : Vector2.right) / 2f;
         }
 
@@ -71,17 +72,21 @@ namespace Visual.Rendering
             transform.DOScale(Vector2.zero, Constants.NormalAnimationSpeed);
         }
 
-        private void SetColor(Color color)
+        protected void SetColor(Color color)
         {
             spriteRenderer.GetPropertyBlock(materialPropertyBlock, 0);
             materialPropertyBlock.SetColor(Constants.ShaderColorPropertyId, color);
             spriteRenderer.SetPropertyBlock(materialPropertyBlock, 0);
         }
 
-        private void SetAlive(bool alive)
+        protected void SetAlive(bool alive)
         {
             IsAlive = alive;
         }
 
+        private void OnDestroy()
+        {
+            transform.DOKill();
+        }
     }
 }

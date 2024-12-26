@@ -1,33 +1,34 @@
 ﻿using System.Linq;
 using Core;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace Data.ScriptableObjects
 {
-    public abstract class EntityData : ScriptableObject
+    public abstract class EntitySO : ScriptableObject
     {
         [SerializeField] private string id;
         [SerializeField] protected int index = -1;
         [SerializeField] private string entityName;
         [SerializeField] private Color color;
-        [SerializeField] private float health = Constants.EntityDefaultHealth;
-        [SerializeField] private float attackPower = Constants.EntityDefaultAttackPower;
+        [FormerlySerializedAs("health")] [SerializeField] private float baseHealth = Constants.EntityDefaultHealth;
+        [FormerlySerializedAs("attackPower")] [SerializeField] private float baseAttackPower = Constants.EntityDefaultAttackPower;
         public string Id => id;
         public int Index => index;
         public string EntityName => entityName;
         public Color Color => color;
 
-        public float Health
+        public float BaseHealth
         {
-            get => health;
-            protected set => health = value;
+            get => baseHealth;
+            protected set => baseHealth = value;
         }
         
-        public float AttackPower
+        public float BaseAttackPower
         {
-            get => attackPower;
-            protected set => attackPower = value;
+            get => baseAttackPower;
+            protected set => baseAttackPower = value;
         }
 
 #if UNITY_EDITOR

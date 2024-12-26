@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using Core;
 using DG.Tweening;
 using TMPro;
@@ -26,6 +27,11 @@ namespace Visual.UI.Views.Battle
             
             var healthPercent = currentHealth / maxHealth;
             healthBar.DOFillAmount(healthPercent, Constants.NormalAnimationSpeed);
+        }
+
+        private void OnDestroy()
+        {
+            healthBar.DOKill(true);
         }
     }
 }

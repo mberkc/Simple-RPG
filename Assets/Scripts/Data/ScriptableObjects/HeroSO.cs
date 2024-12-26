@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Data.ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "NewEnemy", menuName = "Game/Enemy")]
-    public class EnemyData : EntityData
+    [CreateAssetMenu(fileName = "NewHero", menuName = "Game/Hero")]
+    public class HeroSO : EntitySO
     {
 #if UNITY_EDITOR
         
@@ -12,14 +12,14 @@ namespace Data.ScriptableObjects
         {
             base.OnEnable();
             
-            AssignSequentialIndexAndName("Enemy");
+            AssignSequentialIndexAndName("Hero");
         }
         
         protected override void AssignDefaults()
         {
             base.AssignDefaults();
 
-            AssignSequentialIndexAndName("Enemy");
+            AssignSequentialIndexAndName("Hero");
         }
 
         private void AssignSequentialIndexAndName(string baseName)
@@ -28,7 +28,7 @@ namespace Data.ScriptableObjects
             
             var path = AssetDatabase.GetAssetPath(this);
             var folder = System.IO.Path.GetDirectoryName(path);
-            var assets = AssetDatabase.FindAssets("t:EnemyData", new[] { folder });
+            var assets = AssetDatabase.FindAssets("t:HeroData", new[] { folder });
 
             var index = assets.Length-1;
             SetIndexAndName(index, baseName);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Core;
 using Core.Encryption;
 using Core.Progression;
@@ -17,28 +16,30 @@ namespace GameStartupSystem
 {
     public class MainBootstrapper : GameBootstrapper
     {
+        [SerializeField] private int TargetFrameRate = 120;
         [SerializeField] private StorageType storageType = StorageType.Local;
         [SerializeField] private EncryptionType encryptionType = EncryptionType.AES;
         [SerializeField] private SerializationType serializationType = SerializationType.JSON;
         [SerializeField] private string encryptionKey = "0e2tk8M7nbH1pS5z"; // Must be 16 characters for AES
 
-        [SerializeField] private HeroData[] heroes;
-        [SerializeField] private EnemyData[] enemies; 
-        
+        [SerializeField] private HeroSO[] heroes;
+        [SerializeField] private EnemySO[] enemies; 
         
         public override async void Initialize()
         {
             try
             {
                 Debug.Log("Initializing Main Bootstrapper!");
-                
-                var userDataManager = new UserDataManager(new UserData(), InitializeProgressionService());
-                var entityService = new EntityService(heroes, enemies);
-                new GameManager(userDataManager, new SceneTransitionService(), new HeroProgressionService(userDataManager, entityService));
-
-                RegisterServices(userDataManager, entityService);
-
+                Application.targetFrameRate = TargetFrameRate;
+                var enemyService = new EnemyService(enemies);
+                var heroCollectionFiller = new HeroCollectionFiller(heroes);
+                var heroCollection = await heroCollectionFiller.HeroCollection();
+                var userDataManager = new UserDataManager(new UserData(heroCollection), InitializeProgressionService());
                 await userDataManager.InitializeUserDataAsync();
+                
+                new GameManager(userDataManager, new SceneTransitionService(), new HeroProgressionService(userDataManager));
+
+                RegisterServices(userDataManager, enemyService);
                 
                 InitializationCompletionSource.TrySetResult(true);
                 Debug.Log("Main Bootstrapper initialized!");
@@ -50,10 +51,10 @@ namespace GameStartupSystem
             }
         }
         
-        private void RegisterServices(UserDataManager userDataManager, EntityService entityService)
+        private void RegisterServices(UserDataManager userDataManager, EnemyService enemyService)
         {
             ServiceLocator.Register(userDataManager);
-            ServiceLocator.Register(entityService);
+            ServiceLocator.Register(enemyService);
         }
 
         #region Progression Service

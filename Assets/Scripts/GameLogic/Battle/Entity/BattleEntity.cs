@@ -43,7 +43,6 @@ namespace GameLogic.Battle.Entity
         {
             Debug.Log($"{EntityName} has died.");
             GameLogicEventManager.BroadcastEntityDied(BoardIndex)?.Invoke();
-            // Die action => Dead animation
         }
     }
 }

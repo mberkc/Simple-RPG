@@ -26,10 +26,10 @@ namespace GameLogic.Battle
         private BattleState currentState = BattleState.Idle;
         private bool CheckIfPlayerTurn => currentState == BattleState.PlayerTurn;
         
-        public BattleManager(AttackHandler attackHandler, UserData userData, EntityService entityService, EntitySpawner entitySpawner, IBotStrategy botStrategy)
+        public BattleManager(AttackHandler attackHandler, UserData userData, EnemyService enemyService, EntitySpawner entitySpawner, IBotStrategy botStrategy)
         {
-            _playerManager = new PlayerManager(userData, entityService, entitySpawner);
-            _opponentManager = new OpponentManager(userData, entityService, entitySpawner, botStrategy);
+            _playerManager = new PlayerManager(userData, entitySpawner);
+            _opponentManager = new OpponentManager(userData, enemyService, entitySpawner, botStrategy);
             _combatController = new CombatController(attackHandler, _playerManager, _opponentManager);
             SubscribeEvents();
             ProcessState(BattleState.Initialize);

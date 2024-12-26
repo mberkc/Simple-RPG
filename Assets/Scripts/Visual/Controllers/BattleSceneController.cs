@@ -20,12 +20,12 @@ namespace Visual.Controllers
 
         private BattleEntityRenderer enemyEntityRenderer;
         private BattleHeroRenderer[] heroEntityRenderers = new BattleHeroRenderer[3];
-        public void Initialize(UserData userData, EntityService entityService, EntityRendererFactory entityRendererFactory)
+        public void Initialize(UserData userData, EnemyService enemyService, EntityRendererFactory entityRendererFactory)
         {
             Debug.Log("Initializing Battle Scene Controller");
             levelText.text = $"Level: {userData.CurrentLevel}";
-            InitializeEnemyEntityView(userData.CurrentLevel, entityService, entityRendererFactory);
-            InitializeHeroEntityViews(userData.SelectedHeroIndexes, entityService, entityRendererFactory);
+            InitializeEnemyEntityView(userData.CurrentLevel, enemyService, entityRendererFactory);
+            InitializeHeroEntityViews(userData, entityRendererFactory);
             SubscribeEvents();
         }
 
@@ -102,21 +102,22 @@ namespace Visual.Controllers
         
         #endregion
         
-        private void InitializeEnemyEntityView(int level, EntityService entityService, EntityRendererFactory entityRendererFactory)
+        private void InitializeEnemyEntityView(int level, EnemyService enemyService, EntityRendererFactory entityRendererFactory)
         {
-            var enemyData = entityService.GetEnemyByLevel(level);
+            var enemyData = enemyService.GetEnemyByLevel(level);
             enemyEntityRenderer = entityRendererFactory.CreateEnemy(enemyData, opponentEntityParent);
         }
         
-        private void InitializeHeroEntityViews(List<int> selectedHeroIndexes, EntityService entityService, EntityRendererFactory entityRendererFactory)
+        private void InitializeHeroEntityViews(UserData userData, EntityRendererFactory entityRendererFactory)
         {
+            var selectedHeroIndexes = userData.SelectedHeroIndexes;
             var heroCount = playerEntityParent.childCount;
             if (selectedHeroIndexes == null || selectedHeroIndexes.Count != heroCount) return;
             
             for (var i = 0; i < heroCount; i++)
             {
                 var heroIndex = selectedHeroIndexes[i];
-                var heroData = entityService.GetHeroByIndex(heroIndex);
+                var heroData = userData.GetHeroData(heroIndex);
                 var heroRenderer = entityRendererFactory.CreateHero(heroData, playerEntityParent.GetChild(i), i);
                 heroRenderer.OnHeroSelected += OnHeroSelected;
                 heroRenderer.OnHeroHold += OnHeroHold;

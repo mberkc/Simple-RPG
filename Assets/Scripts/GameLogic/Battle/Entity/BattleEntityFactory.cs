@@ -1,4 +1,5 @@
-﻿using Data.ScriptableObjects;
+﻿using Data;
+using Data.ScriptableObjects;
 
 namespace GameLogic.Battle.Entity
 {
@@ -9,18 +10,18 @@ namespace GameLogic.Battle.Entity
             return new BattleEntity(
                 heroData.EntityName, 
                 heroData.Index,
-                heroData.Health,
-                heroData.AttackPower,
+                heroData.ModifiedHealth,
+                heroData.ModifiedAttackPower,
                 boardIndex);
         }
 
-        public BattleEntity CreateEnemy(EnemyData enemyData, int boardIndex)
+        public BattleEntity CreateEnemy(EnemySO enemySo, int boardIndex)
         {
             return new BattleEntity(
-                enemyData.EntityName, 
-                enemyData.Index,
-                enemyData.Health,
-                enemyData.AttackPower,
+                enemySo.EntityName, 
+                enemySo.Index,
+                enemySo.BaseHealth,
+                enemySo.BaseAttackPower,
                 boardIndex);
         }
     }

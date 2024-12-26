@@ -17,10 +17,9 @@ namespace GameStartupSystem
 
             // Dependencies
             var userDataManager = ServiceLocator.Resolve<UserDataManager>();
-            var entityService = ServiceLocator.Resolve<EntityService>();
             
             var heroSelectionSceneController = Instantiate(heroSelectionCanvasPrefab, transform).GetComponent<HeroSelectionSceneController>();
-            heroSelectionSceneController.Initialize(userDataManager.GetUserDataVisual(), entityService);
+            heroSelectionSceneController.Initialize(userDataManager.GetUserDataVisual());
         }
 
         protected override void OnDestroy()

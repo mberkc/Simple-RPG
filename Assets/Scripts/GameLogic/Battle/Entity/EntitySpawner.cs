@@ -1,4 +1,5 @@
 ﻿using Core;
+using Data;
 using Data.ScriptableObjects;
 
 namespace GameLogic.Battle.Entity
@@ -17,9 +18,9 @@ namespace GameLogic.Battle.Entity
             return _entityFactory.CreateHero(heroData, boardIndex);
         }
 
-        public BattleEntity SpawnEnemy(EnemyData enemyData)
+        public BattleEntity SpawnEnemy(EnemySO enemySo)
         {
-            return _entityFactory.CreateEnemy(enemyData, Constants.EnemyBoardIndex); // Equal to hero number.
+            return _entityFactory.CreateEnemy(enemySo, Constants.EnemyBoardIndex); // Equal to hero number.
         }
     }
 }
