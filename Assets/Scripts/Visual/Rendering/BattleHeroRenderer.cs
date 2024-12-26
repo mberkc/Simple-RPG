@@ -1,5 +1,7 @@
 ﻿using System;
+using Data;
 using Data.ScriptableObjects;
+using UnityEngine;
 using Visual.Rendering.DamageValue;
 using Visual.Rendering.PointerHandler;
 
@@ -12,10 +14,16 @@ namespace Visual.Rendering
 
         internal HeroData HeroData;
         
-        public override void Initialize(EntityData entityData, DamageValueSpawner damageValueSpawner, int boardIndex)
+        public void Initialize(HeroData heroData, DamageValueSpawner damageValueSpawner, int boardIndex)
         {
-            HeroData = entityData as HeroData;
-            base.Initialize(entityData, damageValueSpawner, boardIndex);
+            HeroData = heroData;
+            BoardIndex = boardIndex;
+            DamageValueSpawner = damageValueSpawner;
+            materialPropertyBlock = new MaterialPropertyBlock();
+            SetColor(heroData.Color);
+            SetAlive(true);
+            healthView.Initialize(heroData.ModifiedHealth);
+            animationDirection = Vector2.left / 2f;
         }
         
         #region Click & Hold Actions

@@ -33,17 +33,17 @@ namespace GameStartupSystem
             
             // Dependencies
             var userDataManager = ServiceLocator.Resolve<UserDataManager>();
-            var entityService = ServiceLocator.Resolve<EntityService>();
+            var enemyService = ServiceLocator.Resolve<EnemyService>();
 
             var attackHandler = new AttackHandler();
             var entitySpawner = new EntitySpawner(new BattleEntityFactory());
-            battleManager = new BattleManager(attackHandler, userDataManager.GetUserData(), entityService, entitySpawner, InitializeBotStrategy(botStrategyType));
+            battleManager = new BattleManager(attackHandler, userDataManager.GetUserData(), enemyService, entitySpawner, InitializeBotStrategy(botStrategyType));
 
             Instantiate(pointerHandlerUtilityPrefab, transform);
             var damageValueSpawner = Instantiate(damageValueSpawnerPrefab, transform).GetComponent<DamageValueSpawner>();
             
             var battleSceneController = Instantiate(battleCanvasPrefab, transform).GetComponent<BattleSceneController>();
-            battleSceneController.Initialize(userDataManager.GetUserDataVisual(), entityService, new EntityRendererFactory(heroPrefab, enemyPrefab, damageValueSpawner));
+            battleSceneController.Initialize(userDataManager.GetUserDataVisual(), enemyService, new EntityRendererFactory(heroPrefab, enemyPrefab, damageValueSpawner));
         }
         private IBotStrategy InitializeBotStrategy(BotStrategyType type)
         {

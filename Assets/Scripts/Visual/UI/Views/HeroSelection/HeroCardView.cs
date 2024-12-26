@@ -1,6 +1,6 @@
 ﻿using System;
 using Core;
-using Data.ScriptableObjects;
+using Data;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -31,7 +31,7 @@ namespace Visual.UI.Views.HeroSelection
             backgroundImage.color = heroData.Color;
             nameText.text = heroData.EntityName;
             SetSelected(selected);
-            SetUnlocked(heroData.Unlocked);
+            SetUnlocked(heroData.UserHeroData.Unlocked);
         }
 
         internal void SetSelected(bool selected)
@@ -87,5 +87,10 @@ namespace Visual.UI.Views.HeroSelection
         }
 
         #endregion
+
+        private void OnDestroy()
+        {
+            selectionBorder.DOKill(true);
+        }
     }
 }

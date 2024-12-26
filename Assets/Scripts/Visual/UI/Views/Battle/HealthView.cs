@@ -27,5 +27,10 @@ namespace Visual.UI.Views.Battle
             var healthPercent = currentHealth / maxHealth;
             healthBar.DOFillAmount(healthPercent, Constants.NormalAnimationSpeed);
         }
+
+        private void OnDestroy()
+        {
+            healthBar.DOKill(true);
+        }
     }
 }

@@ -6,8 +6,6 @@ namespace Core
     {
         public const int MaxSelectedHeroes = 3;
         public const int TotalHeroes = 10;
-        public const int TotalEnemies = 15;
-        public const int TotalLevels = 15;
         public const int UnlockThreshold = 5;
 
         #region Entity
@@ -19,6 +17,7 @@ namespace Core
 
         #region Hero
 
+        public const int ExperiencePerBattle = 1;
         public const int HeroLevelUpExperienceThreshold = 5;
         public const float HeroLevelUpHealthModifier = 1.1f;
         public const float HeroLevelUpAttackPowerModifier = 1.1f;

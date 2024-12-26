@@ -1,4 +1,5 @@
 ﻿using Core;
+using Data;
 using Data.ScriptableObjects;
 using UnityEngine;
 using Visual.Rendering.DamageValue;
@@ -29,11 +30,11 @@ namespace Visual.Rendering
             return renderer;
         }
 
-        public BattleEntityRenderer CreateEnemy(EnemyData enemyData, Transform parent)
+        public BattleEntityRenderer CreateEnemy(EnemySO enemySo, Transform parent)
         {
             var rendererObject = Object.Instantiate(_enemyPrefab, parent);
             var renderer = rendererObject.GetComponent<BattleEntityRenderer>();
-            renderer.Initialize(enemyData, _damageValueSpawner, Constants.EnemyBoardIndex);
+            renderer.Initialize(enemySo, _damageValueSpawner, Constants.EnemyBoardIndex);
             return renderer;
         }
     }

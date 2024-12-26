@@ -23,16 +23,16 @@ namespace Visual.Controllers
 
         private List<HeroCardView> selectedHeroes = new ();
 
-        public void Initialize(UserData userData, EntityService entityService)
+        public void Initialize(UserData userData)
         {
             levelText.text = $"Level: {userData.CurrentLevel}";
             battleButton.onClick.RemoveAllListeners();
             battleButton.onClick.AddListener(BattleButtonClicked);
-            InitializeHeroCards(userData.SelectedHeroIndexes, entityService);
+            InitializeHeroCards(userData);
             UpdateBattleButton();
         }
 
-        private void InitializeHeroCards(List<int> selectedHeroIndexes, EntityService entityService)
+        private void InitializeHeroCards(UserData userData)
         {
             var childCount = heroGrid.childCount;
             if (childCount != Constants.TotalHeroes)
@@ -40,6 +40,8 @@ namespace Visual.Controllers
                 Debug.LogError($"Hero grid count mismatch! Please have {Constants.TotalHeroes} HeroCardView on {heroGrid.name}");
                 return;
             }
+
+            var selectedHeroIndexes = userData.SelectedHeroIndexes;
             
             for (var i = 0; i < childCount; i++)
             {
@@ -54,7 +56,7 @@ namespace Visual.Controllers
                 heroCard.OnHeroDeselected += OnHeroDeselected;
                 heroCard.OnHeroHold += OnHeroHold;
     
-                var heroData = entityService.GetHeroByIndex(i);
+                var heroData = userData.GetHeroData(i);
                 var isSelected = selectedHeroIndexes.Contains(i);
                 heroCard.Initialize(heroData, isSelected);
                 if(isSelected)

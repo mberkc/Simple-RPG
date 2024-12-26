@@ -1,6 +1,7 @@
+using System;
 using System.Globalization;
 using Core;
-using Data.ScriptableObjects;
+using Data;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -53,10 +54,10 @@ namespace Visual.UI.Views
         private void SetData(HeroData heroData)
         {
             nameText.text = heroData.EntityName;
-            levelText.text = heroData.Level.ToString(CultureInfo.InvariantCulture);
-            healthText.text = heroData.Health.ToString(CultureInfo.InvariantCulture);
-            attackPowerText.text = heroData.AttackPower.ToString(CultureInfo.InvariantCulture);
-            experienceText.text = heroData.Experience.ToString(CultureInfo.InvariantCulture);
+            levelText.text = heroData.UserHeroData.Level.ToString(CultureInfo.InvariantCulture);
+            healthText.text = heroData.ModifiedHealth.ToString(CultureInfo.InvariantCulture);
+            attackPowerText.text = heroData.ModifiedAttackPower.ToString(CultureInfo.InvariantCulture);
+            experienceText.text = heroData.UserHeroData.Experience.ToString(CultureInfo.InvariantCulture);
         }
 
         private void EnableAnimation(bool enable)
@@ -69,6 +70,11 @@ namespace Visual.UI.Views
         private void UpdatePosition(Vector2 screenPosition)
         {
             panelTransform.position = screenPosition;
+        }
+
+        private void OnDestroy()
+        {
+            canvasGroup.DOKill();
         }
     }
 }

@@ -12,12 +12,14 @@ namespace GameLogic
         private readonly UserDataManager _userDataManager;
         private readonly SceneTransitionService _sceneTransitionService;
         private readonly HeroProgressionService _heroProgressionService;
+        private readonly int _maxLevel;
         
-        public GameManager(UserDataManager userDataManager, SceneTransitionService sceneTransitionService, HeroProgressionService heroProgressionService)
+        public GameManager(UserDataManager userDataManager, SceneTransitionService sceneTransitionService, HeroProgressionService heroProgressionService, int maxLevel)
         {
             _userDataManager = userDataManager;
             _sceneTransitionService = sceneTransitionService;
             _heroProgressionService = heroProgressionService;
+            _maxLevel = maxLevel;
             SubscribeEvents();
         }
         
@@ -82,11 +84,11 @@ namespace GameLogic
         {
             var level = _userDataManager.CurrentLevel;
             var playAmount = _userDataManager.BattlePlayAmount + 1;
-            if (victory) 
-                ++level;
+            if (victory && level < _maxLevel) ++level;
 
-            _heroProgressionService.CheckHeroProgression(victory, aliveHeroIndexes, playAmount);
             _userDataManager.UpdateLevelAndPlayAmount(level, playAmount);
+            _heroProgressionService.CheckHeroProgression(victory, aliveHeroIndexes, playAmount);
+            _userDataManager.SaveAllChangesAsync(); // Task can be awaited if needed!
         }
     }
 }

@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64cee98696624a878f0e706fe6b22909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TargetFrameRate: 120
   storageType: 0
   encryptionType: 0
   serializationType: 0
@@ -75,3 +76,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e2c7caa31929c8345a798530857b7311, type: 2}
   - {fileID: 11400000, guid: 83c0697abb46aed4a86ecbb8e2fb588a, type: 2}
   - {fileID: 11400000, guid: c8e3bbf65cf007b4dac2eec53ecb7e2e, type: 2}
+  - {fileID: 11400000, guid: 11cae1a9fe1bb534ca847d67006554b8, type: 2}
+  - {fileID: 11400000, guid: f5ffa8f81ebc38c4e80adaae07efafd8, type: 2}
+  - {fileID: 11400000, guid: 15f3f96ed1e431b42b3e64a335c709b2, type: 2}
+  - {fileID: 11400000, guid: b2913e54ba66210448985cb5720ddef5, type: 2}
+  - {fileID: 11400000, guid: f220cceff044f2c488b429d5dd0dcd4d, type: 2}
+  - {fileID: 11400000, guid: cea12db81377701449dc4dc928565373, type: 2}
+  - {fileID: 11400000, guid: 3b98c215a27406547830784fe223f127, type: 2}
+  - {fileID: 11400000, guid: 087431c87bf934943b1cd218e0bb2578, type: 2}
+  - {fileID: 11400000, guid: 3fe46ac483f07db469211630dcccbc6a, type: 2}
+  - {fileID: 11400000, guid: 5f4bee55c201d7d47bb3cea7726dea02, type: 2}
+  - {fileID: 11400000, guid: cf67e171beef7024fb7d8d3740eab45c, type: 2}
+  - {fileID: 11400000, guid: 420191b4da090d240bb3a4de5c6d625b, type: 2}
+  - {fileID: 11400000, guid: 1295a469a98aa2b47b4f23a4905085b5, type: 2}
+  - {fileID: 11400000, guid: b894b71ae3026d94ba5619e9f6e51232, type: 2}
+  - {fileID: 11400000, guid: 033dd0c13c85a3c4088110d1ec92c85a, type: 2}
