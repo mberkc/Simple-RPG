@@ -16,5 +16,5 @@ MonoBehaviour:
   index: 3
   entityName: Enemy 4
   color: {r: 0.38364768, g: 0.25214577, b: 0.28091183, a: 1}
-  health: 80
-  attackPower: 50
+  baseHealth: 80
+  baseAttackPower: 25

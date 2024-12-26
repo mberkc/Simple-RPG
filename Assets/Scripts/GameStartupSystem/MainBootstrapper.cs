@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Core;
 using Core.Encryption;
 using Core.Progression;
@@ -31,13 +32,17 @@ namespace GameStartupSystem
             {
                 Debug.Log("Initializing Main Bootstrapper!");
                 Application.targetFrameRate = TargetFrameRate;
-                var enemyService = new EnemyService(enemies);
+                
+                var updatedEnemies = RemoveEmptyEnemies();
+                var maxLevel = updatedEnemies.Count;
+                
+                var enemyService = new EnemyService(updatedEnemies);
                 var heroCollectionFiller = new HeroCollectionFiller(heroes);
                 var heroCollection = await heroCollectionFiller.HeroCollection();
                 var userDataManager = new UserDataManager(new UserData(heroCollection), InitializeProgressionService());
                 await userDataManager.InitializeUserDataAsync();
                 
-                new GameManager(userDataManager, new SceneTransitionService(), new HeroProgressionService(userDataManager));
+                new GameManager(userDataManager, new SceneTransitionService(), new HeroProgressionService(userDataManager), maxLevel);
 
                 RegisterServices(userDataManager, enemyService);
                 
@@ -49,6 +54,20 @@ namespace GameStartupSystem
                 Debug.LogError($"Main Bootstrapper initialization failed! Exception: {e.Message}");
                 InitializationCompletionSource.TrySetException(e);
             }
+        }
+
+        private List<EnemySO> RemoveEmptyEnemies()
+        {
+            var amount = enemies.Length;
+            var enemyList = new List<EnemySO>();
+            for (var i = 0; i < amount; i++)
+            {
+                var enemy = enemies[i];
+                if(enemy == null) continue;
+                enemyList.Add(enemy);
+            }
+
+            return enemyList;
         }
         
         private void RegisterServices(UserDataManager userDataManager, EnemyService enemyService)

@@ -16,7 +16,7 @@ namespace GameLogic.Battle
         public OpponentManager(UserData userData, EnemyService enemyService, EntitySpawner entitySpawner, IBotStrategy botStrategy)
         { 
             _botStrategy = botStrategy;
-            var enemy = enemyService.GetEnemyByIndex(userData.CurrentLevel); 
+            var enemy = enemyService.GetEnemyByLevel(userData.CurrentLevel); 
             _enemyEntity = entitySpawner.SpawnEnemy(enemy);
         }
         

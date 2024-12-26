@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f0930f8b2ce40cb9cee6d6a443912d0, type: 3}
-  m_Name: Enemy 14
+  m_Name: Enemy 26
   m_EditorClassIdentifier: 
-  id: D6okjtWOGf
-  index: 13
-  entityName: Enemy 14
-  color: {r: 0.4328514, g: 0.56955117, b: 0.1264737, a: 1}
-  baseHealth: 600
-  baseAttackPower: 30
+  id: DmIo55UJbB
+  index: 14
+  entityName: Enemy 15
+  color: {r: 0.88235295, g: 0.5574942, b: 0.43529412, a: 1}
+  baseHealth: 1500
+  baseAttackPower: 55
