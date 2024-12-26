@@ -49,7 +49,12 @@ namespace GameLogic
             _userData.CurrentLevel = progressionData.CurrentLevel;
             _userData.SelectedHeroIndexes = progressionData.SelectedHeroIndexes;
             for (var i = 0; i < Constants.TotalHeroes; i++)
-                _userData.HeroCollection.Heroes[i].UserHeroData = progressionData.SerializableUserHeroCollection.SerializableUserHeroes[i].UserHeroData;
+            {
+                var serializedHero = progressionData.SerializableUserHeroCollection.SerializableUserHeroes[i];
+                var heroData = _userData.GetHeroData(i);
+                heroData.UserHeroData = serializedHero.UserHeroData;
+                UpdateModifiedStats(heroData);
+            }
 
         }
         
@@ -59,7 +64,7 @@ namespace GameLogic
             progressionData.CurrentLevel = _userData.CurrentLevel;
             progressionData.SelectedHeroIndexes = _userData.SelectedHeroIndexes;
             for (var i = 0; i < Constants.TotalHeroes; i++)
-                progressionData.SerializableUserHeroCollection.SerializableUserHeroes[i].UserHeroData = _userData.HeroCollection.Heroes[i].UserHeroData;
+                progressionData.SerializableUserHeroCollection.SerializableUserHeroes[i].UserHeroData = _userData.GetHeroData(i).UserHeroData;
         }
 
         public void UpdateSelectedHeroes(List<int> heroIndexes)
@@ -98,12 +103,12 @@ namespace GameLogic
         {
             foreach (var index in heroIndexes)
             {
-                var heroData = _userData.HeroCollection.Heroes[index];
+                var heroData = _userData.GetHeroData(index);
                 var userHeroData = heroData.UserHeroData;
                 userHeroData.Experience += experienceGain;
                 if (userHeroData.Experience < Constants.HeroLevelUpExperienceThreshold) continue;
                 
-                userHeroData.Level++;
+                ++userHeroData.Level;
                 userHeroData.Experience -= Constants.HeroLevelUpExperienceThreshold;
                 UpdateModifiedStats(heroData);
             }
@@ -112,8 +117,8 @@ namespace GameLogic
         private void UpdateModifiedStats(HeroData heroData)
         {
             var pow = heroData.UserHeroData.Level - 1;
-            heroData.ModifiedHealth = heroData.BaseHealth * Mathf.Pow(Constants.HeroLevelUpHealthModifier, pow);
-            heroData.ModifiedAttackPower = heroData.BaseAttackPower * Mathf.Pow(Constants.HeroLevelUpAttackPowerModifier, pow);
+            heroData.ModifiedHealth = Mathf.Ceil(heroData.BaseHealth * Mathf.Pow(Constants.HeroLevelUpHealthModifier, pow));
+            heroData.ModifiedAttackPower = Mathf.Ceil(heroData.BaseAttackPower * Mathf.Pow(Constants.HeroLevelUpAttackPowerModifier, pow));
         }
 
         #endregion
