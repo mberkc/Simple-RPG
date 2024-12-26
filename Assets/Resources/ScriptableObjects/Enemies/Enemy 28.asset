@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: DmIo55UJbB
   index: 14
-  entityName: Enemy 15
+  entityName: Enemy 28
   color: {r: 0.72467107, g: 0.88235295, b: 0.43529412, a: 1}
   baseHealth: 1500
   baseAttackPower: 65
