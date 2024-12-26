@@ -24,11 +24,9 @@ namespace GameLogic
             _progressionService = progressionService;
         }
         
-        
         public List<int> SelectedHeroIndexes => _userData.SelectedHeroIndexes;
         public int CurrentLevel => _userData.CurrentLevel;
         public int BattlePlayAmount => _userData.BattlePlayAmount;
-        public HeroCollection HeroCollection => _userData.HeroCollection;
         
         public async Task InitializeUserDataAsync()
         {
@@ -36,10 +34,8 @@ namespace GameLogic
             MapProgressionDataToUserData();
         }
 
-        private async Task SaveUserDataAsync(bool updateEverything = true)
+        private async Task SaveUserDataAsync()
         {
-            if (updateEverything)
-                MapUserDataToProgressionData();
             await _progressionService.SaveProgressionAsync(progressionData);
         }
 
@@ -48,6 +44,7 @@ namespace GameLogic
             _userData.BattlePlayAmount = progressionData.BattlePlayAmount;
             _userData.CurrentLevel = progressionData.CurrentLevel;
             _userData.SelectedHeroIndexes = progressionData.SelectedHeroIndexes;
+            
             for (var i = 0; i < Constants.TotalHeroes; i++)
             {
                 var serializedHero = progressionData.SerializableUserHeroCollection.SerializableUserHeroes[i];
@@ -63,19 +60,21 @@ namespace GameLogic
             progressionData.BattlePlayAmount = _userData.BattlePlayAmount;
             progressionData.CurrentLevel = _userData.CurrentLevel;
             progressionData.SelectedHeroIndexes = _userData.SelectedHeroIndexes;
+            
             for (var i = 0; i < Constants.TotalHeroes; i++)
                 progressionData.SerializableUserHeroCollection.SerializableUserHeroes[i].UserHeroData = _userData.GetHeroData(i).UserHeroData;
         }
 
-        public void UpdateSelectedHeroes(List<int> heroIndexes)
+        public async Task UpdateSelectedHeroes(List<int> heroIndexes)
         {
             _userData.SelectedHeroIndexes = heroIndexes;
             progressionData.SelectedHeroIndexes = _userData.SelectedHeroIndexes;
-            SaveUserDataAsync(false);
+            await SaveUserDataAsync();
         }
         
         public async Task SaveAllChangesAsync()
         { 
+            MapUserDataToProgressionData();
             await SaveUserDataAsync();
         }
 
@@ -116,9 +115,10 @@ namespace GameLogic
         
         private void UpdateModifiedStats(HeroData heroData)
         {
-            var pow = heroData.UserHeroData.Level - 1;
-            heroData.ModifiedHealth = Mathf.Ceil(heroData.BaseHealth * Mathf.Pow(Constants.HeroLevelUpHealthModifier, pow));
-            heroData.ModifiedAttackPower = Mathf.Ceil(heroData.BaseAttackPower * Mathf.Pow(Constants.HeroLevelUpAttackPowerModifier, pow));
+            if(heroData.UserHeroData.Level == 1) return;
+            
+            heroData.ModifiedHealth = ModifiedAttributeCalculator.CalculateLevelEffect(heroData.BaseHealth, Constants.HeroLevelUpHealthModifier, heroData.UserHeroData.Level);
+            heroData.ModifiedAttackPower = ModifiedAttributeCalculator.CalculateLevelEffect(heroData.BaseAttackPower, Constants.HeroLevelUpAttackPowerModifier, heroData.UserHeroData.Level);
         }
 
         #endregion

@@ -30,6 +30,8 @@ namespace GameLogic.Battle.Entity
         public bool TakeDamage(float damage)
         {
             CurrentHealth -= damage;
+            if(CurrentHealth < 0) CurrentHealth = 0;
+            
             Debug.Log($"{EntityName} took {damage} damage. Remaining health: {CurrentHealth}");
             GameLogicEventManager.BroadcastEntityDamaged(BoardIndex, damage, CurrentHealth)?.Invoke();
             
