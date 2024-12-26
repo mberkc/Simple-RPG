@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Core;
 using Core.Progression;
@@ -32,18 +33,17 @@ namespace GameLogic
         public async Task InitializeUserDataAsync()
         {
             progressionData = await _progressionService.LoadProgressionAsync();
-            GetProgressionData();
+            MapProgressionDataToUserData();
         }
 
-        // TODO: change only necessary parts!
         private async Task SaveUserDataAsync(bool updateEverything = true)
         {
             if (updateEverything)
-                SetProgressionData();
+                MapUserDataToProgressionData();
             await _progressionService.SaveProgressionAsync(progressionData);
         }
 
-        private void GetProgressionData()
+        private void MapProgressionDataToUserData()
         {
             _userData.BattlePlayAmount = progressionData.BattlePlayAmount;
             _userData.CurrentLevel = progressionData.CurrentLevel;
@@ -53,22 +53,13 @@ namespace GameLogic
 
         }
         
-        private void SetProgressionData()
+        private void MapUserDataToProgressionData()
         {
             progressionData.BattlePlayAmount = _userData.BattlePlayAmount;
             progressionData.CurrentLevel = _userData.CurrentLevel;
             progressionData.SelectedHeroIndexes = _userData.SelectedHeroIndexes;
             for (var i = 0; i < Constants.TotalHeroes; i++)
                 progressionData.SerializableUserHeroCollection.SerializableUserHeroes[i].UserHeroData = _userData.HeroCollection.Heroes[i].UserHeroData;
-        }
-
-        public void UpdateLevelAndPlayAmount(int level, int playAmount)
-        {
-            _userData.CurrentLevel = level;
-            _userData.BattlePlayAmount = playAmount;
-            progressionData.BattlePlayAmount = _userData.BattlePlayAmount;
-            progressionData.CurrentLevel = _userData.CurrentLevel;
-            SaveUserDataAsync(false);
         }
 
         public void UpdateSelectedHeroes(List<int> heroIndexes)
@@ -78,45 +69,54 @@ namespace GameLogic
             SaveUserDataAsync(false);
         }
         
-        public void UpdateHeroExperience(List<int> heroIndexes, int experienceGain)
+        public async Task SaveAllChangesAsync()
+        { 
+            await SaveUserDataAsync();
+        }
+
+        #region Save After Battle End
+
+        public void UpdateLevelAndPlayAmount(int level, int playAmount)
         {
-            foreach (var index in heroIndexes)
-            {
-                var heroData = HeroCollection.Heroes[index].UserHeroData;
-                heroData.Experience += experienceGain;
-                if (heroData.Experience < Constants.HeroLevelUpExperienceThreshold) continue;
-                
-                heroData.Level++;
-                heroData.Experience -= Constants.HeroLevelUpExperienceThreshold;
-            }
-            SaveUserDataAsync(false);
+            _userData.CurrentLevel = level;
+            _userData.BattlePlayAmount = playAmount;
         }
         
         public void UnlockRandomHero()
         {
-            var lockedHeroes = new List<HeroData>();
-            foreach (var hero in HeroCollection.Heroes)
-            {
-                if (!hero.UserHeroData.Unlocked)
-                    lockedHeroes.Add(hero);
-            }
+            var lockedHeroes = _userData.HeroCollection.Heroes
+                .Where(hero => !hero.UserHeroData.Unlocked)
+                .ToList();
 
-            if (lockedHeroes.Count == 0)
-            {
-                Debug.Log("All heroes are already unlocked!");
-                return;
-            }
+            if (!lockedHeroes.Any()) return;
 
-            var randomIndex = Random.Range(0, lockedHeroes.Count);
-            lockedHeroes[randomIndex].UserHeroData.Unlocked = true;
-            Debug.Log($"Hero {lockedHeroes[randomIndex].EntityName} unlocked!");
-            SaveUserDataAsync(false);
+            var randomHero = lockedHeroes[Random.Range(0, lockedHeroes.Count)];
+            randomHero.UserHeroData.Unlocked = true;
         }
         
-        public void UpdateHeroProgress()
+        public void UpdateHeroExperience(List<int> heroIndexes, int experienceGain)
         {
-            SaveUserDataAsync();
+            foreach (var index in heroIndexes)
+            {
+                var heroData = _userData.HeroCollection.Heroes[index];
+                var userHeroData = heroData.UserHeroData;
+                userHeroData.Experience += experienceGain;
+                if (userHeroData.Experience < Constants.HeroLevelUpExperienceThreshold) continue;
+                
+                userHeroData.Level++;
+                userHeroData.Experience -= Constants.HeroLevelUpExperienceThreshold;
+                UpdateModifiedStats(heroData);
+            }
         }
+        
+        private void UpdateModifiedStats(HeroData heroData)
+        {
+            var pow = heroData.UserHeroData.Level - 1;
+            heroData.ModifiedHealth = heroData.BaseHealth * Mathf.Pow(Constants.HeroLevelUpHealthModifier, pow);
+            heroData.ModifiedAttackPower = heroData.BaseAttackPower * Mathf.Pow(Constants.HeroLevelUpAttackPowerModifier, pow);
+        }
+
+        #endregion
         
         public UserData GetUserData()
         {

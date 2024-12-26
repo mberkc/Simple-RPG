@@ -82,11 +82,11 @@ namespace GameLogic
         {
             var level = _userDataManager.CurrentLevel;
             var playAmount = _userDataManager.BattlePlayAmount + 1;
-            if (victory) 
-                ++level;
+            if (victory) ++level;
 
-            _heroProgressionService.CheckHeroProgression(victory, aliveHeroIndexes, playAmount);
             _userDataManager.UpdateLevelAndPlayAmount(level, playAmount);
+            _heroProgressionService.CheckHeroProgression(victory, aliveHeroIndexes, playAmount);
+            _userDataManager.SaveAllChangesAsync(); // Task can be awaited if needed!
         }
     }
 }
