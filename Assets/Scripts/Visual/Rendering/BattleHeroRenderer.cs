@@ -1,6 +1,5 @@
 ﻿using System;
 using Data;
-using Data.ScriptableObjects;
 using UnityEngine;
 using Visual.Rendering.DamageValue;
 using Visual.Rendering.PointerHandler;
@@ -20,6 +19,7 @@ namespace Visual.Rendering
             BoardIndex = boardIndex;
             DamageValueSpawner = damageValueSpawner;
             materialPropertyBlock = new MaterialPropertyBlock();
+            SetName(heroData.EntityName);
             SetColor(heroData.Color);
             SetAlive(true);
             healthView.Initialize(heroData.ModifiedHealth);

@@ -1,7 +1,7 @@
-﻿using System;
-using Core;
+﻿using Core;
 using Data.ScriptableObjects;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using Visual.Rendering.DamageValue;
 using Visual.UI.Views.Battle;
@@ -12,10 +12,11 @@ namespace Visual.Rendering
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] protected HealthView healthView;
+        [SerializeField] protected TextMeshProUGUI NameText;
         
         protected DamageValueSpawner DamageValueSpawner;
-        protected bool IsAlive = false;
         protected MaterialPropertyBlock materialPropertyBlock;
+        protected bool IsAlive = false;
         protected int BoardIndex;
 
         protected Vector2 animationDirection;
@@ -26,6 +27,7 @@ namespace Visual.Rendering
             BoardIndex = boardIndex;
             DamageValueSpawner = damageValueSpawner;
             materialPropertyBlock = new MaterialPropertyBlock();
+            SetName(entitySo.EntityName);
             SetColor(entitySo.Color);
             SetAlive(true);
             healthView.Initialize(entitySo.BaseHealth);
@@ -82,6 +84,11 @@ namespace Visual.Rendering
         protected void SetAlive(bool alive)
         {
             IsAlive = alive;
+        }
+
+        protected void SetName(string name)
+        {
+            NameText.text = name;
         }
 
         private void OnDestroy()
