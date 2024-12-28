@@ -1,4 +1,6 @@
-﻿using Core.EventManager.GameLogicEventManager;
+﻿using System.Threading.Tasks;
+using Core;
+using Core.EventManager.GameLogicEventManager;
 using UnityEngine;
 
 namespace GameLogic.Battle.Entity
@@ -27,7 +29,7 @@ namespace GameLogic.Battle.Entity
         /// </summary>
         /// <param name="damage"></param>
         /// <returns></returns>
-        public bool TakeDamage(float damage)
+        public async Task TakeDamage(float damage)
         {
             CurrentHealth -= damage;
             if(CurrentHealth < 0) CurrentHealth = 0;
@@ -35,10 +37,13 @@ namespace GameLogic.Battle.Entity
             Debug.Log($"{EntityName} took {damage} damage. Remaining health: {CurrentHealth}");
             GameLogicEventManager.BroadcastEntityDamaged(BoardIndex, damage, CurrentHealth)?.Invoke();
             
-            if (IsAlive) return false;
+            await Task.Delay(Utility.GetNormalAnimationDurationAsMS); // Damage Taken wait
+
+            if (IsAlive) return;
             
             Die();
-            return true;
+            
+            await Task.Delay(Utility.GetNormalAnimationDurationAsMS); // Die wait
         }
 
         private void Die()

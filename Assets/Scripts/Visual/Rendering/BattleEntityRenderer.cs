@@ -61,17 +61,17 @@ namespace Visual.Rendering
         
         private void PlayAttackAnimation()
         {
-            transform.DOPunchPosition(animationDirection, Constants.NormalAnimationSpeed, elasticity: 0.1f);
+            transform.DOPunchPosition(animationDirection, Constants.NormalAnimationDuration, elasticity: 0.1f);
         }
 
         private void PlayDamageAnimation()
         {
-            transform.DOPunchScale(targetScale, Constants.NormalAnimationSpeed, elasticity: 0.1f);
+            transform.DOPunchScale(targetScale, Constants.NormalAnimationDuration, elasticity: 0.1f);
         }
         
         private void PlayDieAnimation()
         {
-            transform.DOScale(Vector2.zero, Constants.NormalAnimationSpeed);
+            transform.DOScale(Vector2.zero, Constants.NormalAnimationDuration);
         }
 
         protected void SetColor(Color color)

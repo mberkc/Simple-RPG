@@ -38,7 +38,7 @@ namespace Visual.UI.Views.HeroSelection
         {
             isSelected = selected;
             selectionBorder.DOKill(true);
-            selectionBorder.DOFade(selected ? 1f : 0f, Constants.FastAnimationSpeed);
+            selectionBorder.DOFade(selected ? 1f : 0f, Constants.FastAnimationDuration);
         }
         
         private void SetUnlocked(bool unlocked)

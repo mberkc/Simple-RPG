@@ -25,11 +25,12 @@ namespace GameLogic.Battle
         private readonly OpponentManager _opponentManager;
         private BattleState currentState = BattleState.Idle;
         private bool CheckIfPlayerTurn => currentState == BattleState.PlayerTurn;
+        private bool playerCanAttack = false;
         
-        public BattleManager(AttackHandler attackHandler, UserData userData, EnemyService enemyService, EntitySpawner entitySpawner, IBotStrategy botStrategy)
+        public BattleManager(AttackHandler attackHandler, UserData userData, EnemyService enemyService, BattleEntitySpawner battleEntitySpawner, IBotStrategy botStrategy)
         {
-            _playerManager = new PlayerManager(userData, entitySpawner);
-            _opponentManager = new OpponentManager(userData, enemyService, entitySpawner, botStrategy);
+            _playerManager = new PlayerManager(userData, battleEntitySpawner);
+            _opponentManager = new OpponentManager(userData, enemyService, battleEntitySpawner, botStrategy);
             _combatController = new CombatController(attackHandler, _playerManager, _opponentManager);
             SubscribeEvents();
             ProcessState(BattleState.Initialize);
@@ -92,13 +93,17 @@ namespace GameLogic.Battle
         private void HandlePlayerTurn()
         {
             Debug.Log("Player turn!");
+            playerCanAttack = true;
             GameLogicEventManager.BroadcastPlayerTurnStarted?.Invoke();
         }
         
-        private void HandleOpponentTurn()
+        private async void HandleOpponentTurn()
         {
             Debug.Log("Opponent turn!");
-            _combatController.HandleOpponentAttack();
+            if(await _combatController.HandleOpponentAttack()) return;
+            
+            // This lets opponent attack again on not successful attack (it's not enabled because of recursive call)
+            // HandleOpponentTurn();
         }
         
         private void CompleteBattle(bool victory)
@@ -123,11 +128,16 @@ namespace GameLogic.Battle
             StartBattle();
         }
         
-        private void HandlePlayerAttack(int attackerIndex)
+        private async void HandlePlayerAttack(int attackerIndex)
         {
-            if(!CheckIfPlayerTurn) return;
-            
-            _combatController.HandlePlayerAttack(attackerIndex);
+            if(!CheckIfPlayerTurn || !playerCanAttack) return;
+
+            playerCanAttack = false;
+            if(await _combatController.HandlePlayerAttack(attackerIndex))
+                return;
+                
+            // This lets player attack again on not successful attack
+            playerCanAttack = true;
         }
 
         private void PlayerTurnEnded()

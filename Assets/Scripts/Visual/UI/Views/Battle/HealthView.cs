@@ -25,7 +25,7 @@ namespace Visual.UI.Views.Battle
             healthText.text = currentHealth.ToString(CultureInfo.InvariantCulture);
             
             var healthPercent = currentHealth / maxHealth;
-            healthBar.DOFillAmount(healthPercent, Constants.NormalAnimationSpeed);
+            healthBar.DOFillAmount(healthPercent, Constants.NormalAnimationDuration);
         }
 
         private void OnDestroy()

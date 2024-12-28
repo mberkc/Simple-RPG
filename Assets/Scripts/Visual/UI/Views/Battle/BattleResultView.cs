@@ -1,4 +1,5 @@
-﻿using Core;
+﻿using System.Collections.Generic;
+using Core;
 using Core.EventManager.UIEventManager;
 using DG.Tweening;
 using TMPro;
@@ -13,12 +14,13 @@ namespace Visual.UI.Views.Battle
         [SerializeField] private TextMeshProUGUI resultText;
         [SerializeField] private Button returnButton;
     
-        public void ShowResult(bool victory)
+        public void ShowResult(bool victory, List<int> experienceGainedHeroes)
         {
             resultText.text = victory ? "Victory!" : "Defeat...";
+            ShowExperienceGainedHeroes(experienceGainedHeroes);
             returnButton.onClick.RemoveAllListeners();
             returnButton.onClick.AddListener(ReturnToHeroSelection);
-            rectTransform.DOScale(Vector3.one, Constants.FastAnimationSpeed);
+            rectTransform.DOScale(Vector3.one, Constants.FastAnimationDuration);
         }
 
         private void ReturnToHeroSelection()
@@ -27,6 +29,11 @@ namespace Visual.UI.Views.Battle
             rectTransform.DOKill();
             returnButton.onClick.RemoveAllListeners();
             UIEventManager.RaiseReturnToHeroSelectionRequested?.Invoke();
+        }
+
+        private void ShowExperienceGainedHeroes(List<int> experienceGainedHeroes)
+        {
+            // TODO: Show Hero Experience gain
         }
     }
 }

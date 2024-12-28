@@ -1,14 +1,13 @@
-﻿using Core;
-using Data;
+﻿using Data;
 using Data.ScriptableObjects;
 
 namespace GameLogic.Battle.Entity
 {
-    public class EntitySpawner
+    public class BattleEntitySpawner
     {
         private readonly BattleEntityFactory _entityFactory;
 
-        public EntitySpawner(BattleEntityFactory entityFactory)
+        public BattleEntitySpawner(BattleEntityFactory entityFactory)
         {
             _entityFactory = entityFactory;
         }
@@ -18,9 +17,9 @@ namespace GameLogic.Battle.Entity
             return _entityFactory.CreateHero(heroData, boardIndex);
         }
 
-        public BattleEntity SpawnEnemy(EnemySO enemySo)
+        public BattleEntity SpawnEnemy(EnemySO enemySo, int boardIndex)
         {
-            return _entityFactory.CreateEnemy(enemySo, Constants.EnemyBoardIndex); // Equal to hero number.
+            return _entityFactory.CreateEnemy(enemySo, boardIndex);
         }
     }
 }

@@ -87,17 +87,17 @@ namespace Visual.Controllers
         
         private void PlayerTurnStarted()
         {
-            // TODO: Enable input
+            // TODO: Visual Update
         }
 
         private void PlayerTurnEnded()
         {
-            // TODO: Disable input
+            // TODO: Visual Update
         }
 
-        private void ShowResult(bool victory, List<int> aliveHeroIndexes)
+        private void ShowResult(bool victory, List<int> experienceGainedHeroes)
         {
-            battleResultView.ShowResult(victory);
+            battleResultView.ShowResult(victory, experienceGainedHeroes);
         }
         
         #endregion

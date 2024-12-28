@@ -13,6 +13,9 @@ namespace Core
         public const int EntityDefaultHealth = 100;
         public const int EntityDefaultAttackPower = 10;
 
+        /// <summary>
+        /// Equal to Hero number on battle
+        /// </summary>
         public const int EnemyBoardIndex = 3;
 
         #region Hero
@@ -28,9 +31,9 @@ namespace Core
 
         #region Animation
         
-        public const float SlowAnimationSpeed = 0.5f;
-        public const float NormalAnimationSpeed = 0.3f;
-        public const float FastAnimationSpeed = 0.1f;
+        public const float SlowAnimationDuration = 0.5f;
+        public const float NormalAnimationDuration = 0.3f;
+        public const float FastAnimationDuration = 0.1f;
 
         #endregion
 

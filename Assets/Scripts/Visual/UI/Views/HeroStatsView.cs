@@ -64,7 +64,7 @@ namespace Visual.UI.Views
         {
             isEnabled = enable;
             canvasGroup.DOKill(true);
-            canvasGroup.DOFade(enable ? 1f : 0f, Constants.NormalAnimationSpeed);
+            canvasGroup.DOFade(enable ? 1f : 0f, Constants.NormalAnimationDuration);
         }
 
         private void UpdatePosition(Vector2 screenPosition)

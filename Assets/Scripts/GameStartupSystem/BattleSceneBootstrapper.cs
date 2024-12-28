@@ -36,7 +36,7 @@ namespace GameStartupSystem
             var enemyService = ServiceLocator.Resolve<EnemyService>();
 
             var attackHandler = new AttackHandler();
-            var entitySpawner = new EntitySpawner(new BattleEntityFactory());
+            var entitySpawner = new BattleEntitySpawner(new BattleEntityFactory());
             battleManager = new BattleManager(attackHandler, userDataManager.GetUserData(), enemyService, entitySpawner, InitializeBotStrategy(botStrategyType));
 
             Instantiate(pointerHandlerUtilityPrefab, transform);

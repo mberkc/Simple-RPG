@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Core;
 using Data;
 using GameLogic.Battle.BotStrategy;
 using GameLogic.Battle.Entity;
@@ -13,11 +14,11 @@ namespace GameLogic.Battle
         private readonly IBotStrategy _botStrategy;
         private readonly BattleEntity _enemyEntity;
 
-        public OpponentManager(UserData userData, EnemyService enemyService, EntitySpawner entitySpawner, IBotStrategy botStrategy)
+        public OpponentManager(UserData userData, EnemyService enemyService, BattleEntitySpawner battleEntitySpawner, IBotStrategy botStrategy)
         { 
             _botStrategy = botStrategy;
             var enemy = enemyService.GetEnemyByLevel(userData.CurrentLevel); 
-            _enemyEntity = entitySpawner.SpawnEnemy(enemy);
+            _enemyEntity = battleEntitySpawner.SpawnEnemy(enemy, Constants.EnemyBoardIndex);
         }
         
         public async Task<BattleEntity> GetTarget(BattleEntity[] availableTargets)

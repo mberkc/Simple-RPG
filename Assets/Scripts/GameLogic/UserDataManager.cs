@@ -117,8 +117,8 @@ namespace GameLogic
         {
             if(heroData.UserHeroData.Level == 1) return;
             
-            heroData.ModifiedHealth = ModifiedAttributeCalculator.CalculateLevelEffect(heroData.BaseHealth, Constants.HeroLevelUpHealthModifier, heroData.UserHeroData.Level);
-            heroData.ModifiedAttackPower = ModifiedAttributeCalculator.CalculateLevelEffect(heroData.BaseAttackPower, Constants.HeroLevelUpAttackPowerModifier, heroData.UserHeroData.Level);
+            heroData.ModifiedHealth = Utility.CalculateModifiedAttribute(heroData.BaseHealth, Constants.HeroLevelUpHealthModifier, heroData.UserHeroData.Level);
+            heroData.ModifiedAttackPower = Utility.CalculateModifiedAttribute(heroData.BaseAttackPower, Constants.HeroLevelUpAttackPowerModifier, heroData.UserHeroData.Level);
         }
 
         #endregion
