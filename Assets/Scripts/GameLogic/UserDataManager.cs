@@ -83,7 +83,6 @@ namespace GameLogic
                 heroData.UserHeroData = serializedHero.UserHeroData;
                 UpdateModifiedStats(heroData);
             }
-
         }
         
         private void MapUserDataToProgressionData()
@@ -93,7 +92,7 @@ namespace GameLogic
             progressionData.SelectedHeroIndexes = _userData.SelectedHeroIndexes;
             
             for (var i = 0; i < Constants.TotalHeroes; i++)
-                progressionData.SerializableUserHeroCollection.SerializableUserHeroes[i].UserHeroData = _userData.GetHeroData(i).UserHeroData;
+                progressionData.SerializableUserHeroCollection.SerializableUserHeroes[i].UserHeroData = _userData.GetUserHeroData(i);
         }
 
         #endregion
