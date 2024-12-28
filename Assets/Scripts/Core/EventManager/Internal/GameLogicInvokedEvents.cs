@@ -8,14 +8,13 @@ namespace Core.EventManager.Internal
 {
     internal static class GameLogicInvokedEvents
     {
-        internal static event Action<bool, List<int>> OnBattleComplete;
-        internal static event Action OnPlayerTurnEnded;
+        internal static event Action<bool, List<int>> OnBattleComplete; // For Both Assemblies
         internal static event Action OnPlayerTurnStarted;
+        internal static event Action OnPlayerTurnEnded;
         internal static event Action<int> OnEntityAttacked;
         internal static event Action<int, float, float> OnEntityDamaged;
         internal static event Action<int> OnEntityDied;
-        internal static event Action OnBattleSceneLoaded;
-        internal static event Action OnHeroSelectionSceneLoaded;
+        internal static event Action OnBattleSceneLoaded; // For GameLogic Assembly
         
         internal static void BroadcastBattleComplete(bool victory, List<int> aliveHeroIndexes)
         {
@@ -46,15 +45,10 @@ namespace Core.EventManager.Internal
         {
             OnEntityDied?.Invoke(boardIndex);
         }
-//
+
         internal static void BroadcastBattleSceneLoaded()
         {
             OnBattleSceneLoaded?.Invoke();
-        }
-        
-        internal static void BroadcastHeroSelectionSceneLoaded()
-        {
-            OnHeroSelectionSceneLoaded?.Invoke();
         }
     }
 }

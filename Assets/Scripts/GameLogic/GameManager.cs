@@ -23,7 +23,6 @@ namespace GameLogic
             SubscribeEvents();
         }
         
-        
         public void Cleanup() // Call on Parent MonoBehaviour OnDestroy if needed (currently GameManager exists during gameplay).
         {
             UnSubscribeEvents();

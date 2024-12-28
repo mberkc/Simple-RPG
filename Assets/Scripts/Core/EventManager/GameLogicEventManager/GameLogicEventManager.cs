@@ -17,7 +17,6 @@ namespace Core.EventManager.GameLogicEventManager
         public static Action BroadcastEntityDamaged(int boardIndex, float damage, float targetHealth) => () => GameLogicInvokedEvents.BroadcastEntityDamaged(boardIndex, damage, targetHealth);
         public static Action BroadcastEntityDied(int boardIndex) => () => GameLogicInvokedEvents.BroadcastEntityDied(boardIndex);
         public static Action BroadcastBattleSceneLoaded => GameLogicInvokedEvents.BroadcastBattleSceneLoaded;
-        public static Action BroadcastHeroSelectionSceneLoaded => GameLogicInvokedEvents.BroadcastHeroSelectionSceneLoaded;
 
         #endregion
 

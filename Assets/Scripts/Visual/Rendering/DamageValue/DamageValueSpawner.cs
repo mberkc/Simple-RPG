@@ -37,6 +37,8 @@ namespace Visual.Rendering.DamageValue
 
         private void Recycle(DamageValue damageValue)
         {
+            if(damageValue == null) return;
+            
             damageValue.gameObject.SetActive(false);
             _pool.Enqueue(damageValue);
         }

@@ -58,18 +58,6 @@ namespace Core.EventManager.UIEventManager
             remove => GameLogicInvokedEvents.OnEntityDied -= value;
         }
 
-        public static event Action OnBattleSceneLoaded
-        {
-            add => GameLogicInvokedEvents.OnBattleSceneLoaded += value;
-            remove => GameLogicInvokedEvents.OnBattleSceneLoaded -= value;
-        }
-        
-        public static event Action OnHeroSelectionSceneLoaded
-        {
-            add => GameLogicInvokedEvents.OnHeroSelectionSceneLoaded += value;
-            remove => GameLogicInvokedEvents.OnHeroSelectionSceneLoaded -= value;
-        }
-
         #endregion
 
         #endregion
