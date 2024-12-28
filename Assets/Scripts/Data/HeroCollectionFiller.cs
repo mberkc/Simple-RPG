@@ -23,15 +23,15 @@ namespace Data
                 heroData.BaseHealth = scriptableHero.BaseHealth;
                 heroData.BaseAttackPower = scriptableHero.BaseAttackPower;
 
-                // Optionally, initialize modified values to base values if needed
+                // Optionally, initialize modified values to base values if needed => currently they're just base values
                 heroData.ModifiedHealth = heroData.BaseHealth;
                 heroData.ModifiedAttackPower = heroData.BaseAttackPower;
             }
         }
 
-        public async Task<HeroCollection> HeroCollection()
+        public async Task<HeroCollection> GetHeroCollection()
         {
-            await Task.Delay(50);
+            await Task.Delay(50); // Wait for hero collection fill
             return _heroCollection;
         }
     }

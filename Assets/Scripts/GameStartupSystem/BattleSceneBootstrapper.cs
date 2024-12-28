@@ -35,16 +35,22 @@ namespace GameStartupSystem
             var userDataManager = ServiceLocator.Resolve<UserDataManager>();
             var enemyService = ServiceLocator.Resolve<EnemyService>();
 
+            var entityFactory = new BattleEntityFactory();
+            var entitySpawner = new BattleEntitySpawner(entityFactory);
             var attackHandler = new AttackHandler();
-            var entitySpawner = new BattleEntitySpawner(new BattleEntityFactory());
-            battleManager = new BattleManager(attackHandler, userDataManager.GetUserData(), enemyService, entitySpawner, InitializeBotStrategy(botStrategyType));
+            var botStrategy = InitializeBotStrategy(botStrategyType);
+            battleManager = new BattleManager(attackHandler, userDataManager.GetUserData, enemyService, entitySpawner, botStrategy);
 
             Instantiate(pointerHandlerUtilityPrefab, transform);
+            
             var damageValueSpawner = Instantiate(damageValueSpawnerPrefab, transform).GetComponent<DamageValueSpawner>();
             
+            var entityRendererFactory = new EntityRendererFactory(heroPrefab, enemyPrefab, damageValueSpawner);
             var battleSceneController = Instantiate(battleCanvasPrefab, transform).GetComponent<BattleSceneController>();
-            battleSceneController.Initialize(userDataManager.GetUserDataVisual(), enemyService, new EntityRendererFactory(heroPrefab, enemyPrefab, damageValueSpawner));
+            battleSceneController.Initialize(userDataManager.GetUserDataVisual, enemyService, entityRendererFactory);
         }
+        
+        
         private IBotStrategy InitializeBotStrategy(BotStrategyType type)
         {
             return type switch

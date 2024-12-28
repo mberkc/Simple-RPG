@@ -17,6 +17,16 @@ namespace GameLogic
         private readonly UserData _userData;
         
         private ProgressionData progressionData;
+        
+        /// <summary>
+        /// UserData for DI (GameLogic Assembly)
+        /// </summary>
+        public UserData GetUserData => _userData;
+        
+        /// <summary>
+        /// UserData for DI (Visual Assembly)
+        /// </summary>
+        public UserData GetUserDataVisual => _userData; // Userdata needed by visual assembly might differ in the future, so we have this property
 
         public UserDataManager(UserData userData, ProgressionService progressionService)
         {
@@ -28,16 +38,37 @@ namespace GameLogic
         public int CurrentLevel => _userData.CurrentLevel;
         public int BattlePlayAmount => _userData.BattlePlayAmount;
         
+        /// <summary>
+        /// Initializes userdata from progressiondata
+        /// </summary>
         public async Task InitializeUserDataAsync()
         {
             progressionData = await _progressionService.LoadProgressionAsync();
             MapProgressionDataToUserData();
         }
-
+        
+        /// <summary>
+        /// Saves userdata as progressiondata
+        /// </summary>
         private async Task SaveUserDataAsync()
         {
             await _progressionService.SaveProgressionAsync(progressionData);
         }
+        
+        public async Task UpdateSelectedHeroes(List<int> heroIndexes)
+        {
+            _userData.SelectedHeroIndexes = heroIndexes;
+            progressionData.SelectedHeroIndexes = _userData.SelectedHeroIndexes;
+            await SaveUserDataAsync();
+        }
+        
+        public async Task SaveAllChangesAsync()
+        { 
+            MapUserDataToProgressionData(); // This makes sure all changes are updated for progresiondata (if we need to optimize, just update required ones)
+            await SaveUserDataAsync();
+        }
+        
+        #region UserData <=> ProgressionData Mapping
 
         private void MapProgressionDataToUserData()
         {
@@ -65,18 +96,7 @@ namespace GameLogic
                 progressionData.SerializableUserHeroCollection.SerializableUserHeroes[i].UserHeroData = _userData.GetHeroData(i).UserHeroData;
         }
 
-        public async Task UpdateSelectedHeroes(List<int> heroIndexes)
-        {
-            _userData.SelectedHeroIndexes = heroIndexes;
-            progressionData.SelectedHeroIndexes = _userData.SelectedHeroIndexes;
-            await SaveUserDataAsync();
-        }
-        
-        public async Task SaveAllChangesAsync()
-        { 
-            MapUserDataToProgressionData();
-            await SaveUserDataAsync();
-        }
+        #endregion
 
         #region Save After Battle End
 
@@ -117,21 +137,10 @@ namespace GameLogic
         {
             if(heroData.UserHeroData.Level == 1) return;
             
-            heroData.ModifiedHealth = Utility.CalculateModifiedAttribute(heroData.BaseHealth, Constants.HeroLevelUpHealthModifier, heroData.UserHeroData.Level);
-            heroData.ModifiedAttackPower = Utility.CalculateModifiedAttribute(heroData.BaseAttackPower, Constants.HeroLevelUpAttackPowerModifier, heroData.UserHeroData.Level);
+            heroData.ModifiedHealth = CoreUtility.CalculateModifiedAttribute(heroData.BaseHealth, Constants.HeroLevelUpHealthModifier, heroData.UserHeroData.Level);
+            heroData.ModifiedAttackPower = CoreUtility.CalculateModifiedAttribute(heroData.BaseAttackPower, Constants.HeroLevelUpAttackPowerModifier, heroData.UserHeroData.Level);
         }
 
         #endregion
-        
-        public UserData GetUserData()
-        {
-            return _userData;
-        }
-        
-        // Extracts UserData for DI (Visual Assembly)
-        public UserData GetUserDataVisual()
-        {
-            return _userData;
-        }
     }
 }

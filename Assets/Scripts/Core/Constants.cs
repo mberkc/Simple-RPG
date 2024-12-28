@@ -4,19 +4,21 @@ namespace Core
 {
     public static class Constants
     {
+        public const string SaveFileName = "progression.txt";
+        
         public const int MaxSelectedHeroes = 3;
         public const int TotalHeroes = 10;
         public const int UnlockThreshold = 5;
+        
+        /// <summary>
+        /// Equal to Hero number on battle
+        /// </summary>
+        public const int EnemyBoardIndex = 3;
 
         #region Entity
         
         public const int EntityDefaultHealth = 100;
         public const int EntityDefaultAttackPower = 10;
-
-        /// <summary>
-        /// Equal to Hero number on battle
-        /// </summary>
-        public const int EnemyBoardIndex = 3;
 
         #region Hero
 
@@ -31,7 +33,6 @@ namespace Core
 
         #region Animation
         
-        public const float SlowAnimationDuration = 0.5f;
         public const float NormalAnimationDuration = 0.3f;
         public const float FastAnimationDuration = 0.1f;
 

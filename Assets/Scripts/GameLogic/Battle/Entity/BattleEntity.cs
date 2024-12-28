@@ -37,13 +37,13 @@ namespace GameLogic.Battle.Entity
             Debug.Log($"{EntityName} took {damage} damage. Remaining health: {CurrentHealth}");
             GameLogicEventManager.BroadcastEntityDamaged(BoardIndex, damage, CurrentHealth)?.Invoke();
             
-            await Task.Delay(Utility.GetNormalAnimationDurationAsMS); // Damage Taken wait
+            await Task.Delay(CoreUtility.GetNormalAnimationDurationAsMS); // Damage Taken wait
 
             if (IsAlive) return;
             
             Die();
             
-            await Task.Delay(Utility.GetNormalAnimationDurationAsMS); // Die wait
+            await Task.Delay(CoreUtility.GetNormalAnimationDurationAsMS); // Die wait
         }
 
         private void Die()

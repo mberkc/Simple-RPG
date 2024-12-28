@@ -77,12 +77,7 @@ namespace Visual.Controllers
             if(boardIndex == Constants.EnemyBoardIndex)
                 enemyEntityRenderer.Die();
             else
-            {    
-                var heroRenderer = heroEntityRenderers[boardIndex];
-                heroRenderer.OnHeroSelected -= OnHeroSelected;
-                heroRenderer.OnHeroHold -= OnHeroHold;
-                heroRenderer.Die();
-            }
+                heroEntityRenderers[boardIndex].Die();
         }
         
         private void PlayerTurnStarted()
@@ -118,9 +113,7 @@ namespace Visual.Controllers
             {
                 var heroIndex = selectedHeroIndexes[i];
                 var heroData = userData.GetHeroData(heroIndex);
-                var heroRenderer = entityRendererFactory.CreateHero(heroData, playerEntityParent.GetChild(i), i);
-                heroRenderer.OnHeroSelected += OnHeroSelected;
-                heroRenderer.OnHeroHold += OnHeroHold;
+                var heroRenderer = entityRendererFactory.CreateHero(heroData, playerEntityParent.GetChild(i), i, OnHeroSelected, OnHeroHold);
                 heroEntityRenderers[i] = heroRenderer;
             }
         }
@@ -133,7 +126,7 @@ namespace Visual.Controllers
         private void OnHeroHold(BattleHeroRenderer entityRenderer)
         {
             if(entityRenderer != null)
-                heroStatsView.Show(entityRenderer);
+                heroStatsView.Show(entityRenderer.HeroData, VisualUtility.WorldToScreenPosition(entityRenderer.transform.position));
             else
                 heroStatsView.Hide();
         }

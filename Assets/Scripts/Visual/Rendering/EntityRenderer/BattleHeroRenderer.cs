@@ -7,15 +7,24 @@ namespace Visual.Rendering.EntityRenderer
 {
     public class BattleHeroRenderer : BattleEntityRenderer, IPointerHandler
     {
-        internal event Action<int> OnHeroSelected;
-        internal event Action<BattleHeroRenderer> OnHeroHold;
+        private event Action<int> OnHeroSelected;
+        private event Action<BattleHeroRenderer> OnHeroHold;
 
         internal HeroData HeroData { get; private set; }
         
-        public void Initialize(HeroData heroData, int boardIndex, DamageValueSpawner damageValueSpawner)
+        public void Initialize(HeroData heroData, int boardIndex, DamageValueSpawner damageValueSpawner, Action<int> onHeroSelected, Action<BattleHeroRenderer> onHeroHold)
         {
             HeroData = heroData;
+            OnHeroSelected = onHeroSelected;
+            OnHeroHold = onHeroHold;
             base.Initialize(heroData.EntityName, heroData.Color, heroData.ModifiedHealth, boardIndex, damageValueSpawner);
+        }
+
+        internal override void Die()
+        {
+            OnHeroSelected = null;
+            OnHeroHold = null;
+            base.Die();
         }
         
         #region Click & Hold Actions

@@ -9,7 +9,8 @@ namespace Visual
         internal static Camera MainCamera {
             get
             {
-                if(_mainCamera == null) _mainCamera = Camera.main;
+                if(_mainCamera == null) 
+                    _mainCamera = Camera.main;
                 return _mainCamera;
             }
         }

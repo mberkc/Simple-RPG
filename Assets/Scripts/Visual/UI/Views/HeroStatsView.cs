@@ -4,8 +4,6 @@ using Data;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using Visual.Rendering.EntityRenderer;
-using Visual.UI.Views.HeroSelection;
 
 namespace Visual.UI.Views
 {
@@ -21,27 +19,14 @@ namespace Visual.UI.Views
 
         private bool isEnabled = false;
         
-        // Show the stats panel with data of a HeroCard => UI Element
-        internal void Show(HeroCardView heroCard)
+        internal void Show(HeroData heroData, Vector3 screenPosition)
         {
-            if (isEnabled || heroCard == null) return;
+            if (isEnabled) return;
 
-            SetData(heroCard.HeroData);
-            UpdatePosition(heroCard.transform.position);
-            EnableAnimation(true);
-        }
-        
-        // Show the stats panel with data of a HeroEntity => SpriteRenderer
-        internal void Show(BattleHeroRenderer heroEntity)
-        {
-            if (isEnabled || heroEntity == null) return;
-
-            SetData(heroEntity.HeroData);
-            var screenPosition = VisualUtility.WorldToScreenPosition(heroEntity.transform.position);  
+            SetData(heroData);
             UpdatePosition(screenPosition);
             EnableAnimation(true);
         }
-
 
         internal void Hide()
         {

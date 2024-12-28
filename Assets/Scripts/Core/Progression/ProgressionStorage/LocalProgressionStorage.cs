@@ -9,14 +9,16 @@ namespace Core.Progression.ProgressionStorage
 {
     public class LocalProgressionStorage : IProgressionStorage
     {
-        private readonly string _savePath = Path.Combine(Application.persistentDataPath, "progression.txt");
+        private readonly string _savePath = Path.Combine(Application.persistentDataPath, Constants.SaveFileName);
         private readonly IEncryptionService _encryptionService;
         private readonly ISerializationService _serializationService;
+        private readonly ProgressionData _defaultProgressionData;
         
         public LocalProgressionStorage(IEncryptionService encryptionService, ISerializationService serializationService)
         {
             _encryptionService = encryptionService;
             _serializationService = serializationService;
+            _defaultProgressionData = new ProgressionData();
         }
 
         public async Task<ProgressionData> LoadAsync()
@@ -24,7 +26,7 @@ namespace Core.Progression.ProgressionStorage
             if (!File.Exists(_savePath))
             {
                 Debug.Log("No progression file found. Initializing new progression.");
-                return new ProgressionData();
+                return _defaultProgressionData;
             }
             try
             {
@@ -35,7 +37,7 @@ namespace Core.Progression.ProgressionStorage
             catch (Exception ex)
             {
                 Debug.LogError($"Failed to load progression data: {ex.Message}");
-                return new ProgressionData();
+                return _defaultProgressionData;
             }
         }
 

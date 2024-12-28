@@ -46,7 +46,7 @@ namespace Visual.Rendering.EntityRenderer
             healthView.UpdateHealth(targetHealth);
         }
         
-        internal void Die()
+        internal virtual void Die()
         {
             SetAlive(false);
             PlayDieAnimation();

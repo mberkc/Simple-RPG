@@ -2,7 +2,6 @@
 using Core;
 using UnityEngine;
 using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
 
 namespace Data.ScriptableObjects
 {

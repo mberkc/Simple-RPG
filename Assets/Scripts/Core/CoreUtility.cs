@@ -2,7 +2,7 @@
 
 namespace Core
 {
-    public static class Utility
+    public static class CoreUtility
     {
         private static int _normalAnimationDurationAsMS;
 
@@ -17,7 +17,7 @@ namespace Core
         }
         
         /// <summary>
-        /// Default Level is 1, Don't calculate for first level!
+        /// Default Level is 1, Don't calculate for the first level!
         /// </summary>
         /// <param name="baseAttribute"></param>
         /// <param name="attributeLevelUpModifier"></param>

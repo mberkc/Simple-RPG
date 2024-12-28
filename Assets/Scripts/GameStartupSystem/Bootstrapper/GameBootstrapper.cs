@@ -26,7 +26,7 @@ namespace GameStartupSystem.Bootstrapper
             }
             else
             {
-                Debug.Log($"Duplicate GameBootStrapper found, deleting. Name: {name}. Please check if's the original one. If the scene is reloaded it might try to create a new one, if that's the case just ignore this.");
+                Debug.Log($"Duplicate GameBootstrapper is found, deleting... Name: {name}. Please check if's the original one. If the scene is reloaded it might try to create a new one, if that's the case just ignore this.");
                 Destroy(gameObject);
                 return;
             }

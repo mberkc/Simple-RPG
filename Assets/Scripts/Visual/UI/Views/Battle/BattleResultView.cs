@@ -26,8 +26,8 @@ namespace Visual.UI.Views.Battle
         private void ReturnToHeroSelection()
         {
             Debug.Log("Confirm button clicked");
-            rectTransform.DOKill();
             returnButton.onClick.RemoveAllListeners();
+            rectTransform.DOKill();
             UIEventManager.RaiseReturnToHeroSelectionRequested?.Invoke();
         }
 

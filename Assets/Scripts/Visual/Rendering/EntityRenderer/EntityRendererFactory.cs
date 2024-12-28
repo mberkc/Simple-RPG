@@ -1,8 +1,10 @@
-﻿using Core;
+﻿using System;
+using Core;
 using Data;
 using Data.ScriptableObjects;
 using UnityEngine;
 using Visual.Rendering.DamageValue;
+using Object = UnityEngine.Object;
 
 namespace Visual.Rendering.EntityRenderer
 {
@@ -22,11 +24,11 @@ namespace Visual.Rendering.EntityRenderer
             _damageValueSpawner = damageValueSpawner;
         }
         
-        public BattleHeroRenderer CreateHero(HeroData heroData, Transform parent, int boardIndex)
+        public BattleHeroRenderer CreateHero(HeroData heroData, Transform parent, int boardIndex, Action<int> onHeroSelected, Action<BattleHeroRenderer> onHeroHold)
         {
             var rendererObject = Object.Instantiate(_heroPrefab, parent);
             var renderer = rendererObject.GetComponent<BattleHeroRenderer>();
-            renderer.Initialize(heroData, boardIndex, _damageValueSpawner);
+            renderer.Initialize(heroData, boardIndex, _damageValueSpawner, onHeroSelected, onHeroHold);
             return renderer;
         }
 

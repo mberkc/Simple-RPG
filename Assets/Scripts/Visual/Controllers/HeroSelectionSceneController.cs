@@ -51,16 +51,11 @@ namespace Visual.Controllers
                     Debug.LogError($"Hero card view could not be found on {heroGrid.name} hero grid with child index: {i}");
                     return;
                 }
-                
-                heroCard.OnHeroSelected += OnHeroSelected;
-                heroCard.OnHeroDeselected += OnHeroDeselected;
-                heroCard.OnHeroHold += OnHeroHold;
     
                 var heroData = userData.GetHeroData(i);
                 var isSelected = selectedHeroIndexes.Contains(i);
-                heroCard.Initialize(heroData, isSelected);
-                if(isSelected)
-                    selectedHeroes.Add(heroCard);
+                heroCard.Initialize(heroData, isSelected, OnHeroSelected, OnHeroDeselected, OnHeroHold);
+                if(isSelected) selectedHeroes.Add(heroCard);
             }
         }
 
@@ -98,7 +93,7 @@ namespace Visual.Controllers
         private void OnHeroHold(HeroCardView hero)
         {
             if(hero != null)
-                heroStatsView.Show(hero);
+                heroStatsView.Show(hero.HeroData, hero.transform.position);
             else
                 heroStatsView.Hide();
         }

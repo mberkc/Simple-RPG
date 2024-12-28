@@ -23,9 +23,10 @@ namespace GameLogic.Battle
         private readonly CombatController _combatController;
         private readonly PlayerManager _playerManager;
         private readonly OpponentManager _opponentManager;
+        
         private BattleState currentState = BattleState.Idle;
-        private bool CheckIfPlayerTurn => currentState == BattleState.PlayerTurn;
         private bool playerCanAttack = false;
+        private bool CheckIfPlayerTurn => currentState == BattleState.PlayerTurn;
         
         public BattleManager(AttackHandler attackHandler, UserData userData, EnemyService enemyService, BattleEntitySpawner battleEntitySpawner, IBotStrategy botStrategy)
         {

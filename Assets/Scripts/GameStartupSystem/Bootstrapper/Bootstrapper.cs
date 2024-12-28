@@ -7,10 +7,7 @@ namespace GameStartupSystem.Bootstrapper
     /// </summary>
     public abstract class Bootstrapper : MonoBehaviour, IBootstrapper
     {
-        public bool IsEnabled => enabled;
-        
         public abstract void Initialize();
-
         public abstract void Awake();
     }
 }

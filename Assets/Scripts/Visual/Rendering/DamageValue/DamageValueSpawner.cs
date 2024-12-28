@@ -24,13 +24,18 @@ namespace Visual.Rendering.DamageValue
             }
         }
 
+        /// <summary>
+        /// Recycle is handled on DamageValue itself, don't try to recycle it.
+        /// </summary>
+        /// <param name="damage"></param>
+        /// <param name="scenePosition"></param>
         public void Spawn(float damage, Vector3 scenePosition)
         {
             var damageValue = Get();
-            damageValue.Show(damage, scenePosition, this);
+            damageValue.Show(damage, scenePosition, Recycle);
         }
 
-        internal void Recycle(DamageValue damageValue)
+        private void Recycle(DamageValue damageValue)
         {
             damageValue.gameObject.SetActive(false);
             _pool.Enqueue(damageValue);

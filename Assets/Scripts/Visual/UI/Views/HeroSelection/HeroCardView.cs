@@ -22,16 +22,18 @@ namespace Visual.UI.Views.HeroSelection
         internal HeroData HeroData { get; private set; }
 
         private bool isSelected = false;
-        private bool unlocked = false;
+        private bool isUnlocked = false;
 
-        internal void Initialize(HeroData heroData, bool selected)
+        internal void Initialize(HeroData heroData, bool selected, Action<HeroCardView> onHeroSelected, Action<HeroCardView> onHeroDeselected, Action<HeroCardView> onHeroHold)
         {
             HeroData = heroData;
-
             backgroundImage.color = heroData.Color;
             nameText.text = heroData.EntityName;
             SetSelected(selected);
             SetUnlocked(heroData.UserHeroData.Unlocked);
+            OnHeroSelected = onHeroSelected;
+            OnHeroDeselected = onHeroDeselected;
+            OnHeroHold = onHeroHold;
         }
 
         internal void SetSelected(bool selected)
@@ -43,7 +45,7 @@ namespace Visual.UI.Views.HeroSelection
         
         private void SetUnlocked(bool unlocked)
         {
-            this.unlocked = unlocked;
+            isUnlocked = unlocked;
             lockedVisual.SetActive(!unlocked);
         }
 
@@ -67,7 +69,7 @@ namespace Visual.UI.Views.HeroSelection
         
         private void OnCardClicked()
         {
-            if(!unlocked) return;
+            if(!isUnlocked) return;
             
             if (isSelected)
                 OnHeroDeselected?.Invoke(this);
@@ -91,6 +93,9 @@ namespace Visual.UI.Views.HeroSelection
         private void OnDestroy()
         {
             selectionBorder.DOKill(true);
+            OnHeroSelected = null;
+            OnHeroDeselected = null;
+            OnHeroHold = null;
         }
     }
 }

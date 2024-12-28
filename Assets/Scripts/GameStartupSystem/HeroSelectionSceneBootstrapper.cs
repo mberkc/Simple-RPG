@@ -1,5 +1,4 @@
-﻿using Data;
-using GameLogic;
+﻿using GameLogic;
 using GameStartupSystem.Bootstrapper;
 using GameStartupSystem.Bootstrapper.Utility;
 using UnityEngine;
@@ -19,7 +18,7 @@ namespace GameStartupSystem
             var userDataManager = ServiceLocator.Resolve<UserDataManager>();
             
             var heroSelectionSceneController = Instantiate(heroSelectionCanvasPrefab, transform).GetComponent<HeroSelectionSceneController>();
-            heroSelectionSceneController.Initialize(userDataManager.GetUserDataVisual());
+            heroSelectionSceneController.Initialize(userDataManager.GetUserDataVisual);
         }
 
         protected override void OnDestroy()

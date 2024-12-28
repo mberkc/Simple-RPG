@@ -25,7 +25,7 @@ namespace GameLogic.Battle.Combat
             GameLogicEventManager.BroadcastEntityAttacked(attacker.BoardIndex)?.Invoke();
             Debug.Log($"{attacker.EntityName} is attacking {target.EntityName} for {attacker.CurrentAttackPower} damage.");
 
-            await Task.Delay(Utility.GetNormalAnimationDurationAsMS); // Attack wait
+            await Task.Delay(CoreUtility.GetNormalAnimationDurationAsMS); // Attack wait
 
             await target.TakeDamage(attacker.CurrentAttackPower); // Damage taken (&die) wait
             

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Core;
 using Core.Encryption;
 using Core.Progression;
@@ -24,7 +23,7 @@ namespace GameStartupSystem
         [SerializeField] private string encryptionKey = "0e2tk8M7nbH1pS5z"; // Must be 16 characters for AES
 
         [SerializeField] private HeroSO[] heroes;
-        [SerializeField] private EnemySO[] enemies; 
+        [SerializeField] private EnemySO[] enemies;
         
         public override async void Initialize()
         {
@@ -32,17 +31,17 @@ namespace GameStartupSystem
             {
                 Debug.Log("Initializing Main Bootstrapper!");
                 Application.targetFrameRate = TargetFrameRate;
-                
-                var updatedEnemies = RemoveEmptyEnemies();
-                var maxLevel = updatedEnemies.Count;
-                
-                var enemyService = new EnemyService(updatedEnemies);
+
+                var sceneTransitionService = new SceneTransitionService();
+                var enemyService = new EnemyService(enemies, out var maxLevel);
                 var heroCollectionFiller = new HeroCollectionFiller(heroes);
-                var heroCollection = await heroCollectionFiller.HeroCollection();
-                var userDataManager = new UserDataManager(new UserData(heroCollection), InitializeProgressionService());
+                var heroCollection = await heroCollectionFiller.GetHeroCollection();
+                var userData = new UserData(heroCollection);
+                var userDataManager = new UserDataManager(userData, InitializeProgressionService());
                 await userDataManager.InitializeUserDataAsync();
                 
-                new GameManager(userDataManager, new SceneTransitionService(), new HeroProgressionService(userDataManager), maxLevel);
+                var heroProgressionService = new HeroProgressionService(userDataManager);
+                new GameManager(userDataManager, sceneTransitionService, heroProgressionService, maxLevel);
 
                 RegisterServices(userDataManager, enemyService);
                 
@@ -54,20 +53,6 @@ namespace GameStartupSystem
                 Debug.LogError($"Main Bootstrapper initialization failed! Exception: {e.Message}");
                 InitializationCompletionSource.TrySetException(e);
             }
-        }
-
-        private List<EnemySO> RemoveEmptyEnemies()
-        {
-            var amount = enemies.Length;
-            var enemyList = new List<EnemySO>();
-            for (var i = 0; i < amount; i++)
-            {
-                var enemy = enemies[i];
-                if(enemy == null) continue;
-                enemyList.Add(enemy);
-            }
-
-            return enemyList;
         }
         
         private void RegisterServices(UserDataManager userDataManager, EnemyService enemyService)
