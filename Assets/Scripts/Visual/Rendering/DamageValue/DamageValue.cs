@@ -20,8 +20,8 @@ namespace Visual.Rendering.DamageValue
             startColor = textMeshPro.color;
             
             sequence = DOTween.Sequence();
-            sequence.Append(textMeshPro.DOFade(0, 5f))
-                .Join(rectTransform.DOMoveY(rectTransform.position.y + verticalMoveVector, 5f))
+            sequence.Append(textMeshPro.DOFade(0, 1.5f))
+                .Join(rectTransform.DOMoveY(rectTransform.position.y + verticalMoveVector, 1.5f))
                 .SetEase(Ease.OutQuad).OnComplete(() => Recycle(recycle));
         }
 
