@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2850146642721967108}
-  - component: {fileID: 7100891244774408167}
+  - component: {fileID: 2094246572841959353}
   - component: {fileID: -9042369099540435577}
   m_Layer: 0
   m_Name: BattleEnemyRenderer
@@ -34,7 +34,7 @@ Transform:
   - {fileID: 966086347129378069}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7100891244774408167
+--- !u!114 &2094246572841959353
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,7 +43,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5681719209290159652}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e06e1f3ce094b3e8877b850047fe761, type: 3}
+  m_Script: {fileID: 11500000, guid: 35250e4883f2403babdaa7347f84e6c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: -9042369099540435577}

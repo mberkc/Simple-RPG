@@ -9,8 +9,8 @@ using GameStartupSystem.Bootstrapper;
 using GameStartupSystem.Bootstrapper.Utility;
 using UnityEngine;
 using Visual.Controllers;
-using Visual.Rendering;
 using Visual.Rendering.DamageValue;
+using Visual.Rendering.EntityRenderer;
 
 namespace GameStartupSystem
 {

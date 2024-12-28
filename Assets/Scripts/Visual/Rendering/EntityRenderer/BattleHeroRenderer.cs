@@ -1,29 +1,21 @@
 ﻿using System;
 using Data;
-using UnityEngine;
 using Visual.Rendering.DamageValue;
 using Visual.Rendering.PointerHandler;
 
-namespace Visual.Rendering
+namespace Visual.Rendering.EntityRenderer
 {
     public class BattleHeroRenderer : BattleEntityRenderer, IPointerHandler
     {
         internal event Action<int> OnHeroSelected;
         internal event Action<BattleHeroRenderer> OnHeroHold;
 
-        internal HeroData HeroData;
+        internal HeroData HeroData { get; private set; }
         
-        public void Initialize(HeroData heroData, DamageValueSpawner damageValueSpawner, int boardIndex)
+        public void Initialize(HeroData heroData, int boardIndex, DamageValueSpawner damageValueSpawner)
         {
             HeroData = heroData;
-            BoardIndex = boardIndex;
-            DamageValueSpawner = damageValueSpawner;
-            materialPropertyBlock = new MaterialPropertyBlock();
-            SetName(heroData.EntityName);
-            SetColor(heroData.Color);
-            SetAlive(true);
-            healthView.Initialize(heroData.ModifiedHealth);
-            animationDirection = Vector2.left / 2f;
+            base.Initialize(heroData.EntityName, heroData.Color, heroData.ModifiedHealth, boardIndex, damageValueSpawner);
         }
         
         #region Click & Hold Actions

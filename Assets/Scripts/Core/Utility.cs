@@ -11,7 +11,7 @@ namespace Core
             get
             {
                 if(_normalAnimationDurationAsMS == 0)
-                    _normalAnimationDurationAsMS = (int) (Constants.NormalAnimationDuration * 1000f);
+                    _normalAnimationDurationAsMS = (int) (Constants.FastAnimationDuration * 1000f);
                 return _normalAnimationDurationAsMS;
             }
         }

@@ -1,11 +1,10 @@
-using System;
 using System.Globalization;
 using Core;
 using Data;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using Visual.Rendering;
+using Visual.Rendering.EntityRenderer;
 using Visual.UI.Views.HeroSelection;
 
 namespace Visual.UI.Views

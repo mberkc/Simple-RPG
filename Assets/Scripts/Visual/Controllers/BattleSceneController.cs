@@ -4,7 +4,7 @@ using Core.EventManager.UIEventManager;
 using Data;
 using TMPro;
 using UnityEngine;
-using Visual.Rendering;
+using Visual.Rendering.EntityRenderer;
 using Visual.UI.Views;
 using Visual.UI.Views.Battle;
 
@@ -18,7 +18,7 @@ namespace Visual.Controllers
         [SerializeField] private HeroStatsView heroStatsView;
         [SerializeField] private TextMeshProUGUI levelText;
 
-        private BattleEntityRenderer enemyEntityRenderer;
+        private BattleEnemyRenderer enemyEntityRenderer;
         private BattleHeroRenderer[] heroEntityRenderers = new BattleHeroRenderer[3];
         public void Initialize(UserData userData, EnemyService enemyService, EntityRendererFactory entityRendererFactory)
         {

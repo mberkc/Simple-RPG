@@ -1,39 +1,39 @@
 ﻿using Core;
-using Data.ScriptableObjects;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using Visual.Rendering.DamageValue;
 using Visual.UI.Views.Battle;
 
-namespace Visual.Rendering
+namespace Visual.Rendering.EntityRenderer
 {
-    public class BattleEntityRenderer : MonoBehaviour
+    public abstract class BattleEntityRenderer : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
-        [SerializeField] protected HealthView healthView;
-        [SerializeField] protected TextMeshProUGUI NameText;
+        [SerializeField] private HealthView healthView;
+        [SerializeField] private TextMeshProUGUI NameText;
         
-        protected DamageValueSpawner DamageValueSpawner;
-        protected MaterialPropertyBlock materialPropertyBlock;
-        protected bool IsAlive = false;
         protected int BoardIndex;
+        protected bool IsAlive = false;
+        
+        private DamageValueSpawner damageValueSpawner;
+        private MaterialPropertyBlock materialPropertyBlock;
 
-        protected Vector2 animationDirection;
+        private Vector2 animationDirection;
         private Vector2 targetScale = Vector2.one/5f;
         
-        public void Initialize(EntitySO entitySo, DamageValueSpawner damageValueSpawner, int boardIndex)
+        protected void Initialize(string name, Color color, float health, int boardIndex, DamageValueSpawner damageValueSpawner)
         {
             BoardIndex = boardIndex;
-            DamageValueSpawner = damageValueSpawner;
+            this.damageValueSpawner = damageValueSpawner;
             materialPropertyBlock = new MaterialPropertyBlock();
-            SetName(entitySo.EntityName);
-            SetColor(entitySo.Color);
+            SetName(name);
+            SetColor(color);
             SetAlive(true);
-            healthView.Initialize(entitySo.BaseHealth);
+            healthView.Initialize(health);
             animationDirection = (BoardIndex >= Constants.EnemyBoardIndex ? Vector2.left : Vector2.right) / 2f;
         }
-
+        
         internal void Attack()
         {
             PlayAttackAnimation();
@@ -56,37 +56,37 @@ namespace Visual.Rendering
         {
             var centerPosition = spriteRenderer.bounds.center;
             var screenPosition = VisualUtility.WorldToScreenPosition(centerPosition);
-            DamageValueSpawner.Spawn(damage, screenPosition);
+            damageValueSpawner.Spawn(damage, screenPosition);
         }
         
         private void PlayAttackAnimation()
         {
-            transform.DOPunchPosition(animationDirection, Constants.NormalAnimationDuration, elasticity: 0.1f);
+            transform.DOPunchPosition(animationDirection, Constants.FastAnimationDuration, elasticity: 0f, vibrato: 0);
         }
 
         private void PlayDamageAnimation()
         {
-            transform.DOPunchScale(targetScale, Constants.NormalAnimationDuration, elasticity: 0.1f);
+            transform.DOPunchScale(targetScale, Constants.FastAnimationDuration, elasticity: 0.1f);
         }
         
         private void PlayDieAnimation()
         {
-            transform.DOScale(Vector2.zero, Constants.NormalAnimationDuration);
+            transform.DOScale(Vector2.zero, Constants.FastAnimationDuration);
         }
 
-        protected void SetColor(Color color)
+        private void SetColor(Color color)
         {
             spriteRenderer.GetPropertyBlock(materialPropertyBlock, 0);
             materialPropertyBlock.SetColor(Constants.ShaderColorPropertyId, color);
             spriteRenderer.SetPropertyBlock(materialPropertyBlock, 0);
         }
 
-        protected void SetAlive(bool alive)
+        private void SetAlive(bool alive)
         {
             IsAlive = alive;
         }
 
-        protected void SetName(string name)
+        private void SetName(string name)
         {
             NameText.text = name;
         }
