@@ -15,6 +15,7 @@ namespace GameLogic
     {
         private readonly ProgressionService _progressionService;
         private readonly UserData _userData;
+        private readonly int _maxLevel;
         
         private ProgressionData progressionData;
         
@@ -28,10 +29,11 @@ namespace GameLogic
         /// </summary>
         public UserData GetUserDataVisual => _userData; // Userdata needed by visual assembly might differ in the future, so we have this property
 
-        public UserDataManager(UserData userData, ProgressionService progressionService)
+        public UserDataManager(UserData userData, ProgressionService progressionService, int maxLevel)
         {
             _userData = userData;
             _progressionService = progressionService;
+            _maxLevel = maxLevel;
         }
         
         public List<int> SelectedHeroIndexes => _userData.SelectedHeroIndexes;
@@ -72,6 +74,8 @@ namespace GameLogic
 
         private void MapProgressionDataToUserData()
         {
+            if(progressionData.CurrentLevel > _maxLevel) progressionData.CurrentLevel = _maxLevel;
+            
             _userData.BattlePlayAmount = progressionData.BattlePlayAmount;
             _userData.CurrentLevel = progressionData.CurrentLevel;
             _userData.SelectedHeroIndexes = progressionData.SelectedHeroIndexes;

@@ -37,7 +37,7 @@ namespace GameStartupSystem
                 var heroCollectionFiller = new HeroCollectionFiller(heroes);
                 var heroCollection = await heroCollectionFiller.GetHeroCollection();
                 var userData = new UserData(heroCollection);
-                var userDataManager = new UserDataManager(userData, InitializeProgressionService());
+                var userDataManager = new UserDataManager(userData, InitializeProgressionService(), maxLevel);
                 await userDataManager.InitializeUserDataAsync();
                 
                 var heroProgressionService = new HeroProgressionService(userDataManager);
